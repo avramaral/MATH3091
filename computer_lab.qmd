@@ -1,0 +1,57 @@
+---
+title: "Computer Labs"
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: false
+    from: markdown+emoji
+---
+
+Welcome to the [Computer Labs]{.attention} section! Below, you will find all the necessary files for the labs, including instructions and solutions. 
+
+Download all required datasets: [click here](/labs/datasets.zip) to get started.
+
+---
+
+### :beetle: Lab 05 (Week 08): Modelling Beetle Mortality Under Toxic Exposure
+
+We analyse how exposure to different doses of an insecticide affects beetle mortality. The study examines eight groups subjected to varying levels of the insecticide to determine its lethal effects.
+
+- :memo: [Instructions](/labs/lab05/lab05.html)
+- :speaking_head: <a href="/labs/lab05/lab05_sol.R" download>Solution</a>
+
+
+### :rocket: Lab 06 (Week 09): Space Shuttle O-Ring Failure
+
+We investigate data from 23 space shuttle flights before the Challenger disaster, focusing on O-ring failures. The goal is to understand factors contributing to the disaster.
+
+- :memo: [Instructions](/labs/lab06/lab06.html)
+- :speaking_head: <a href="/labs/lab06/lab06_sol.R" download>Solution</a>
+
+
+### :anatomical_heart: Lab 07 (Week 10): Thrombolytic Treatment Trial
+
+We analyse clinical trial data assessing the effectiveness of a thrombolytic (clot-busting) treatment for patients who have suffered a heart attack.
+
+- :memo: [Instructions](/labs/lab07/lab07.html)
+- :speaking_head: <a href="/labs/lab07/lab07_sol.R" download>Solution</a>
+
+
+### :car: Lab 08 (Week 11): Road Accidents & Hodgkin’s Disease
+
+We explore two datasets:
+
+1. Road accidents: examining the relationship between traffic volume and accident numbers across different roads and times of day in Cambridge.
+1. Hodgkin’s disease: investigating how histological type and treatment response are linked among 538 patients.
+
+- :memo: [Instructions](/labs/lab08/lab08.html)
+- :speaking_head: <a href="/labs/lab08/lab08_sol.R" download>Solution</a>
+
+
+### :drop_of_blood: Lab 09 (Week 12): Lymphoma Classification & Treatment
+
+We analyse data from 30 lymphoma patients classified by sex, cell type, and treatment response. The focus is on understanding relationships between these factors.
+
+- :memo: [Instructions](/labs/lab09/lab09.html)
+- :speaking_head: <a href="/labs/lab09/lab09_sol.R" download>Solution</a>

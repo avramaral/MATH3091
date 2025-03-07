@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "problem_class.html",
+    "href": "problem_class.html",
+    "title": "Problem Classes",
+    "section": "",
+    "text": "Welcome to the Problem Classes section! Here, you will find the problem sheets for each session. Try to work through them beforehand, as we will go through the solutions together and answer any questions during the problem classes.\n📌 Note: solutions will be made available after each class.\n\n\nProblem Sheet 04 (Week 08): Generalised Linear Models (Part I)\nIntroduction to the exponential family, components of a GLM, examples, maximum likelihood estimation (MLE), and confidence intervals.\n\n\n📝 Problem Sheet\n🔒 Solution (available after class)\n\n\n\nProblem Sheet 05 (Week 10): Generalised Linear Models (Part II)\nComparing GLMs, deviance, models with unknown scale, contingency tables, and log-linear models.\n\n📝 Problem Sheet\n🔒 Solution (available after class)\n\n\n\nProblem Sheet 06 (Week 12): Models for Categorical Data\nMultinomial sampling, interpretation of two-way tables, and interpretation of multiway tables.\n\n📝 Problem Sheet\n🔒 Solution (available after class)"
+  },
+  {
+    "objectID": "lecture_slides.html",
+    "href": "lecture_slides.html",
+    "title": "Lecture Slides",
+    "section": "",
+    "text": "Welcome to the Lecture Slides section! Here, you will find the slides for each chapter covered in the second part of the module.\n📌 Note: slides may be updated throughout the course.\n\n\n📊 Chapter 05: Generalised Linear Models\nThis chapter introduces Generalised Linear Models (GLMs). It covers the exponential family of distributions, key components of a GLM, and examples like logistic regression for binary data and Poisson regression for count data. The chapter also looks at maximum likelihood estimation, confidence intervals, model comparison, scaled deviance, and residual analysis.\n\n📄 Chapter 5 (last updated on 06/03/2025)\n\n\n\n📊 Chapter 06: Models for Categorical Data\nThis chapter covers the analysis of categorical data using contingency tables and log-linear models. It also explores multinomial sampling, as well as the interpretation of log-linear models for two-way and multiway tables.\n\n📄 Chapter 6 (last updated on 06/03/2025, Incomplete)"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "MATH3091: Statistical Modelling II",
+    "section": "",
+    "text": "Welcome to the second part of MATH3091: Statistical Modelling. The first part of the module was taught by Dr Helen Ogden, covering Chapters 1–4 from the lecture notes (see below). This part will focus on Generalised Linear Models (Chapter 5) and Models for Categorical Data (Chapter 6).\n📖 Lecture Notes: Available here\n\n\n📆 Tentative Schedule\nBelow is the tentative schedule for the second part of the module.\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nLab\nSession 1 (Thursday)\nSession 2 (Friday)\nSession 3 (Friday)\nProblem sheet\n\n\n\n\n07\nNo lab\n5.1 Exponential family\n5.2 Components of a GLM\n5.3 Examples of GLMs\nSheet 4\n\n\n08\nLab 5\n5.4 MLE\n5.5 Confidence intervals\nPC: sheet 4\n\n\n\n09\nLab 6\n5.6 Comparing GLMs\n5.7 Deviance\n5.8 Models with unknown scale\nSheet 5\n\n\n10\nLab 7\n6.1 Contingency tables\n6.2 Log-linear models\nPC: sheet 5\n\n\n\n11\nLab 8\n6.3 Multinomial sampling\n6.4 Interpretation for two-way tables\n6.5 Interpretation for multiway tables\nSheet 6\n\n\n12\nLab 9\nRevision\nRevision\nPC: sheet 6"
+  },
+  {
+    "objectID": "computer_lab.html",
+    "href": "computer_lab.html",
+    "title": "Computer Labs",
+    "section": "",
+    "text": "Welcome to the Computer Labs section! Below, you will find all the necessary files for the labs, including instructions and solutions.\nDownload all required datasets: click here to get started.\n\n\n🪲 Lab 05 (Week 08): Modelling Beetle Mortality Under Toxic Exposure\nWe analyse how exposure to different doses of an insecticide affects beetle mortality. The study examines eight groups subjected to varying levels of the insecticide to determine its lethal effects.\n\n📝 Instructions\n🗣️ Solution\n\n\n\n🚀 Lab 06 (Week 09): Space Shuttle O-Ring Failure\nWe investigate data from 23 space shuttle flights before the Challenger disaster, focusing on O-ring failures. The goal is to understand factors contributing to the disaster.\n\n📝 Instructions\n🗣️ Solution\n\n\n\n🫀 Lab 07 (Week 10): Thrombolytic Treatment Trial\nWe analyse clinical trial data assessing the effectiveness of a thrombolytic (clot-busting) treatment for patients who have suffered a heart attack.\n\n📝 Instructions\n🗣️ Solution\n\n\n\n🚗 Lab 08 (Week 11): Road Accidents & Hodgkin’s Disease\nWe explore two datasets:\n\nRoad accidents: examining the relationship between traffic volume and accident numbers across different roads and times of day in Cambridge.\nHodgkin’s disease: investigating how histological type and treatment response are linked among 538 patients.\n\n\n📝 Instructions\n🗣️ Solution\n\n\n\n🩸 Lab 09 (Week 12): Lymphoma Classification & Treatment\nWe analyse data from 30 lymphoma patients classified by sex, cell type, and treatment response. The focus is on understanding relationships between these factors.\n\n📝 Instructions\n🗣️ Solution"
+  }
+]

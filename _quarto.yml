@@ -1,0 +1,33 @@
+project:
+  type: website
+  output-dir: docs
+  # Only render these top-level QMD files; i.e., does not re-render inside projects
+  render: 
+    - index.qmd
+    - lecture_slides.qmd
+    - computer_lab.qmd
+    - problem_class.qmd
+  # Copy these folders (as-is) into docs/ when building.
+  resources: 
+    - slides
+    - labs
+    - problem_class
+  
+website:
+  title: "MATH3091: Statistical Modelling II"
+  search: false
+  navbar:
+    left:
+      - lecture_slides.qmd
+      - computer_lab.qmd
+      - problem_class.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    from: markdown+emoji
+
+
+

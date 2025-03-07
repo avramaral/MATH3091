@@ -1,0 +1,56 @@
+---
+title: "Statistical Modelling II (MATH3091)"
+subtitle: "Part II, Chapter 6: Models for Categorical Data"
+format:
+  revealjs: 
+    theme: [default, custom.scss]
+    slide-number: true
+    progress: false
+html-math-method:
+  method: mathjax
+  url: "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+author:
+  - name: "André Victor Ribeiro Amaral"
+    url: "https://www.avramaral.com/"  
+    email: "a.v.ribeiro-amaral@soton.ac.uk"
+    affiliations: "University of Southampton"
+date: last-modified
+date-format: "DD/MM/YYYY"
+---
+
+```{r setup}
+#| echo: FALSE
+#| output: FALSE
+#| message: FALSE
+knitr::opts_chunk$set(include = TRUE)
+options(digits = 4)
+library("tidyverse")
+```
+
+## Preface
+
+:::{.callout-note .center-vertically-only}
+# &nbsp;
+
+The aim of this chapter is to cover the theory and application of generalised linear models (GLMs). 
+
+These slides are based on material written by previous lecturers of this course, including *Sujit Sahu*, *Dave Woods*, and *Chao Zheng*.
+:::
+
+## Schedule
+
+:::{.small-text .center-vertically}
+
+| Week | Lab | Session 1 (Thursday) | Session 2 (Friday) | Session 3 (Friday) | Problem sheet |
+| ---- | ----- | ---------------- | ----------------- | ----------------- | ------------- |
+| 07 | No lab | 5.1 Exponential family | 5.2 Components of a GLM | 5.3 Examples of GLMs | Sheet 4 |
+| 08 | Lab 5  | 5.4 MLE | 5.5 Confidence intervals | PC: sheet 4 | |
+| 09 | Lab 6  | 5.6 Comparing GLMs | 5.7 Deviance | 5.8 Models with unknown scale | Sheet 5 |
+| 10 | Lab 7  | 6.1 Contingency tables | 6.2 Log-linear models | PC: sheet 5 | |
+| 11 | Lab 8  | 6.3 Multinomial sampling | 6.4 Interpretation for two-way tables | 6.5 Interpretation for multiway tables | Sheet 6 |
+| 12 | Lab 9  | Revision | Revision | PC: sheet 6 | |
+:::
+
+# <span style="font-size: 42px; color: #131516; display: block; margin-bottom: -50px">Chapter 5: Generalised Linear Models</span> <br/> Lecture 6.1: Contingency tables
+
+## Recap

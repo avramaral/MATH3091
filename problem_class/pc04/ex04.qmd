@@ -1,0 +1,39 @@
+---
+title: "MATH3091: Statistical Modelling II"
+subtitle: "Problem Sheet 4"
+format: pdf
+header-includes:
+  - \usepackage{xcolor}
+  - \definecolor{solutionblue}{RGB}{0, 0, 255}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. Suppose $Y \sim \text{Exponential}(\lambda)$, with p.d.f.
+$$
+f_Y(y; \lambda) = \lambda e^{- \lambda y}\,,
+$$
+for $y > 0$ and $\lambda > 0$. Show that the exponential distribution is a member
+of the exponential family, and hence find $\mathbb{E}(Y)$, $\text{Var}(Y)$, and the variance function $V(\mu)$. 
+
+2. Suppose $Y \sim \text{Geometric}(p)$, with p.d.f.
+$$
+f_Y(y; p) = p(1 - p)^{y - 1}\,,
+$$ 
+for $y \in \{1, 2, 3, \cdots\}$, $p \in (0, 1)$. Show that the geometric distribution is a member
+of the exponential family, and hence find $\mathbb{E}(Y)$, $\text{Var}(Y)$, and the variance function $V(\mu)$. 
+
+3. What is the canonical link function for the exponential distribution (Q1)? What about for the geometric distribution (Q2)?
+
+4. Suppose that $Y_i$, $i=1, \cdots, n$, are independent $\text{Poisson}(\mu_i)$
+random variables, that $x_i$ is an explanatory variable, and that
+$$
+\log \mu_i = \beta_1 + \beta_2 x_i.
+$$
+
+    a. Write down the log-likelihood function of $\beta_1$ and $\beta_2$ explicitly.  Hence, derive a pair of simultaneous equations, the solution of which are the maximum likelihood estimates for $\boldsymbol{\beta}=(\beta_1, \beta_2)^{\top}$.
+
+    b. Express the above model in terms of $\boldsymbol{\eta} = \mathbf{X} \boldsymbol{\beta}$, where $\mathbf{X}$ is the appropriate  $n \times 2$ matrix.
+

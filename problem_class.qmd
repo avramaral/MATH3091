@@ -1,0 +1,34 @@
+---
+title: "Problem Classes"
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: false
+    from: markdown+emoji
+---
+
+Welcome to the [Problem Classes]{.attention} section! Here, you will find the problem sheets for each session. Try to work through them beforehand, as we will go through the solutions together and answer any questions during the problem classes.
+
+:pushpin: **Note:** solutions will be made available **after** each class.  
+
+---
+
+### Problem Sheet 04 (Week 08): Generalised Linear Models (Part I)  
+Introduction to the exponential family, components of a GLM, examples, maximum likelihood estimation (MLE), and confidence intervals.
+
+<!--:white_check_mark:-->
+- :memo: <a href="/problem_class/pc04/ex04.pdf" download>Problem Sheet</a>
+- :lock: **Solution (available after class)**  
+
+### Problem Sheet 05 (Week 10): Generalised Linear Models (Part II)  
+Comparing GLMs, deviance, models with unknown scale, contingency tables, and log-linear models.
+
+- :memo: <a href="/problem_class/pc05/ex05.pdf" download>Problem Sheet</a>
+- :lock: **Solution (available after class)**  
+
+### Problem Sheet 06 (Week 12): Models for Categorical Data
+Multinomial sampling, interpretation of two-way tables, and interpretation of multiway tables.
+
+- :memo: <a href="/problem_class/pc06/ex06.pdf" download>Problem Sheet</a>
+- :lock: **Solution (available after class)**  
