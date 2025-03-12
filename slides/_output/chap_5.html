@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="André Victor Ribeiro Amaral">
-  <meta name="dcterms.date" content="2025-07-03">
+  <meta name="dcterms.date" content="2025-12-03">
   <title>Statistical Modelling II (MATH3091)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -409,7 +409,7 @@
     </div>
 </div>
 
-  <p class="date">07/03/2025</p>
+  <p class="date">12/03/2025</p>
 </section>
 <section id="preface" class="slide level2">
 <h2>Preface</h2>
@@ -727,13 +727,17 @@ f_Y(y;\theta,\phi)=\exp\left({{y\theta-b(\theta)}\over{a(\phi)}} +c(y,\phi)\righ
 </section>
 <section id="the-random-component" class="slide level2">
 <h2>The random component</h2>
-<p>In a GLM, each <span class="math inline">\(Y_i\)</span> is assumed to be an independent random variable. All the <span class="math inline">\(Y_i\)</span>’s are assumed to have distribution coming from the same exponential family, but with a potentially different value of the parameters.</p>
+<p>In GLM, each <span class="math inline">\(Y_i\)</span> is assumed to be an independent random variable. All the <span class="math inline">\(Y_i\)</span>’s are assumed to have the <span class="alert">same</span> distribution from the exponential family, but with potentially different values for the canonical parameters.</p>
+<div class="fragment">
 <p>The functions <span class="math inline">\(a(\cdot)\)</span>, <span class="math inline">\(b(\cdot)\)</span> and <span class="math inline">\(c(\cdot)\)</span> are the same for each <span class="math inline">\(Y_i\)</span>, but the canonical parameter <span class="math inline">\(\theta\)</span> (and sometimes the scale parameter <span class="math inline">\(\phi\)</span>) may differ.</p>
+</div>
+<div class="fragment">
 <p>We have <span class="math display">\[
 f_{Y_i}(y_i;\theta_i,\phi_i)=
 \exp\left({{y_i\theta_i-b(\theta_i)}\over{a(\phi_i)}}
 +c(y_i,\phi_i)\right)
 \]</span> for <span class="math inline">\(i = 1, \cdots, n\)</span>, where <span class="math inline">\(\boldsymbol{\theta}=(\theta_1,\cdots ,\theta_n)^{\top}\)</span> is the collection of canonical parameters and <span class="math inline">\(\boldsymbol{\phi}=(\phi_1,\cdots ,\phi_n)^T\)</span> is the collection of nuisance parameters (where they exist).</p>
+</div>
 </section>
 <section id="likelihood-for-boldsymboltheta-and-boldsymbolphi" class="slide level2">
 <h2>Likelihood for <span class="math inline">\(\boldsymbol{\theta}\)</span> and <span class="math inline">\(\boldsymbol{\phi}\)</span></h2>
@@ -798,18 +802,26 @@ x_{11}&amp;\cdots&amp;x_{1p}\cr\vdots&amp;\ddots&amp;\vdots\cr x_{n1}&amp;\cdots
 <h2>The design matrix</h2>
 <p>There are different ways to describe the linear predictor, however, the most economical is the matrix form <span class="math display">\[\boldsymbol{\eta}=\mathbf{X}\boldsymbol{\beta}.\]</span></p>
 <p>Again, we call the <span class="math inline">\(n\times p\)</span> matrix <span class="math inline">\(\mathbf{X}\)</span> the <em>design matrix</em>.</p>
+<div class="fragment">
 <p>The <span class="math inline">\(i\)</span>-th row of <span class="math inline">\(\mathbf{X}\)</span> is <span class="math inline">\(\mathbf{x}_i^{\top}\)</span>, the explanatory data corresponding to the <span class="math inline">\(i\)</span>-th observation of the response. The <span class="math inline">\(j\)</span>-th column of <span class="math inline">\(\mathbf{X}\)</span> contains the <span class="math inline">\(n\)</span> observations of the <span class="math inline">\(j\)</span>-th explanatory variable.</p>
+</div>
 </section>
 <section id="the-link-function" class="slide level2">
 <h2>The link function</h2>
-<p>For specifying the pattern of dependence of the response variable on the explanatory variables, the canonical parameters <span class="math inline">\(\boldsymbol{\theta}\)</span> are not of direct interest.</p>
-<p>Recall that the distribution of <span class="math inline">\(Y_i\)</span> should depend on <span class="math inline">\(\mathbf{x}_i\)</span> through <span class="math inline">\(\eta_i\)</span>. It is the parameters <span class="math inline">\(\beta_1, \cdots ,\beta_p\)</span> of the linear predictor which are of primary interest.</p>
+<p>For specifying the pattern of <span class="alert">dependence of the response variable on the explanatory variables</span>, the canonical parameters <span class="math inline">\(\boldsymbol{\theta}\)</span> are <span class="alert">not</span> of direct interest.</p>
+<div class="fragment">
+<p>Recall that the distribution of <span class="math inline">\(Y_i\)</span> should depend on <span class="math inline">\(\mathbf{x}_i\)</span> through <span class="math inline">\(\eta_i\)</span>. <span class="alert">It is the parameters <span class="math inline">\(\beta_1, \cdots ,\beta_p\)</span> of the linear predictor which are of primary interest</span>.</p>
+</div>
+<div class="fragment">
 <p>The link between the distribution of <span class="math inline">\(\mathbf{Y}\)</span> and <span class="math inline">\(\mathbf{\eta}\)</span> is given by the <span class="alert">link function</span> <span class="math inline">\(g\)</span>, <span class="math display">\[
 \eta_i=g(\mu_i),\quad i = 1, \cdots, n,
 \]</span> where <span class="math inline">\(\mu_i\equiv \mathbb{E}(Y_i),\;i = 1, \cdots, n\)</span>.</p>
+</div>
+<div class="fragment">
 <p>So the dependence of the distribution of <span class="math inline">\(Y_i\)</span> on explanatory variables is <span class="math display">\[
 g(\mathbb{E}[Y_i])=g(\mu_i)=\eta_i=\mathbf{x}_i^{\top}\boldsymbol{\beta},\quad i = 1, \cdots, n.
 \]</span></p>
+</div>
 </section>
 <section id="bernoulli-example-1" class="slide level2">
 <h2>Bernoulli example</h2>
@@ -839,17 +851,23 @@ Y_i = \begin{cases} 1 &amp; \text{if person $i$ gets question correct,} \\
 <h2>Choosing the link function</h2>
 <p>In principle, the link function <span class="math inline">\(g\)</span> can be any one-to-one differentiable function.</p>
 <p>However, <span class="math inline">\(\eta_i\)</span> can take any value in <span class="math inline">\(\mathbb{R}\)</span> (as we make no restriction on possible values taken by explanatory variables or model parameters).</p>
+<div class="fragment">
 <p>Recall that for some exponential family distributions <span class="math inline">\(\mu_i\)</span> is restricted. For example, for the <span class="alert">Poisson distribution</span> <span class="math inline">\(\mu_i\in\mathbb{R}_+\)</span>; for the <span class="alert">Bernoulli distribution</span> <span class="math inline">\(\mu_i\in(0,1)\)</span>.</p>
+</div>
+<div class="fragment">
 <p>If <span class="math inline">\(g\)</span> is not chosen carefully, then there may exist a possible <span class="math inline">\(\mathbf{x}_i\)</span> and <span class="math inline">\(\boldsymbol{\beta}\)</span> such that <span class="math inline">\(\eta_i\ne g(\mu_i)\)</span> for any possible value of <span class="math inline">\(\mu_i\)</span>.</p>
+</div>
+<div class="fragment">
 <p>Therefore, <strong><em>sensible</em></strong> choices of link function map the set of allowed values for <span class="math inline">\(\mu_i\)</span> onto <span class="math inline">\(\mathbb{R}\)</span>.</p>
+</div>
 </section>
 <section id="likelihood-for-boldsymbolbeta" class="slide level2">
 <h2>Likelihood for <span class="math inline">\(\boldsymbol\beta\)</span></h2>
-<p>The likelihood function for <span class="math inline">\(\boldsymbol{\theta}\)</span> and <span class="math inline">\(\boldsymbol{\phi}\)</span> is <span class="math display">\[
-\mathcal{L}(\boldsymbol{\theta}, \boldsymbol{\phi}) = \exp\left(\sum_{i=1}^n{{y_i\theta_i-b(\theta_i)}\over{a(\phi_i)}}
+<p>The likelihood function for <span class="math inline">\(\boldsymbol{\theta}\)</span> is <span class="math display">\[
+\mathcal{L}(\boldsymbol{\theta}) =  \exp\left(\sum_{i=1}^n{{y_i\theta_i-b(\theta_i)}\over{a(\phi_i)}}
 +\sum_{i=1}^nc(y_i,\phi_i)\right).
-\]</span> So the likelihood function for <span class="math inline">\(\boldsymbol{\beta}\)</span> and <span class="math inline">\(\boldsymbol{\phi}\)</span> is (<span class="math inline">\(\mu_i = \mathbb{E}(Y_i) = b'(\theta_i)\)</span>) <span class="math display">\[
-\mathcal{L}(\boldsymbol{\beta}, \boldsymbol{\phi}) = \exp\left(\sum_{i=1}^n{{y_i b^{'-1}(g^{-1}(\mathbf{x}_i^{\top}\boldsymbol{\beta})-b(b^{'-1}(g^{-1}(\mathbf{x}_i^{\top}\boldsymbol{\beta}))}\over{a(\phi_i)}} +\sum_{i=1}^nc(y_i,\phi_i)\right).
+\]</span> So the likelihood function for <span class="math inline">\(\boldsymbol{\beta}\)</span> is (<span class="math inline">\(\mu_i = \mathbb{E}(Y_i) = b'(\theta_i)\)</span>) <span class="math display">\[
+\mathcal{L}(\boldsymbol{\beta})= \exp\left(\sum_{i=1}^n{{y_i b^{'-1}(g^{-1}(\mathbf{x}_i^{\top}\boldsymbol{\beta}))-b(b^{'-1}(g^{-1}(\mathbf{x}_i^{\top}\boldsymbol{\beta})))}\over{a(\phi_i)}} +\sum_{i=1}^nc(y_i,\phi_i)\right).
 \]</span> We will assume for now that <span class="math inline">\(\mathbf \phi\)</span> is known. Later, we will also with cases where <span class="math inline">\(\phi_i = \sigma^2/m_i\)</span>, where <span class="math inline">\(\sigma^2\)</span> is an unknown dispersion parameter, and <span class="math inline">\(m_i\)</span> are known weights.</p>
 </section>
 <section id="canonical-link" class="slide level2">
@@ -858,15 +876,23 @@ Y_i = \begin{cases} 1 &amp; \text{if person $i$ gets question correct,} \\
 <p>We have <span class="math display">\[
 \theta_i=b^{'-1}(g^{-1}(\mathbf{x}_i^{\top}\boldsymbol{\beta})),\quad i = 1, \cdots, n.
 \]</span></p>
+<div class="fragment">
 <p>If <span class="math inline">\(g\)</span> and <span class="math inline">\(b^{'-1}\)</span> are identical, then <span class="math display">\[
 \theta_i=\mathbf{x}_i^{\top}\boldsymbol{\beta}\qquad i = 1, \cdots, n
-\]</span> and the resulting likelihood is <span class="math display">\[
+\]</span></p>
+</div>
+<div class="fragment">
+<p>and the resulting likelihood is <span class="math display">\[
 \mathcal{L}(\boldsymbol{\beta})=
 \exp\left(\sum_{i=1}^n{{y_i\mathbf{x}_i^{\top}\boldsymbol{\beta}-b(\mathbf{x}_i^{\top}\boldsymbol{\beta})}\over{a(\phi_i)}}
 +\sum_{i=1}^nc(y_i,\phi_i)\right).
-\]</span> The link function <span class="math display">\[
+\]</span></p>
+</div>
+<div class="fragment">
+<p>The link function <span class="math display">\[
 g(\mu)\equiv b^{'-1}(\mu)
 \]</span> is called the <strong><em>canonical link function</em></strong>. Under the canonical link, the canonical parameter is equal to the linear predictor.</p>
+</div>
 </div>
 </section>
 <section id="bernoulli-example-2" class="slide level2">
