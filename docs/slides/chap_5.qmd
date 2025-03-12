@@ -341,10 +341,13 @@ In this setting, we want to model how the distribution of $Y_i$ depends on $\mat
 
 ## The random component
 
-In a GLM, each $Y_i$ is assumed to be an independent random variable. All the $Y_i$'s are assumed to have distribution coming from the same exponential family, but with a potentially different value of the parameters.
+In GLM, each $Y_i$ is assumed to be an independent random variable. All the $Y_i$'s are assumed to have the [same]{.alert} distribution from the exponential family, but with potentially different values for the canonical parameters.
 
+:::{.fragment}
 The functions $a(\cdot)$, $b(\cdot)$ and $c(\cdot)$ are the same for each $Y_i$, but the canonical parameter $\theta$ (and sometimes the scale parameter $\phi$) may differ.
+:::
 
+:::{.fragment}
 We have
 $$
 f_{Y_i}(y_i;\theta_i,\phi_i)=
@@ -353,6 +356,7 @@ f_{Y_i}(y_i;\theta_i,\phi_i)=
 $$
 for $i = 1, \cdots, n$, where   $\boldsymbol{\theta}=(\theta_1,\cdots ,\theta_n)^{\top}$ is the collection
 of canonical parameters and $\boldsymbol{\phi}=(\phi_1,\cdots ,\phi_n)^T$ is the collection of nuisance parameters (where they exist).
+:::
 
 ## Likelihood for $\boldsymbol{\theta}$ and $\boldsymbol{\phi}$
 
@@ -431,26 +435,35 @@ and $\boldsymbol{\beta}=(\beta_1,\cdots ,\beta_p)^{\top}$ is a vector of unknown
 
 There are different ways to describe the linear predictor, however, the most economical is the matrix form $$\boldsymbol{\eta}=\mathbf{X}\boldsymbol{\beta}.$$
 
+
 Again, we call the $n\times p$ matrix $\mathbf{X}$ the *design matrix*.
 
+:::{.fragment}
 The $i$-th row of $\mathbf{X}$ is $\mathbf{x}_i^{\top}$, the explanatory data corresponding to the $i$-th observation of the response. The $j$-th column of $\mathbf{X}$ contains the $n$ observations of the $j$-th explanatory variable.
+:::
 
 ## The link function
 
-For specifying the pattern of dependence of the response variable on the explanatory variables, the canonical parameters $\boldsymbol{\theta}$ are not of direct interest.
+For specifying the pattern of [dependence of the response variable on the explanatory variables]{.alert}, the canonical parameters $\boldsymbol{\theta}$ are [not]{.alert} of direct interest.
 
-Recall that the distribution of $Y_i$ should depend on $\mathbf{x}_i$ through $\eta_i$. It is the parameters $\beta_1, \cdots ,\beta_p$ of the linear predictor which are of primary interest.
+:::{.fragment}
+Recall that the distribution of $Y_i$ should depend on $\mathbf{x}_i$ through $\eta_i$. [It is the parameters $\beta_1, \cdots ,\beta_p$ of the linear predictor which are of primary interest]{.alert}.
+:::
 
+:::{.fragment}
 The link between the distribution of $\mathbf{Y}$ and $\mathbf{\eta}$ is given by the [link function]{.alert} $g$,
 $$
 \eta_i=g(\mu_i),\quad i = 1, \cdots, n,
 $$
 where $\mu_i\equiv \mathbb{E}(Y_i),\;i = 1, \cdots, n$.
+:::
 
+:::{.fragment}
 So the dependence of the distribution of $Y_i$ on explanatory variables is
 $$
 g(\mathbb{E}[Y_i])=g(\mu_i)=\eta_i=\mathbf{x}_i^{\top}\boldsymbol{\beta},\quad i = 1, \cdots, n.
 $$
+:::
 
 ## Bernoulli example
 
@@ -487,22 +500,28 @@ In principle, the link function $g$ can be any one-to-one differentiable functio
 
 However, $\eta_i$ can take any value in $\mathbb{R}$ (as we make no restriction on possible values taken by explanatory variables or model parameters).
 
+:::{.fragment}
 Recall that for some exponential family distributions $\mu_i$ is restricted. For example, for the [Poisson distribution]{.alert} $\mu_i\in\mathbb{R}_+$; for the [Bernoulli distribution]{.alert} $\mu_i\in(0,1)$.
+:::
 
+:::{.fragment}
 If $g$ is not chosen carefully, then there may exist a possible $\mathbf{x}_i$ and $\boldsymbol{\beta}$ such that $\eta_i\ne g(\mu_i)$ for any possible value of $\mu_i$.
+:::
 
+:::{.fragment}
 Therefore,  ***sensible*** choices of link function map the set of allowed values for $\mu_i$ onto $\mathbb{R}$.
+:::
 
 ## Likelihood for $\boldsymbol\beta$
 
-The likelihood function for $\boldsymbol{\theta}$ and $\boldsymbol{\phi}$ is
+The likelihood function for $\boldsymbol{\theta}$ is
 $$
-\mathcal{L}(\boldsymbol{\theta}, \boldsymbol{\phi}) = \exp\left(\sum_{i=1}^n{{y_i\theta_i-b(\theta_i)}\over{a(\phi_i)}}
+\mathcal{L}(\boldsymbol{\theta}) =  \exp\left(\sum_{i=1}^n{{y_i\theta_i-b(\theta_i)}\over{a(\phi_i)}}
 +\sum_{i=1}^nc(y_i,\phi_i)\right).
 $$
-So the likelihood function for $\boldsymbol{\beta}$ and $\boldsymbol{\phi}$ is ($\mu_i = \mathbb{E}(Y_i) = b'(\theta_i)$)
+So the likelihood function for $\boldsymbol{\beta}$ is ($\mu_i = \mathbb{E}(Y_i) = b'(\theta_i)$)
 $$
-\mathcal{L}(\boldsymbol{\beta}, \boldsymbol{\phi}) = \exp\left(\sum_{i=1}^n{{y_i b^{'-1}(g^{-1}(\mathbf{x}_i^{\top}\boldsymbol{\beta})-b(b^{'-1}(g^{-1}(\mathbf{x}_i^{\top}\boldsymbol{\beta}))}\over{a(\phi_i)}} +\sum_{i=1}^nc(y_i,\phi_i)\right).
+\mathcal{L}(\boldsymbol{\beta})= \exp\left(\sum_{i=1}^n{{y_i b^{'-1}(g^{-1}(\mathbf{x}_i^{\top}\boldsymbol{\beta}))-b(b^{'-1}(g^{-1}(\mathbf{x}_i^{\top}\boldsymbol{\beta})))}\over{a(\phi_i)}} +\sum_{i=1}^nc(y_i,\phi_i)\right).
 $$
 We will assume for now that $\mathbf \phi$ is known. Later, we will also with cases where
 $\phi_i = \sigma^2/m_i$, where $\sigma^2$ is an unknown dispersion parameter,
@@ -516,22 +535,30 @@ $$
 \theta_i=b^{'-1}(g^{-1}(\mathbf{x}_i^{\top}\boldsymbol{\beta})),\quad i = 1, \cdots, n.
 $$
 
+:::{.fragment}
 If $g$ and $b^{'-1}$ are identical, then
 $$
 \theta_i=\mathbf{x}_i^{\top}\boldsymbol{\beta}\qquad i = 1, \cdots, n
 $$
+:::
+
+:::{.fragment}
 and the resulting likelihood is
 $$
 \mathcal{L}(\boldsymbol{\beta})=
 \exp\left(\sum_{i=1}^n{{y_i\mathbf{x}_i^{\top}\boldsymbol{\beta}-b(\mathbf{x}_i^{\top}\boldsymbol{\beta})}\over{a(\phi_i)}}
 +\sum_{i=1}^nc(y_i,\phi_i)\right).
 $$
+:::
+
+:::{.fragment}
 The link function
 $$
 g(\mu)\equiv b^{'-1}(\mu)
 $$
 is called the ***canonical link function***. Under the canonical link, the
 canonical parameter is equal to the linear predictor.
+:::
 :::
 
 ## Bernoulli example
