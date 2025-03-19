@@ -1213,14 +1213,17 @@ We have
 where $\boldsymbol{\eta}^{(m)},\,\mathbf{W}^{(m)}$ and $\mathbf{z}^{(m)}$ are all functions of $\boldsymbol{\beta}^{(m)}$.
 
 :::{.fragment}
-Note that this is a weighted least squares equation; that is, $\boldsymbol{\beta}^{(m+1)}$
+Note that this is a weighted least squares equation. That is, $\boldsymbol{\beta}^{(m+1)}$
 minimises the weighted sum of squares
+
+:::{.super-small-text}
 $$
-(\boldsymbol{\eta}+\mathbf{z}-\mathbf{X}\boldsymbol{\beta})^{\top}\mathbf{W}(\boldsymbol{\eta}+\mathbf{z}-\mathbf{X}\boldsymbol{\beta})=
-\sum_{i=1}^n w_i\left(\eta_i+z_i-\mathbf{x}_i^{\top}\boldsymbol{\beta}\right)^2
+\left(\left[\boldsymbol{\eta}^{(m)}+\mathbf{z}^{(m)}\right]-\mathbf{X}\boldsymbol{\beta}^{(m + 1)}\right)^{\top}\mathbf{W}^{(m)}\left(\left[\boldsymbol{\eta}^{(m)}+\mathbf{z}^{(m)}\right]-\mathbf{X}\boldsymbol{\beta}^{(m + 1)}\right)=
+\sum_{i=1}^n w_i^{(m)}\left(\left[\eta_i^{(m)}+z_i^{(m)}\right]-\mathbf{x}_i^{\top}\boldsymbol{\beta}^{(m + 1)}\right)^2,
 $$
-as a function of $\boldsymbol{\beta}$ where $w_1,\cdots ,w_n$ are the weights
-and $\boldsymbol{\eta}+\mathbf{z}$ is called the [*adjusted dependent variable*]{.alert}.
+:::
+where $w_1^{(m)},\cdots ,w_n^{(m)}$ are the weights
+and $\boldsymbol{\eta}^{(m)}+\mathbf{z}^{(m)}$ is called the [*adjusted dependent variable*]{.alert}.
 :::
 :::
 

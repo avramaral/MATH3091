@@ -17,7 +17,7 @@ Welcome to the [Lecture Slides]{.attention} section! Here, you will find the sli
 ### :bar_chart: **Chapter 05: Generalised Linear Models**  
 This chapter introduces Generalised Linear Models (GLMs). It covers the exponential family of distributions, key components of a GLM, and examples like logistic regression for binary data and Poisson regression for count data. The chapter also looks at maximum likelihood estimation, confidence intervals, model comparison, scaled deviance, and residual analysis.
 
-- :page_facing_up: [Chapter 5](/slides/_output/chap_5.html) (last updated on 12/03/2025)
+- :page_facing_up: [Chapter 5](/slides/_output/chap_5.html) (last updated on 19/03/2025)
 
 
 ### :bar_chart: **Chapter 06: Models for Categorical Data**  
