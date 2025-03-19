@@ -11,7 +11,6 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="André Victor Ribeiro Amaral">
-  <meta name="dcterms.date" content="2025-12-03">
   <title>Statistical Modelling II (MATH3091)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -409,7 +408,7 @@
     </div>
 </div>
 
-  <p class="date">12/03/2025</p>
+  <p class="date">19/03/2025</p>
 </section>
 <section id="preface" class="slide level2">
 <h2>Preface</h2>
@@ -1653,10 +1652,14 @@ $iterations
 &amp;=[\mathbf{X}^{\top}\mathbf{W}^{(m)}\mathbf{X}]^{-1}\mathbf{X}^{\top}\mathbf{W}^{(m)}[\boldsymbol{\eta}^{(m)}+\mathbf{z}^{(m)}],
 \end{align*}\]</span> where <span class="math inline">\(\boldsymbol{\eta}^{(m)},\,\mathbf{W}^{(m)}\)</span> and <span class="math inline">\(\mathbf{z}^{(m)}\)</span> are all functions of <span class="math inline">\(\boldsymbol{\beta}^{(m)}\)</span>.</p>
 <div class="fragment">
-<p>Note that this is a weighted least squares equation; that is, <span class="math inline">\(\boldsymbol{\beta}^{(m+1)}\)</span> minimises the weighted sum of squares <span class="math display">\[
-(\boldsymbol{\eta}+\mathbf{z}-\mathbf{X}\boldsymbol{\beta})^{\top}\mathbf{W}(\boldsymbol{\eta}+\mathbf{z}-\mathbf{X}\boldsymbol{\beta})=
-\sum_{i=1}^n w_i\left(\eta_i+z_i-\mathbf{x}_i^{\top}\boldsymbol{\beta}\right)^2
-\]</span> as a function of <span class="math inline">\(\boldsymbol{\beta}\)</span> where <span class="math inline">\(w_1,\cdots ,w_n\)</span> are the weights and <span class="math inline">\(\boldsymbol{\eta}+\mathbf{z}\)</span> is called the <span class="alert"><em>adjusted dependent variable</em></span>.</p>
+<p>Note that this is a weighted least squares equation. That is, <span class="math inline">\(\boldsymbol{\beta}^{(m+1)}\)</span> minimises the weighted sum of squares</p>
+<div class="super-small-text">
+<p><span class="math display">\[
+\left(\left[\boldsymbol{\eta}^{(m)}+\mathbf{z}^{(m)}\right]-\mathbf{X}\boldsymbol{\beta}^{(m + 1)}\right)^{\top}\mathbf{W}^{(m)}\left(\left[\boldsymbol{\eta}^{(m)}+\mathbf{z}^{(m)}\right]-\mathbf{X}\boldsymbol{\beta}^{(m + 1)}\right)=
+\sum_{i=1}^n w_i^{(m)}\left(\left[\eta_i^{(m)}+z_i^{(m)}\right]-\mathbf{x}_i^{\top}\boldsymbol{\beta}^{(m + 1)}\right)^2,
+\]</span></p>
+</div>
+<p>where <span class="math inline">\(w_1^{(m)},\cdots ,w_n^{(m)}\)</span> are the weights and <span class="math inline">\(\boldsymbol{\eta}^{(m)}+\mathbf{z}^{(m)}\)</span> is called the <span class="alert"><em>adjusted dependent variable</em></span>.</p>
 </div>
 </div>
 </section>
