@@ -51,6 +51,1200 @@ These slides are based on material written by previous lecturers of this course,
 | 12 | Lab 9  | Revision | Revision | PC: sheet 6 | |
 :::
 
-# <span style="font-size: 42px; color: #131516; display: block; margin-bottom: -50px">Chapter 5: Generalised Linear Models</span> <br/> Lecture 6.1: Contingency tables
+# <span style="font-size: 42px; color: #131516; display: block; margin-bottom: -50px">Chapter 6: Models for Categorical Data</span> <br/> Lecture 6.1: Contingency tables
+
+## Introduction
+
+A particularly important application of generalised linear models is the analysis of [**categorical data**]{.alert}. 
+
+:::{.fragment}
+Here, the data are observations of one or more categorical variables on each of a number of units (often individuals). Therefore, each of the units are **cross-classified** by the categorical variables.
+:::
+
+:::{.fragment}
+For example, the `job` dataset gives the job satisfaction and income band of 901 individuals from the 1984 General Social Survey.
+
+
+| Income ($)     | Very Dissat. | A Little Dissat. | Moderately Sat. | Very Sat. |
+|----------------|--------------|------------------|------------------|-----------|
+| <6000          | 20           | 24               | 80               | 82        |
+| 6000–15000     | 22           | 38               | 104              | 125       |
+| 15000–25000    | 13           | 28               | 81               | 113       |
+| >25000         | 7            | 18               | 54               | 92        |
+:::
+
+## Contingency tables
+
+A cross-classification table like this is called a [**contingency table**]{.alert}. This is a **two-way table**, as there are two classifying variables.
+
+:::{.fragment}
+It might also be describe as a $4 \times 4$ contingency table (as each of the classifying variables takes one of four possible levels).
+:::
+
+:::{.fragment}
+Each position in a contingency table is called a **cell** and the number of individuals in a particular cell is the **cell count**.
+:::
+
+:::{.fragment}
+Partial classifications derived from the table are called **margins**. For a two-way table these are often displayed in the margins of the table.
+:::
+
+:::{.fragment}
+Our aim in Chapter 6 is to model the cell counts of a contingency table and say something about the relationship between the cross-classifying variables. E.g., [is there a relationship
+between income and job satisfaction?]{.alert}
+:::
+
+## A contingency table of the `job` dataset, with margins
+
+As before,
+
+| Income ($)     | Very Dissat. | A Little Dissat. | Moderately Sat.  | Very Sat. | **Sum** |
+|----------------|--------------|------------------|------------------|-----------|---------|
+| <6000          | 20           | 24               | 80               | 82        | **206** |
+| 6000–15000     | 22           | 38               | 104              | 125       | **289** |
+| 15000–25000    | 13           | 28               | 81               | 113       | **235** |
+| >25000         | 7            | 18               | 54               | 92        | **171** |
+| **Sum**        | **62**       | **108**          | **319**          | **412**   | **901** |
+
+:::{.fragment}
+We have added **one-way margins**, which represent the classification of items by a single variable; `income group` and `job satisfaction`, respectively.
+:::
+
+## A three-way contingency table
+
+The `lymphoma` dataset gives information about 30 patients, classified by cell type of lymphoma, sex, and response to treatment. This is an example of a three-way contingency table. It is a $2\times 2\times 2$ or $2^3$ table.
+
+<br />
+
+:::{.fragment}
+| Cell Type      | Sex         | Remission: No     | Remission: Yes     |
+|----------------|-------------|-------------------|--------------------|
+| Diffuse        | Female      | 3                 | 1                  |
+| Diffuse        | Male        | 12                | 1                  |
+| Nodular        | Female      | 2                 | 6                  |
+| Nodular        | Male        | 1                 | 4                  |
+:::
+
+## Higher-order margins
+
+For **multiway** tables, higher order margins may be calculated. For example, for `lymphoma`, the two-way `Cell type`/`Sex` margin is
+
+<br />
+
+:::{.fragment}
+| Cell Type       | Female   | Male |
+|-----------------|----------|------|
+| Diffuse         | 4        | 13   |
+| Nodular         | 8        | 5    |
+:::
+
+## Modelling contingency table data
+
+We can model contingency table data using [generalised linear models]{.alert}.
+
+:::{.fragment}
+To do this, we assume that the cell counts are observations of [independent Poisson random variables]{.alert}.
+:::
+
+:::{.fragment}
+This is intuitively sensible as the cell counts are non-negative integers (the sample space for the Poisson distribution).
+:::
+
+:::{.fragment}
+Therefore, if the table has $n$ cells, which we label $1, \cdots, n$, then the observed cell counts $y_1, \cdots, y_n$ are assumed to be observations of independent Poisson random variables $Y_1, \cdots, Y_n$.
+:::
+
+:::{.fragment}
+We denote the means of these Poisson random variables by $\mu_1, \cdots , \mu_n$.
+:::
+
+
+## Log-linear models
+
+The canonical link function for the Poisson distribution is the [log function]{.alert}, and we assume this link function throughout. A generalised linear model for Poisson data using the log link function is called a [**log-linear model**]{.alert}.
+
+:::{.fragment}
+The explanatory variables in a log-linear model for contingency table data are the cross-classifying variables. 
+:::
+
+:::{.fragment}
+As these variables are categorical, they are **factors**. As usual with factors, we can include interactions in the model as well as just main effects. 
+:::
+
+:::{.fragment}
+Such a model will describe how the expected count in each cell depends on the classifying variables, and any interactions between them. *Interpretation of these models will be discussed later on*.
+:::
+
+## `job` dataset in long format
+
+The original data structure of the `job` dataset is
+
+:::{.small-text }
+| Income        | Satisfaction            | Count |
+|---------------|--------------------------|--------|
+| <6000         | Very Dissatisfied        | 20     |
+| <6000         | A Little Dissatisfied    | 24     |
+| <6000         | Moderately Satisfied     | 80     |
+| <6000         | Very Satisfied           | 82     |
+| 6000–15000    | Very Dissatisfied        | 22     |
+| 6000–15000    | A Little Dissatisfied    | 38     |
+| 6000–15000    | Moderately Satisfied     | 104    |
+| 6000–15000    | Very Satisfied           | 125    |
+| 15000–25000   | Very Dissatisfied        | 13     |
+| 15000–25000   | A Little Dissatisfied    | 28     |
+| 15000–25000   | Moderately Satisfied     | 81     |
+| 15000–25000   | Very Satisfied           | 113    |
+| >25000        | Very Dissatisfied        | 7      |
+| >25000        | A Little Dissatisfied    | 18     |
+| >25000        | Moderately Satisfied     | 54     |
+| >25000        | Very Satisfied           | 92     |
+:::
+
+## Log-linear models for `job`
+
+The original format of the `job` dataset the same data as the contingency table, but in a different format, sometimes called **long** format.
+
+A log-linear model is just a Poisson GLM, where the [response variable]{.alert} is `Count`, and `Income`
+and `Satisfaction` are [explanatory variables]{.alert}.
+
+<br />
+
+```{r, echo = TRUE}
+job <- read_csv("data/job.csv", show_col_types = FALSE)
+
+loglin_job_1 <- glm(Count ~ Income + Satisfaction, family = poisson, data = job)
+loglin_job_2 <- glm(Count ~ Income * Satisfaction, family = poisson, data = job)
+```
+
+## Comparing two models ([vevox.app](https://vevox.app/m#/160892474), 160-892-474)
+
+```{r, echo = TRUE}
+loglin_job_1 <- glm(Count ~ Income + Satisfaction, family = poisson, data = job)
+loglin_job_2 <- glm(Count ~ Income * Satisfaction, family = poisson, data = job)
+```
+
+Recall `Income` and `Satisfaction` are both factors with 4 levels.
+
+:::{.small-text .fragment}
+What is $q$, the number of parameters in `loglin_job_1`?
+
+- 5
+- 6
+- 7
+:::
+
+:::{.small-text .fragment}
+What is $p$, the number of parameters in `loglin_job_2`?
+
+- 15
+- 16
+- 17
+:::
+
+## Log-linear models for `job` (`loglin_job_1`)
+
+:::{.small-text .scrollable}
+```{r, echo = TRUE}
+summary(loglin_job_1)
+```
+:::
+
+## Log-linear models for `job` (`loglin_job_2`)
+
+:::{.small-text .scrollable}
+```{r, echo = TRUE}
+summary(loglin_job_2)
+```
+:::
+
+## Comparing two models
+
+Now we conduct a log likelihood ratio test to compare the two models.
+```{r, echo = TRUE}
+anova(loglin_job_1, loglin_job_2)
+```
+
+Here, $L_{01}$ is $12.037$, given in the deviance column.
+
+## Comparing two models ([vevox.app](https://vevox.app/m#/160892474), 160-892-474)
+
+Under $H_0$, $L_{01} \sim \chi^2_9$. 
+
+We should reject $H_0$ if $L_{01} > k$. Which of the following commands could be used to find $k$, for a test at the $5\%$ level?
+
+- `dchisq(0.05, df = 9)`
+- `dchisq(0.95, df = 9)`
+- `pchisq(0.05, df = 9)`
+- `pchisq(0.95, df = 9)`
+- `qchisq(0.05, df = 9)`
+- `qchisq(0.95, df = 9)`
+
+##  Comparing two models 
+
+```{r, echo = TRUE}
+qchisq(0.95, df = 9)
+```
+
+Since $L_{01} =  12.037 < 16.9$, we do [**not**]{.alert} reject $H_0$, and we prefer the simpler model, `loglin_job_1`.
+
+:::{.fragment}
+Later, we'll see that we can interpret `loglin_job_1` as meaning that there is no dependence of job satisfaction on income.
+:::
+
+## Recap: `lymphoma` data contingency table
+
+:::{.center-vertically}
+| Cell Type | Sex.         | Remission: No  | Remission: Yes  |
+|-----------|--------------|----------------|-----------------|
+| Diffuse   | Female       | 3              | 1               |
+| Diffuse   | Male         | 12             | 1               |
+| Nodular   | Female       | 2              | 6               |
+| Nodular   | Male         | 1              | 4               |
+:::
+
+## Recap: `lymphoma` data in long format
+
+:::{.center-vertically}
+| Cell    | Sex          | Remis  | Count |
+|---------|--------------|--------|--------|
+| Nodular | Male         | No     | 1      |
+| Nodular | Male         | Yes    | 4      |
+| Nodular | Female       | No     | 2      |
+| Nodular | Female       | Yes    | 6      |
+| Diffuse | Male         | No     | 12     |
+| Diffuse | Male         | Yes    | 1      |
+| Diffuse | Female       | No     | 3      |
+| Diffuse | Female       | Yes    | 1      |
+:::
+
+## A log-linear model for `lymphoma`
+
+A log-linear model for the contingency table is just a Poisson GLM for this data, where in this case
+the response variable is `Count`, and `Sex`, `Remis` and `Cell` are explanatory variables.
+
+The aim is to understand how the probability of remission varies by type of lymphoma and sex.
+
+:::{.fragment}
+You will consider log-linear models for this in [**LAB 09**]{.alert}. For example,
+
+```{r, echo = TRUE}
+lymphoma <- read_csv("data/lymphoma.csv", show_col_types = FALSE)
+loglin_lymphoma <- glm(Count ~ Cell * Remis * Sex, data = lymphoma, family = poisson)
+```
+:::
+
+:::{.callout-note .fragment}
+In some cases, it might seem more natural to consider a binomial model for the number of patients in remission, given the total number in each group. We will see later on that the inference assuming this binomial model would be the same as assuming the Poisson log-linear model.
+:::
+
+## Summary
+
+- We have introduced the idea of a [**contingency table**]{.alert}: a cross-classification of counts according to categorical variables.
+- A [**log-linear model**]{.alert} is a Poisson GLM with the canonical link function (the log link). We can use log-linear models to model contingency table data.
+- Sometimes, the Poisson distribution does not seem to be a natural model for the data. We will consider [**multinomial models**]{.alert} (an extension of the binomial to more than two categories), and show that we make the same conclusions about the relationships between variables with either model.
+
+# <span style="font-size: 42px; color: #131516; display: block; margin-bottom: -50px">Chapter 6: Models for Categorical Data</span> <br/> Lecture 6.2 Log-linear models
 
 ## Recap
+
+- A contingency table is  a cross-classification of counts according to categorical variables.
+- A contingency table is just a particular view of a dataset: we can rewrite the data in "long" format, which looks like the data frame we are familiar with.
+- We can model the cell counts in a contingency table data using log-linear models, which are just Poisson GLMs with the (canonical) log link function.
+
+:::{.fragment .callout-tip}
+# &nbsp;
+Let's return to an example to demonstrate these concepts.
+:::
+
+## A contingency table of the `job` dataset, with margins
+
+As before,
+
+| Income ($)     | Very Dissat. | A Little Dissat. | Moderately Sat. | Very Sat.        | **Sum** |
+|----------------|--------------|------------------|------------------|-----------------|--------|
+| <6000          | 20           | 24               | 80               | 82              | **206** |
+| 6000–15000     | 22           | 38               | 104              | 125             | **289** |
+| 15000–25000    | 13           | 28               | 81               | 113             | **235** |
+| >25000         | 7            | 18               | 54               | 92              | **171** |
+| **Sum**        | **62**       | **108**          | **319**          | **412**         | **901** |
+
+<br />
+
+The **one-way margins** represent the classification of items by a single variable; `income group` and `job satisfaction`, respectively.
+
+## Log-linear models
+
+If the table has $n$ cells, which we label $1, \cdots ,n$, then the observed cell counts $y_1, \cdots ,y_n$ are assumed to be observations of independent Poisson random variables $Y_1, \cdots ,Y_n$.
+
+:::{.fragment}
+We denote the means of these Poisson random variables by $\mu_1, \cdots, \mu_n$, and model $log(\mu_i) = \eta_i$, where $\boldsymbol{\eta}$ is the linear predictor.
+:::
+
+:::{.fragment}
+The explanatory variables in a log-linear model for contingency table data are the cross-classifying variables. As these variables are categorical, they are **factors**. As usual with factors, we can include interactions in the model as well as just main effects. 
+:::
+
+:::{.fragment}
+Such a model will describe how the expected count in each cell depends on the classifying variables, and any interactions between them. *Interpretation of these models will be discussed later on*.
+:::
+
+## `job` dataset in long format
+
+The original data structure of the `job` dataset is
+
+:::{.small-text }
+| Income        | Satisfaction            | Count |
+|---------------|--------------------------|--------|
+| <6000         | Very Dissatisfied        | 20     |
+| <6000         | A Little Dissatisfied    | 24     |
+| <6000         | Moderately Satisfied     | 80     |
+| <6000         | Very Satisfied           | 82     |
+| 6000–15000    | Very Dissatisfied        | 22     |
+| 6000–15000    | A Little Dissatisfied    | 38     |
+| 6000–15000    | Moderately Satisfied     | 104    |
+| 6000–15000    | Very Satisfied           | 125    |
+| 15000–25000   | Very Dissatisfied        | 13     |
+| 15000–25000   | A Little Dissatisfied    | 28     |
+| 15000–25000   | Moderately Satisfied     | 81     |
+| 15000–25000   | Very Satisfied           | 113    |
+| >25000        | Very Dissatisfied        | 7      |
+| >25000        | A Little Dissatisfied    | 18     |
+| >25000        | Moderately Satisfied     | 54     |
+| >25000        | Very Satisfied           | 92     |
+:::
+
+## Log-linear models for `job`
+
+The original format of the `job` dataset the same data 
+as the contingency table,
+but in a different format, sometimes called **long** format.
+
+A log-linear model is just a Poisson GLM, where
+the response variable is `Count`, and `Income`
+and `Satisfaction` are explanatory variables.
+
+```{r, echo = TRUE}
+job <- read_csv("data/job.csv", show_col_types = FALSE)
+
+job$Income <- factor(job$Income, levels = c("<6000", "6000-15000", "15000-25000", ">25000"))
+job$Satisfaction <- factor(job$Satisfaction, levels = c("Very Dissatisfied", "A Little Dissatisfied", "Moderately Satisfied", "Very Satisfied"))
+
+# Fit the models
+loglin_job_1 <- glm(Count ~ Income + Satisfaction, family = poisson, data = job)
+loglin_job_2 <- glm(Count ~ Income * Satisfaction, family = poisson, data = job)
+```
+
+## Log-linear models for `job` (`loglin_job_1`)
+
+:::{.small-text .scrollable}
+```{r, echo = TRUE}
+loglin_job_1
+```
+:::
+
+:::{.small-text .scrolling}
+```{r, echo = TRUE}
+summary(loglin_job_1)
+```
+:::
+
+## Expected cell counts ([vevox.app](https://vevox.app/m#/160892474), 160-892-474)
+
+```{r, echo = TRUE}
+coef(loglin_job_1)
+```
+
+:::{.small-text}
+The fitted values $\hat \mu_i = \exp(\mathbf{x}_i^{\top} \hat{\boldsymbol{\beta}})$ give us the expected counts in each cell of the contingency table.
+
+<br />
+
+:::{.fragment}
+Which of the following would give the expected count of people with income $<6000$ who
+were `A Little Dissatisfied` under model `loglin_job_1`?
+
+- $\exp(0.5550) = 1.70$
+- $\exp(2.6515) = 14.1$
+- $\exp(3.2065) = 24.7$
+:::
+:::
+
+## Observed and expected cell counts in contingency table format
+
+:::{.small-text}
+```{r, echo = TRUE}
+job_tab <- xtabs(Count ~ Income + Satisfaction, data = job)
+# Puts Arbitrary Margins on Multidimensional Tables or Arrays
+addmargins(job_tab)
+```
+
+:::{.fragment}
+```{r, echo = TRUE}
+fit1_tab <- xtabs(fitted(loglin_job_1) ~ Income + Satisfaction, data = job)
+# Puts Arbitrary Margins on Multidimensional Tables or Arrays
+addmargins(fit1_tab)
+```
+:::
+:::
+
+## Log-linear models for `job` (`loglin_job_2`)
+
+:::{.small-text .scrollable}
+```{r, echo = TRUE}
+summary(loglin_job_2)
+```
+:::
+
+## Expected cell counts ([vevox.app](https://vevox.app/m#/160892474), 160-892-474)
+
+```{r, echo = TRUE}
+loglin_job_1 <- glm(Count ~ Income + Satisfaction,  family = poisson, data = job)
+loglin_job_2 <- glm(Count ~ Income * Satisfaction,  family = poisson, data = job)
+```
+
+:::{.small-text}
+:::{.fragment}
+There are $24$ people with income $<6000$ who were `A Little Dissatisfied`o. The expected count in this cell under model `loglin_job_1` is $24.7$. What is the expected count in this cell under `loglin_job_2`?
+
+- less than $23.9$.
+- $24$.
+- between $24.1$ and $24.6$.
+- $24.7$.
+- more than $24.8$.
+- It is not possible to say.
+:::
+::: {.callout-tip .fragment}
+# Discussion
+
+Notice that `loglin_job_2` is the saturated model ($16$ cells and $16$ parameters), therefore, it fits the data exactly.
+
+This happens when the model includes **(I)** all main effects and **(II)** all interactions needed to uniquely estimate each cell.
+:::
+:::
+
+## Observed and expected cell counts in contingency table format
+
+:::{.small-text}
+```{r, echo = TRUE}
+job_tab <- xtabs(Count ~ Income + Satisfaction, data = job)
+# Puts Arbitrary Margins on Multidimensional Tables or Arrays
+addmargins(job_tab)
+```
+
+:::{.fragment}
+```{r, echo = TRUE}
+fit2_tab <- xtabs(fitted(loglin_job_2) ~ Income + Satisfaction, data = job)
+# Puts Arbitrary Margins on Multidimensional Tables or Arrays
+addmargins(fit2_tab)
+```
+:::
+:::
+
+## Multinomial sampling
+
+Although the assumption of Poisson distributed observations is convenient for the purposes of modelling, **it might not be a realistic assumption**, because of the way in which the data have been collected.
+
+:::{.fragment}
+Frequently, when contingency table data are obtained, the total number of observations (the [**grand total**]{.alert}, the sum of all the cell counts) is fixed in advance.
+:::
+
+:::{.fragment}
+In this case, no individual cell count can exceed the pre-specified fixed total, so the assumption of **Poisson sampling is invalid** as the sample space is bounded. Furthermore, with a fixed total, the **observations can no longer be observations of independent random variables**.
+:::
+
+## Recap: `lymphoma` data contingency table
+
+The `lymphoma` dataset gives information about 30 patients, classified by cell type of lymphoma, sex, and response to treatment. This is an example of a three-way contingency table. It is a $2\times 2\times 2$ or $2^3$ table.
+
+<br />
+
+:::{.fragment}
+| Cell Type      | Sex         | Remission: No     | Remission: Yes     |
+|----------------|-------------|-------------------|--------------------|
+| Diffuse        | Female      | 3                 | 1                  |
+| Diffuse        | Male        | 12                | 1                  |
+| Nodular        | Female      | 2                 | 6                  |
+| Nodular        | Male        | 1                 | 4                  |
+:::
+
+## Recap: `lymphoma` data contingency table
+
+For the `lymphoma` contingency table, the appropriate model to use depends on the process by which these data were collected
+
+- If the data were collected over a fixed period of time, and that in that time there happened to be 30 patients, then Poisson assumption is perfectly valid. 
+- If it had been decided at the outset to collect data on 30 patients, the [grand total]{.alert} is fixed at 30, and the Poisson assumption is not valid.
+
+:::{.fragment}
+When the grand total is fixed, a more appropriate distribution for the cell counts is the [**multinomial distribution**]{.alert}.
+:::
+
+## The multinomial distribution
+
+The [**multinomial distribution**]{.alert} is the distribution of cell counts arising when a pre-specified total of $N$ items are each independently assigned to one of $n$ cells, where the probability of being classified into cell $i$ is $p_i$, ${i=1, \cdots, n}$, so $\sum_{i=1}^n p_i=1$.
+
+The probability function for the multinomial distribution is
+\begin{align*}
+f_{\mathbf{Y}}(\mathbf{y};{\mathbf{p}})
+&= P(Y_1=y_1,\cdots ,Y_n=y_n) \cr
+&= \begin{cases} 
+N!\prod_{i=1}^n \frac{p_i^{y_i}}{y_i!} & \text{if $\sum_{i=1}^n y_i=N$} \\
+0 & \text{otherwise.}
+\end{cases}
+\end{align*}
+
+:::{.fragment}
+The binomial is the special case of the multinomial with two cells ($n=2$).
+:::
+
+
+## Summary
+
+- We have revised the idea of a [**contingency table**]{.alert}: a cross-classification of counts according to categorical variables.
+- A [**log-linear model**]{.alert} is a Poisson GLM with the canonical link function (the log link). We can use log-linear models to model contingency table data, and find expected cell counts.
+- If the total count is fixed, a [**multinomial model**]{.alert} is more natural than a Poisson one.
+- Next time, we will show that we make the *same conclusions about the relationships between variables by using a Poisson log-linear model instead of a multinomial one* (provided that we include an intercept in the Poisson model).
+
+# <span style="font-size: 42px; color: #131516; display: block; margin-bottom: -50px">Chapter 6: Models for Categorical Data</span> <br/> Lecture 6.3 Multinomial sampling
+
+## Recap
+
+- A [**log-linear model**]{.alert} is a Poisson GLM with the canonical link function (the log link). We can use log-linear models to model contingency table data, and find expected cell counts.
+- If the total count is fixed, a [**multinomial model**]{.alert} is more natural than a Poisson one.
+- How should we do [**inference**]{.alert} for a multinomial model?
+
+## Recap: the multinomial distribution
+
+The [**multinomial distribution**]{.alert} is the distribution of cell counts arising when a pre-specified total of $N$ items are each independently assigned to one of $n$ cells, where the probability of being classified into cell $i$ is $p_i$, ${i=1, \cdots, n}$, so $\sum_{i=1}^n p_i=1$.
+
+The probability function for the multinomial distribution is
+\begin{align*}
+f_{\mathbf{Y}}(\mathbf{y};{\mathbf{p}})
+&= P(Y_1=y_1,\cdots ,Y_n=y_n) \cr
+&= \begin{cases} 
+N!\prod_{i=1}^n \frac{p_i^{y_i}}{y_i!} & \text{if $\sum_{i=1}^n y_i=N$} \\
+0 & \text{otherwise.}
+\end{cases}
+\end{align*}
+
+:::{.fragment}
+The binomial is the special case of the multinomial with two cells ($n=2$).
+:::
+
+## A multinomial log-linear model
+
+When the data have been obtained by multinomial sampling, we suppose $\mathbf{Y} \sim \text{Multinomial}(N, \mathbf{p})$, where $\log\mu_i=\log(N \cdot p_i)$, ${i=1, \cdots, n}$ is modelled as as a linear function of explanatory variables, so that $\log \mu_i = \mathbf{x}_i^{\top} \boldsymbol{\beta}$.
+
+Since $\sum_{i=1}^n p_i = 1$, we have $\sum_{i=1}^n \mu_i=N$, the [grand total]{.alert}--which is fixed in advance.
+
+## Equivalence of Poisson log-linear model
+
+Suppose we model instead $Y_i \sim \text{Poisson}(\mu_i)$, where $\log \mu_i = \mathbf{x}_i^{\top} \boldsymbol{\beta}$. Suppose that we include an intercept term, e.g. $x_{i1} = 1$ for $i = 1, \cdots,n$, so
+$\log \mu_i = \beta_1 + \sum_{j=2}^p x_{ij} \beta_j$.
+
+:::{.callout-important .fragment}
+The maximum likelihood estimates for multinomial log-linear parameters are identical to those for Poisson log-linear parameters (with intercept). Furthermore, the maximised log-likelihoods for both Poisson and multinomial models take the form $\sum_{i=1}^ny_i\log\hat{\mu}_i$, where $\hat{\mu}_i = \mathbf{x}_i^{\top} \boldsymbol{\hat{\beta}}$.
+:::
+
+:::{.fragment}
+We will see a [**sketch of the proof**]{.alert} of this result (this is also in the lecture notes).
+:::
+
+## Implications of the equivalence result
+
+Recall that the maximised log-likelihoods for both Poisson and multinomial models take the form $\sum_{i=1}^ny_i\log\hat{\mu}_i$ as functions of the log-linear parameter estimates.
+
+:::{.fragment}
+So [any inferences based on maximised log-likelihoods (such as likelihood ratio tests) will be the same]{.alert}.
+:::
+
+:::{.fragment}
+Therefore, we can analyse contingency table data using Poisson log-linear models, even when the data has been obtained by multinomial sampling. All that is required is that we ensure that the Poisson model
+contains an intercept term.
+:::
+
+
+## Sampling with fixed margins
+
+Sometimes [**margins other than just the grand total may be pre-specified**].
+
+For example, consider the `lymphoma` contingency table.
+
+:::{.fragment}
+| Cell Type      | Sex         | Remission: No     | Remission: Yes     |
+|----------------|-------------|-------------------|--------------------|
+| Diffuse        | Female      | 3                 | 1                  |
+| Diffuse        | Male        | 12                | 1                  |
+| Nodular        | Female      | 2                 | 6                  |
+| Nodular        | Male        | 1                 | 4                  |
+
+It may have been decided at the outset to collect data on $18$ male patients and $12$ female patients. Alternatively, perhaps the distribution of both the `Sex` and `Cell Type` of the patients was fixed in advance.
+:::
+
+## Product multinomial sampling
+
+In cases where a margin is fixed by design, the data consist of a number of fixed total subgroups, defined by the fixed margin. [Neither Poisson nor multinomial sampling assumptions are valid]{.alert}.
+
+<div style="margin-top: -20pt;"></div>
+
+:::{.fragment}
+The appropriate distribution combines a separate, independent multinomial for each subgroup
+
+- If the `Sex` margin is fixed, then we should model the data with two independent multinomials, one for males with $N=18$ and one for females with $N=12$. Each of these multinomials has four cells, representing the cross-classification of the relevant patients by `Cell Type` and `Remission`.
+- If the `Cell Type`/`Sex` margin has been fixed, then the appropriate distribution is four independent two-cell multinomials (binomials) representing the remission classification for each of the four fixed-total patient subgroups.
+:::
+
+## The product multinomial distribution
+
+:::{.small-text}
+When the data are modelled using independent multinomials, then the joint probability function for the cell counts $Y_1, \cdots, Y_n$ is the product of multinomial probability functions, one for each fixed-total subgroup. We call this a distribution a [**product multinomial**]{.alert}.
+
+:::{.small-text}
+For example, if the `Sex` margin is fixed for `lymphoma`, then the product multinomial distribution has the form
+$$
+f_{\mathbf{Y}}(\mathbf{y};{\mathbf{p}})=
+\begin{cases}
+N_m!\prod_{i=1}^4 {{p_{mi}^{y_{mi}}}\over{y_{mi}!}}
+N_f!\prod_{i=1}^4 {{p_{fi}^{y_{fi}}}\over{y_{fi}!}} &
+\text{if $\sum_{i=1}^4 y_{mi}=N_m$ and
+$\sum_{i=1}^4 y_{fi}=N_f$} \\
+0 & \text{otherwise,}
+\end{cases}
+$$
+where 
+
+- $N_m$ and $N_f$ are the two fixed marginal totals (18 and 12, respectively)
+- $y_{m1}, \cdots, y_{m4}$  are the cell counts for males and
+  $y_{f1}, \cdots, y_{f4}$  are the corresponding cell counts for females.
+- $\sum_{i=1}^4 p_{mi}=\sum_{i=1}^4 p_{fi}=1$.
+:::
+:::
+
+## Analysis using Poisson log-linear models
+
+Using similar reasoning to the multinomial sampling case, [we can analyse contingency table data using Poisson log-linear models, even when the data has been obtained by product multinomial sampling]{.alert}.
+
+:::{.fragment}
+However, we must ensure that the Poisson model contains a term corresponding to the fixed margin
+(and all marginal terms). Then, the estimated means for the specified margin are equal to the corresponding
+fixed totals.
+:::
+
+## Example: `lymphoma` data
+
+For the `lymphoma` dataset, for inferences obtained using a Poisson model to be valid when the `Sex` margin is fixed in advance, the Poisson model must contain the `Sex` main effect (and the `intercept`).
+
+:::{.fragment}
+For inferences obtained using a Poisson model to be valid when the `Cell Type`/`Sex` margin is fixed in advance, the Poisson model must contain the `Cell Type`/`Sex` interaction, and all marginal terms
+(the `Cell Type` main effect, the `Sex` main effect, and the `intercept`).
+:::
+
+:::{.fragment}
+Therefore, when analysing product multinomial data using a Poisson log-linear model, certain terms **must** be present in any model we fit. If they are removed, the inferences would no longer be
+valid.
+:::
+
+## Interpreting log-linear models
+
+Log-linear models for contingency tables enable us to determine important properties concerning the joint distribution of the classifying variables. [The form of our preferred log linear model for a table will have implications for how the variables are associated]{.alert}.
+
+:::{.fragment}
+Each combination of the classifying variables occurs exactly once in a contingency table. Therefore, the model with the highest order interaction (between all the variables) and all marginal terms (all other interactions) is the [**saturated model**]{.alert}.
+:::
+
+:::{.fragment}
+The implication of this model is that every combination of levels of the variables has its own mean (probability) and that there are no relationships between these means (no structure). [The variables are highly dependent]{.alert}.
+:::
+
+## Example: return to the `job` dataset
+
+In the `job` dataset, we might assume that the number of people in each income group is fixed. We are interested in the probability of having each level of satisfaction at each income group, and seeing whether there is any evidence in this data that job satisfaction depends on income.
+
+<br />
+
+<div style="margin-top: -30pt;"></div>
+
+| Income ($)     | Very Dissat. | A Little Dissat. | Moderately Sat.  | Very Sat. | **Sum** |
+|----------------|--------------|------------------|------------------|-----------|---------|
+| <6000          | 20           | 24               | 80               | 82        | **206** |
+| 6000–15000     | 22           | 38               | 104              | 125       | **289** |
+| 15000–25000    | 13           | 28               | 81               | 113       | **235** |
+| >25000         | 7            | 18               | 54               | 92        | **171** |
+| **Sum**        | **62**       | **108**          | **319**          | **412**   | **901** |
+
+
+## Fitting log-linear models
+
+This is an example of product multinomial sampling, with the `Income` margin fixed: provided that we include an intercept and `Income` in the model,  we can use Poisson log-linear models to analyse the contingency table (as we did before).
+
+<br />
+
+<div style="margin-top: -30pt;"></div>
+
+```{r, echo = TRUE}
+job <- read_csv("data/job.csv", show_col_types = FALSE)
+
+job$Income <- factor(job$Income, levels = c("<6000", "6000-15000", "15000-25000", ">25000"))
+job$Satisfaction <- factor(job$Satisfaction, levels = c("Very Dissatisfied", "A Little Dissatisfied", "Moderately Satisfied", "Very Satisfied"))
+
+loglin_job_1 <- glm(Count ~ Income + Satisfaction, family = poisson, data = job)
+loglin_job_2 <- glm(Count ~ Income * Satisfaction, family = poisson, data = job)
+```
+
+
+## Comparing models
+
+As before, we can compare these models with a log-likelihood
+ratio test
+```{r, echo = TRUE}
+anova(loglin_job_1, loglin_job_2, test = "LRT")
+```
+
+:::{.fragment}
+On the basis of this, we prefer `loglin_job_1`,  which does not have an interaction between `Income`
+and `Satisfaction`.
+:::
+
+## Expected cell counts for `loglin_job_1`
+
+The fitted values $\hat{\mu}_i = \exp(\mathbf{x}_i^{\top} \hat{\boldsymbol{\beta}})$ give us the expected counts in each cell of the contingency table.
+
+<br />
+
+<div style="margin-top: -30pt;"></div>
+
+```{r, echo = TRUE}
+fit1_tab <- xtabs(fitted(loglin_job_1) ~ Income + Satisfaction, data = job)
+# Puts Arbitrary Margins on Multidimensional Tables or Arrays
+addmargins(fit1_tab)
+```
+
+## Fitted conditional prob. ([vevox.app](https://vevox.app/m#/160892474), 160-892-474)
+
+Under `loglin_job_1`, the expected cell counts for `Income` $< 6000$ are
+
+```{r, echo = TRUE}
+fit1_tab[1,]
+```
+
+
+:::{.fragment}
+Under this model, what is the estimate of the probability
+$$\mathbb{P}(\text{Satisfaction = Very Satisfied} | \text{Income < 6000})?$$
+
+- $94.2 / 100 = 0.94$
+- $94.2 / (14.2 + 24.6 + 72.9) = 0.84$
+- $94.2 / (14.2 + 24.6 + 72.9 + 94.2) = 0.46$
+- $94.2 / 901 = 0.10$
+:::
+
+## Fitted conditional prob. ([vevox.app](https://vevox.app/m#/160892474), 160-892-474)
+
+Under `loglin_job_1`, the expected cell counts for `Income` $6000\text{-}15000$ are
+
+```{r, echo = TRUE}
+fit1_tab[2,]
+```
+
+:::{.fragment}
+Under this model, what is the estimate of the probability
+$$\mathbb{P}(\text{Satisfaction = Very Satisfied} | \text{Income = 6000-15000})?$$
+
+- $132.2 / (19.9 + 34.6 + 102.3) = 0.84$
+- $132.2 / (19.9 + 34.6 + 102.3 + 132.2) = 0.46$
+- $132.2 / 901 = 0.15$
+:::
+
+
+## Fitted conditional prob. for `loglin_job_1`
+
+The fitted conditional probability for each satisfaction level are
+```{r, echo = TRUE}
+fit1_tab[1,] / sum(fit1_tab[1,])
+```
+for `Income`  $< 6000$, and
+```{r, echo = TRUE}
+fit1_tab[2,] / sum(fit1_tab[2,])
+```
+for `Income` $6000\text{-}15000$.
+
+:::{.fragment}
+In fact, we get the **same** fitted conditional probabilities for each income. Under this model, `Income` and `Satisfaction` are [**independent**]{.alert}!
+:::
+
+## Summary
+
+- We have considered [**multinomial**]{.alert} and [**product multinomial models**]{.alert}, appropriate when the grand total or some margin is fixed. We can still analyse such contingency tables using a Poisson log-linear models, [provided we include certain terms (corresponding to the fixed margin) in the model]{.alert}.
+- We have seen an example of a log-linear model for a two-way table, with no interaction between classifying variables. For this model, we found that the classifying variables are independent of one another.
+
+# <span style="font-size: 42px; color: #131516; display: block; margin-bottom: -50px">Chapter 6: Models for Categorical Data</span> <br/> Lecture 6.4 Interpretation for two-way tables
+
+## Recap
+
+Last time we considered the implications of a log-linear model
+with no interaction term for the job dataset.
+
+```{r, echo = TRUE}
+job <- read_csv("data/job.csv", show_col_types = FALSE)
+
+job$Income <- factor(job$Income, levels = c("<6000", "6000-15000", "15000-25000", ">25000"))
+job$Satisfaction <- factor(job$Satisfaction, levels = c("Very Dissatisfied", "A Little Dissatisfied", "Moderately Satisfied", "Very Satisfied"))
+
+loglin_job_1 <- glm(Count ~ Income + Satisfaction, family = poisson, data = job)
+```
+
+We found that under this model, the fitted conditional probabilities for having each level of job satisfaction were the same for each income group. 
+
+:::{.fragment}
+For this model for a two-way table, with no interaction (no `Income:Satisfaction` term), we find the the cross-classifying factors (`Income` and `Satisfaction`) are independent. Now, [we will show that this is true in general, and then go on to look at multi-way tables]{.alert}.
+:::
+
+## Interpretation for two-way tables
+
+We consider a two-way $r \times c$ table where the two classifying variables $R$ and $C$ have $r$ and $c$ levels, respectively.
+
+:::{.fragment}
+The saturated model $R*C$ implies that the two variables are associated. If we remove the RC interaction, we have the model $R+C$,
+$$
+\log\mu_i=\alpha+\beta_R(r_i)+\beta_C(c_i),\qquad {i=1, \cdots, n}
+$$
+where $n=rc$ is the total number of cells in the table.
+:::
+
+## Cell probabilities in main-effects model
+
+Because of the equivalence of Poisson and multinomial sampling, we can think of each cell mean $\mu_i$ as equal to $N \cdot p_i$ where $N$ is the total number of observations in the table, and $p_i$ a cell probability.
+
+:::{.fragment}
+As each combination of levels of $R$ and $C$ is represented in exactly one cell, it is also convenient to replace the cell label $i$ by the pair of labels $j$ and $k$ representing the corresponding levels
+of $R$ and $C$ respectively. Hence
+$$
+\log \left(p_{jk}\right) = \alpha + \beta_R(j) + \beta_C(k) - \log (N),
+$$
+for $j = 1, \cdots, r$ and $k = 1, \cdots, c$.
+:::
+
+## Joint row and column probabilities
+
+We have
+$$
+\log \left(p_{jk}\right)=\alpha+\beta_R(j)+\beta_C(k)-\log(N),
+$$
+and
+$$
+\mathbb{P}(R=j,C=k)=\exp[\alpha+\beta_R(j)+\beta_C(k)-\log(N)],
+$$
+for $j=1, \cdots, r$ and $k=1, \cdots, c$.
+
+:::{.fragment}
+So,
+
+<div style="margin-top: -20pt;"></div>
+
+:::{.small-text}
+\begin{align*}
+1&=\sum_{j=1}^r\sum_{k=1}^c\exp[\alpha+\beta_R(j)+\beta_C(k)-\log(N)]\cr
+&={1\over N}\exp[\alpha]\sum_{j=1}^r\exp[\beta_R(j)]\sum_{k=1}^c\exp[\beta_C(k)].
+\end{align*}
+:::
+:::
+
+## Marginal row and column probabilities
+
+:::{.small-text}
+Since 
+$$
+\mathbb{P}(R=j,C=k)=\exp[\alpha+\beta_R(j)+\beta_C(k)-\log (N)],
+$$
+
+:::{.fragment}
+we have
+
+\begin{align*}
+\mathbb{P}(R=j)&=\sum_{k=1}^c\exp[\alpha+\beta_R(j)+\beta_C(k)-\log(N)]\cr
+&={1\over N}\exp[\alpha]\exp[\beta_R(j)]\sum_{k=1}^c\exp[\beta_C(k)],
+\quad j=1,\cdots,r,
+\end{align*}
+:::
+
+:::{.fragment}
+and
+
+\begin{align*}
+\mathbb{P}(C=k)&=\sum_{j=1}^r\exp[\alpha+\beta_R(j)+\beta_C(k)-\log(N)]\cr
+&={1\over N}\exp[\alpha]\exp[\beta_C(k)]\sum_{j=1}^r\exp[\beta_R(j)],
+\quad k=1,\cdots,c.
+\end{align*}
+:::
+:::
+
+## Independence of cross-classifying variables
+
+:::{.small-text}
+Therefore,
+\begin{align*}
+\mathbb{P}(R=j)\mathbb{P}(C=k) &=
+{1\over N}\exp[\alpha]\exp[\beta_R(j)]\sum_{k=1}^c\exp[\beta_C(k)] \times \\
+&\phantom{=|\;}{1\over N}\exp[\alpha]\exp[\beta_C(k)]\sum_{j=1}^r\exp[\beta_R(j)] \\
+&={1\over N}\exp[\alpha]\exp[\beta_C(k)]\exp[\beta_R(j)] \times \\
+&\phantom{=|\;}{1\over N}\exp[\alpha]\sum_{j=1}^r\exp[\beta_R(j)] \sum_{k=1}^c\exp[\beta_C(k)] \\
+&={1\over N}\exp[\alpha]\exp[\beta_C(k)]\exp[\beta_R(j)]\times 1 \\
+&=\mathbb{P}(R=j,C=k)
+\end{align*}
+for $j = 1, \cdots, r$ and $k = 1, \cdots, c$.
+:::
+
+## Independence of cross-classifying variables
+
+Absence of the interaction $R*C$ in a log-linear model implies that $R$ and $C$ are independent variables.
+
+[Absence of main effects is generally less interesting]{.alert}, and main effects are typically not removed from a log-linear model for a contingency table.
+
+## Interpretation for multi-way tables
+
+In multi-way tables, absence of a two-factor interaction does not necessarily mean that the two variables are independent.
+
+:::{.fragment}
+For example, consider the `lymphoma` dataset, with 3 binary classifying variables `Sex` ($S$), `Cell type` ($C$) and `Remission` ($R$).
+
+After comparing the fit of several possible models, we find that a reasonable log-linear model for these data is $R * C + C * S$.
+
+Hence the interaction between `Remission` and `Sex` is absent.
+
+<div style="margin-top: 20pt;"></div>
+
+```{r, echo = TRUE}
+lymphoma <- read_csv("data/lymphoma.csv", show_col_types = FALSE)
+mod <- glm(Count ~ Remis * Cell + Cell * Sex, data = lymphoma, family = poisson)
+```
+:::
+
+## Expected cell counts ([vevox.app](https://vevox.app/m#/160892474), 160-892-474)
+
+```{r, echo = TRUE}
+coef(mod)
+```
+
+Which of the following would give the expected count of [*female patients*]{.alert} with [*nodular cell type who were in remission*]{.alert} under model `mod`?
+
+- $\exp(1.261) = 3.53$
+- $\exp(1.261 -2.015 -0.648) = 0.25$
+- $\exp(1.261 -2.015 -0.648 + 3.219) = 6.15$
+- $\exp(1.261 - 2.015 - 0.648 + 1.179 + 3.219 - 1.649) = 3.85$
+
+## Expected cell counts
+
+```{r, echo = TRUE}
+xtabs(fitted(mod) ~ Cell + Sex + Remis, data = lymphoma)
+```
+
+## Fitted cell probabilities
+
+```{r, echo = TRUE}
+N <- sum(lymphoma$Count)
+p <- fitted(mod) / N
+
+xtabs(p ~ Cell + Sex + Remis, data = lymphoma)
+```
+
+## Marginal cell probabilities
+
+The estimated probabilities for the two-way `Sex`/`Remission` margin are
+
+```{r, echo = TRUE}
+lymphoma_p_table <- xtabs(fitted(mod) ~ Cell + Sex + Remis, data = lymphoma)
+lymphoma_p_margins <- margin.table(lymphoma_p_table, margin = c(2, 3))
+lymphoma_p_margins <- addmargins(lymphoma_p_margins)
+```
+
+<br />
+
+<div style="margin-top: -40pt;"></div>
+
+| Sex    | Remission: No | Remission: Yes | **Sum** |
+|--------|----------------|-----------------|--------|
+| Female | 0.1792         | 0.2208          | **0.4** |
+| Male   | 0.4208         | 0.1792          | **0.6** |
+| **Sum** | **0.6**        | **0.4**          | **1.0** |
+
+<div style="margin-top: 20pt;"></div>
+
+:::{.fragment}
+The estimated conditional probability of remission is $0.2208/ 0.4 = 0.55$ for female patients, and $0.1792 / 0.6 = 0.30$ for male patients.
+
+So, [remission ($R$) and sex ($S$) are **not** independent]{.alert}.
+:::
+
+## Conditional independence
+
+What the model $R*C+C*S$ implies is that $R$ is independent of $S$ **conditional on** $C$, that is
+$$
+\mathbb{P}(R,S|C)=\mathbb{P}(R|C)\mathbb{P}(S|C).
+$$
+
+:::{.fragment}
+Another way of expressing this is
+$$
+\mathbb{P}(R|S,C)=\mathbb{P}(R|C),
+$$
+that is, the probability of each level of $R$ given a particular combination of $S$ and $C$, does not
+depend on which level $S$ takes. 
+
+Equivalently, we can write $\mathbb{P}(S|R,C)=\mathbb{P}(S|C)$.
+:::
+
+## Conditional probs. and conditional independence
+
+This can be observed by calculating the estimated conditional probabilities of remission for the `lymphoma` dataset.
+
+
+| Cell Type | Sex    | Remission: No | Remission: Yes | $\hat{\mathbb{P}}(R \mid S, C)$ |
+|-----------|--------|----------------|-----------------|------------------------|
+| Diffuse   | Female | 0.1176         | 0.0157          | 0.12                   |
+| Diffuse   | Male   | 0.3824         | 0.0510          | 0.12                   |
+| Nodular   | Female | 0.0615         | 0.2051          | 0.77                   |
+| Nodular   | Male   | 0.0385         | 0.1282          | 0.77                   |
+
+:::{.fragment}
+The probability of remission given `Cell type` and `Sex` depend only on a patient's `Cell type`, and not on their `Sex`.
+
+So, $\mathbb{P}(R|S, C) = \mathbb{P}(R|C)$, and [$R$ is independent of $S$, given $C$]{.alert}.
+:::
+
+## Interpretation for `lymphoma` example
+
+Although $R$ and $S$ are conditionally independent given $C$, they are [**not** marginally independent]{.alert}. Male patients have a much lower probability of remission.
+
+:::{.fragment}
+Observing the estimated values it is clear that patients with nodular cell type have a greater probability of remission, and furthermore, that female patients are more likely to have this cell type than males.
+Thus, women are more likely to be in remission than men.
+:::
+
+## Summary
+
+- In two-way tables, if there is [no interaction between the two cross classifying variables]{.alert}, then [those two variable are independent]{.alert}.
+- In three-way tables, we have seen an [example]{.alert} with no interaction between a pair of variables, in which those variables were [conditionally independent given the remaining variable]{.alert}. 
+- Next, we will see a general result on conditional independence in multiway tables.
+
+# <span style="font-size: 42px; color: #131516; display: block; margin-bottom: -50px">Chapter 6: Models for Categorical Data</span> <br/> Lecture 6.5 Interpretation for multiway tables
+
+## Recap
+
+- In two-way tables, if there is [no interaction between the two cross classifying variables]{.alert}, then [those two variable are independent]{.alert}.
+- In three-way tables, we have seen an [example]{.alert} with no interaction between a pair of variables ($R$ and $S$), in which those variables were [conditionally independent given the remaining variable]{.alert} ($C$). 
+
+:::{.fragment}
+Let's look at a general result on conditional independence in multiway tables.
+:::
+
+## General result on conditional independence
+  
+In general, suppose we have an $r$-way contingency table with classifying variables $X_1, \cdots ,X_r$.
+
+A log linear model which does not contain the $X_1 * X_2$ interaction implies that $X_1$ and $X_2$ are [**conditionally independent**]{.alert} given $X_3, \cdots, X_r$, that is
+$$
+\mathbb{P}(X_1,X_2|X_3,\cdots ,X_r)=\mathbb{P}(X_1|X_3,\cdots ,X_r)\mathbb{P}(X_2|X_3,\cdots ,X_r).
+$$
+
+<br />
+
+<div style="margin-top: -20pt;"></div>
+
+:::{.fragment}
+*The proof is similar to the two-way case; therefore, we will **not** present it here*.
+:::
+
+## Implications for three-way tables
+
+Suppose the factors for a three-way tables are $X_1$, $X_2$ and $X_3$. We can list all models and the implications for the conditional independence structure
+
+1. [**Model 1**]{.alert} containing the terms $X_1, X_2, X_3$. All factors are mutually independent.
+1. [**Model 2**]{.alert} containing the terms $X_1*X_2, X_3$. The factor $X_3$ is jointly independent of $X_1$ and $X_2$.
+1. [**Model 3**]{.alert} containing the terms $X_1*X_2, X_2*X_3$. The factors $X_1$ and $X_3$ are conditionally independent given $X_2$.
+1. [**Model 4**]{.alert} containing the terms $X_1*X_2, X_2*X_3, X_1*X_3$. There is no conditional independence structure. This is the model without the highest order interaction term.
+1. [**Model 5**]{.alert} containing  $X_1*X_2*X_3$. This is the saturated model. No more simplification of dependence structure is possible.
+
+## Interpreting four-way table ([vevox.app](https://vevox.app/m#/160892474), 160-892-474)
+
+Suppose that we have a four-way table, cross-clasitified by variables $A$, $B$, $C$, and $D$.
+
+<div style="margin-top: -15pt;"></div>
+
+Suppose we fit the model
+```{r, echo = TRUE, eval = FALSE}
+mod <- glm(Count ~ A + A*B + B*C + C*D, family = "Poisson")
+```
+
+Under the model `mod`, which of the following statements are true?
+Select all that apply.
+
+- $A$ is independent of $B$.
+- $A$ is conditionally independent of $B$ given $C$ and $D$.
+- $A$ is conditionally independent of $D$ given $B$ and $C$.
+- $B$ is conditionally independent of $C$ given $A$ and $D$.
+- $B$ is conditionally independent of $D$ given $A$ and $C$.
+
+
+## Simpson's paradox
+
+In 1972-74, a survey of women was carried out in an area of Newcastle. A follow-up survey was carried out 20 years later.
+
+A summary of the responses is
+
+
+| Smoker | Dead | Alive | $\hat{\mathbb{P}}(\text{Dead} \mid \text{Smoker})$ |
+|--------|------|--------|------------------------------------------|
+| Yes    | 139  | 443    | 0.24         |
+| No     | 230  | 502    | 0.31         |
+
+
+Looking at this table, it appears that the non-smokers had a greater probability of dying: [**can that be right?**]{.alert}
+
+## Simpson's paradox explained
+
+There is an important extra variable to be considered, related to both smoking habit and mortality--[**age**]{.alert} (at the time of the initial survey).
+
+:::{.fragment}
+When we consider this variable, we get
+
+:::{.small-text}
+
+| Age     | Smoker | Dead | Alive | $\hat{\mathbb{P}}(\text{Dead} \mid \text{Age}, \text{Smoker})$ |
+|---------|--------|------|--------|-----------------------------------------------------|
+| 18–34   | Yes    | 5    | 174    | 0.03       |
+| 18–34   | No     | 6    | 213    | 0.03       |
+| 35–44   | Yes    | 14   | 95     | 0.13       |
+| 35–44   | No     | 7    | 114    | 0.06       |
+| 45–54   | Yes    | 27   | 103    | 0.21       |
+| 45–54   | No     | 12   | 66     | 0.15       |
+| 55–64   | Yes    | 51   | 64     | 0.44       |
+| 55–64   | No     | 40   | 81     | 0.33       |
+| 65–74   | Yes    | 29   | 7      | 0.81       |
+| 65–74   | No     | 101  | 28     | 0.78       |
+| 75–     | Yes    | 13   | 0      | 1          |
+| 75–     | No     | 64   | 0      | 1          |
+:::
+:::
+
+## Simpson's paradox explained
+
+[Conditional on every age at outset]{.alert}, it is now the [smokers who have a higher probability of dying]{.alert}.
+
+:::{.fragment}
+The marginal association is reversed in the table conditional on age, because mortality and smoking are associated with age. There are proportionally many fewer smokers in the older age-groups (where the probability of death is greater).
+:::
+
+:::{.fragment}
+When making inferences about associations between variables, **it is important that all other variables which are relevant are considered**. [**Marginal inferences may lead to misleading conclusions**]{.alert}.
+:::
+
+## Summary
+
+- We have seen how to interpret log-linear models in terms of (conditional) independence between variables.
+- We have seen through Simpson’s paradox how marginal associations can mask or reverse true conditional relationships.
+
+<div style="margin-top: 80pt;"></div>
+
+:::{.callout-tip .centering .fragment}
+# Mission Accomplished
+[**This completes the lecture material!**]{.alert}
+:::

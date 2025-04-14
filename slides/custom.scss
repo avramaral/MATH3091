@@ -341,4 +341,8 @@ $selection-bg: #26351c !default;
   text-align: center;
 }
 
+.scrolling {
+  max-height: 350px;
+  overflow-y: auto;
+}
 

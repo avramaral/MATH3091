@@ -82,28 +82,15 @@ Does it look like a linear model might be appropriate here?
 ## Linear model quiz 03 ([vevox.app](https://vevox.app/m#/160892474), 160-892-474)
 
 ```{r, echo = FALSE, fig.width = 5, fig.height = 4, fig.align = "center"}
-n <- 200
-x <- rbinom(n, 3, 0.5)
-mu <- 0.5 + 2 * x 
-y <- rnorm(n, mu, sd = 1.5)
-ggplot(data.frame(x = x, y = y)) + geom_point(aes(x = x, y = y)) + labs(x = "Variable 1", y = "Variable 2") + theme_bw() + theme(text = element_text(size = 16, family = "LM Roman 10")) 
-```
-
-Does it look like a linear model might be appropriate here?
-
-
-## Linear model quiz 04 ([vevox.app](https://vevox.app/m#/160892474), 160-892-474)
-
-```{r, echo = FALSE, fig.width = 5, fig.height = 4, fig.align = "center"}
-n <- 200
+n <- 100
 x <- rnorm(n)
-mu <- 1 + 0.5 * x 
-y <- rpois(n, lambda = exp(mu))
-ggplot(data.frame(x = x, y = y)) + geom_point(aes(x = x, y = y)) + labs(x = "Variable 1", y = "Variable 2") + theme_bw() + theme(text = element_text(size = 16, family = "LM Roman 10")) 
+lambda <- 1 + 0.3 * x 
+y <- rpois(n, lambda = exp(lambda))
+# Flipped
+ggplot(data.frame(x = x, y = y)) + geom_point(aes(x = x, y = y)) + labs(x = "Variable 1", y = "Variable 2") + scale_y_continuous(limits = c(0, 8), breaks = seq(0, 8, 1)) + theme_bw() + theme(text = element_text(size = 16, family = "LM Roman 10")) 
 ```
 
 Does it look like a linear model might be appropriate here?
-
 
 ## Introduction
 

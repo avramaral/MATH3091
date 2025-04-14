@@ -11,7 +11,6 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="André Victor Ribeiro Amaral">
-  <meta name="dcterms.date" content="2025-06-03">
   <title>Statistical Modelling II (MATH3091)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -30,6 +29,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="chap_6_files/libs/revealjs/dist/theme/quarto.css">
   <link href="chap_6_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -344,7 +408,7 @@
     </div>
 </div>
 
-  <p class="date">06/03/2025</p>
+  <p class="date">14/04/2025</p>
 </section>
 <section id="preface" class="slide level2">
 <h2>Preface</h2>
@@ -441,12 +505,2213 @@
 </div>
 </section>
 <section>
-<section id="chapter-5-generalised-linear-models-lecture-6.1-contingency-tables" class="title-slide slide level1 center">
-<h1><span style="font-size: 42px; color: #131516; display: block; margin-bottom: -50px">Chapter 5: Generalised Linear Models</span> <br> Lecture 6.1: Contingency tables</h1>
+<section id="chapter-6-models-for-categorical-data-lecture-6.1-contingency-tables" class="title-slide slide level1 center">
+<h1><span style="font-size: 42px; color: #131516; display: block; margin-bottom: -50px">Chapter 6: Models for Categorical Data</span> <br> Lecture 6.1: Contingency tables</h1>
+
+</section>
+<section id="introduction" class="slide level2">
+<h2>Introduction</h2>
+<p>A particularly important application of generalised linear models is the analysis of <span class="alert"><strong>categorical data</strong></span>.</p>
+<div class="fragment">
+<p>Here, the data are observations of one or more categorical variables on each of a number of units (often individuals). Therefore, each of the units are <strong>cross-classified</strong> by the categorical variables.</p>
+</div>
+<div class="fragment">
+<p>For example, the <code>job</code> dataset gives the job satisfaction and income band of 901 individuals from the 1984 General Social Survey.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 18%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Income ($)</th>
+<th>Very Dissat.</th>
+<th>A Little Dissat.</th>
+<th>Moderately Sat.</th>
+<th>Very Sat.</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>&lt;6000</td>
+<td>20</td>
+<td>24</td>
+<td>80</td>
+<td>82</td>
+</tr>
+<tr class="even">
+<td>6000–15000</td>
+<td>22</td>
+<td>38</td>
+<td>104</td>
+<td>125</td>
+</tr>
+<tr class="odd">
+<td>15000–25000</td>
+<td>13</td>
+<td>28</td>
+<td>81</td>
+<td>113</td>
+</tr>
+<tr class="even">
+<td>&gt;25000</td>
+<td>7</td>
+<td>18</td>
+<td>54</td>
+<td>92</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="contingency-tables" class="slide level2">
+<h2>Contingency tables</h2>
+<p>A cross-classification table like this is called a <span class="alert"><strong>contingency table</strong></span>. This is a <strong>two-way table</strong>, as there are two classifying variables.</p>
+<div class="fragment">
+<p>It might also be describe as a <span class="math inline">\(4 \times 4\)</span> contingency table (as each of the classifying variables takes one of four possible levels).</p>
+</div>
+<div class="fragment">
+<p>Each position in a contingency table is called a <strong>cell</strong> and the number of individuals in a particular cell is the <strong>cell count</strong>.</p>
+</div>
+<div class="fragment">
+<p>Partial classifications derived from the table are called <strong>margins</strong>. For a two-way table these are often displayed in the margins of the table.</p>
+</div>
+<div class="fragment">
+<p>Our aim in Chapter 6 is to model the cell counts of a contingency table and say something about the relationship between the cross-classifying variables. E.g., <span class="alert">is there a relationship between income and job satisfaction?</span></p>
+</div>
+</section>
+<section id="a-contingency-table-of-the-job-dataset-with-margins" class="slide level2">
+<h2>A contingency table of the <code>job</code> dataset, with margins</h2>
+<p>As before,</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 16%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 12%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Income ($)</th>
+<th>Very Dissat.</th>
+<th>A Little Dissat.</th>
+<th>Moderately Sat.</th>
+<th>Very Sat.</th>
+<th><strong>Sum</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>&lt;6000</td>
+<td>20</td>
+<td>24</td>
+<td>80</td>
+<td>82</td>
+<td><strong>206</strong></td>
+</tr>
+<tr class="even">
+<td>6000–15000</td>
+<td>22</td>
+<td>38</td>
+<td>104</td>
+<td>125</td>
+<td><strong>289</strong></td>
+</tr>
+<tr class="odd">
+<td>15000–25000</td>
+<td>13</td>
+<td>28</td>
+<td>81</td>
+<td>113</td>
+<td><strong>235</strong></td>
+</tr>
+<tr class="even">
+<td>&gt;25000</td>
+<td>7</td>
+<td>18</td>
+<td>54</td>
+<td>92</td>
+<td><strong>171</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Sum</strong></td>
+<td><strong>62</strong></td>
+<td><strong>108</strong></td>
+<td><strong>319</strong></td>
+<td><strong>412</strong></td>
+<td><strong>901</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>We have added <strong>one-way margins</strong>, which represent the classification of items by a single variable; <code>income group</code> and <code>job satisfaction</code>, respectively.</p>
+</div>
+</section>
+<section id="a-three-way-contingency-table" class="slide level2">
+<h2>A three-way contingency table</h2>
+<p>The <code>lymphoma</code> dataset gives information about 30 patients, classified by cell type of lymphoma, sex, and response to treatment. This is an example of a three-way contingency table. It is a <span class="math inline">\(2\times 2\times 2\)</span> or <span class="math inline">\(2^3\)</span> table.</p>
+<p><br></p>
+<div class="fragment">
+<table class="caption-top">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 19%">
+<col style="width: 27%">
+<col style="width: 29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Cell Type</th>
+<th>Sex</th>
+<th>Remission: No</th>
+<th>Remission: Yes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Diffuse</td>
+<td>Female</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Diffuse</td>
+<td>Male</td>
+<td>12</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Nodular</td>
+<td>Female</td>
+<td>2</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>Nodular</td>
+<td>Male</td>
+<td>1</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="higher-order-margins" class="slide level2">
+<h2>Higher-order margins</h2>
+<p>For <strong>multiway</strong> tables, higher order margins may be calculated. For example, for <code>lymphoma</code>, the two-way <code>Cell type</code>/<code>Sex</code> margin is</p>
+<p><br></p>
+<div class="fragment">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Cell Type</th>
+<th>Female</th>
+<th>Male</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Diffuse</td>
+<td>4</td>
+<td>13</td>
+</tr>
+<tr class="even">
+<td>Nodular</td>
+<td>8</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="modelling-contingency-table-data" class="slide level2">
+<h2>Modelling contingency table data</h2>
+<p>We can model contingency table data using <span class="alert">generalised linear models</span>.</p>
+<div class="fragment">
+<p>To do this, we assume that the cell counts are observations of <span class="alert">independent Poisson random variables</span>.</p>
+</div>
+<div class="fragment">
+<p>This is intuitively sensible as the cell counts are non-negative integers (the sample space for the Poisson distribution).</p>
+</div>
+<div class="fragment">
+<p>Therefore, if the table has <span class="math inline">\(n\)</span> cells, which we label <span class="math inline">\(1, \cdots, n\)</span>, then the observed cell counts <span class="math inline">\(y_1, \cdots, y_n\)</span> are assumed to be observations of independent Poisson random variables <span class="math inline">\(Y_1, \cdots, Y_n\)</span>.</p>
+</div>
+<div class="fragment">
+<p>We denote the means of these Poisson random variables by <span class="math inline">\(\mu_1, \cdots , \mu_n\)</span>.</p>
+</div>
+</section>
+<section id="log-linear-models" class="slide level2">
+<h2>Log-linear models</h2>
+<p>The canonical link function for the Poisson distribution is the <span class="alert">log function</span>, and we assume this link function throughout. A generalised linear model for Poisson data using the log link function is called a <span class="alert"><strong>log-linear model</strong></span>.</p>
+<div class="fragment">
+<p>The explanatory variables in a log-linear model for contingency table data are the cross-classifying variables.</p>
+</div>
+<div class="fragment">
+<p>As these variables are categorical, they are <strong>factors</strong>. As usual with factors, we can include interactions in the model as well as just main effects.</p>
+</div>
+<div class="fragment">
+<p>Such a model will describe how the expected count in each cell depends on the classifying variables, and any interactions between them. <em>Interpretation of these models will be discussed later on</em>.</p>
+</div>
+</section>
+<section id="job-dataset-in-long-format" class="slide level2">
+<h2><code>job</code> dataset in long format</h2>
+<p>The original data structure of the <code>job</code> dataset is</p>
+<div class="small-text">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Income</th>
+<th>Satisfaction</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>&lt;6000</td>
+<td>Very Dissatisfied</td>
+<td>20</td>
+</tr>
+<tr class="even">
+<td>&lt;6000</td>
+<td>A Little Dissatisfied</td>
+<td>24</td>
+</tr>
+<tr class="odd">
+<td>&lt;6000</td>
+<td>Moderately Satisfied</td>
+<td>80</td>
+</tr>
+<tr class="even">
+<td>&lt;6000</td>
+<td>Very Satisfied</td>
+<td>82</td>
+</tr>
+<tr class="odd">
+<td>6000–15000</td>
+<td>Very Dissatisfied</td>
+<td>22</td>
+</tr>
+<tr class="even">
+<td>6000–15000</td>
+<td>A Little Dissatisfied</td>
+<td>38</td>
+</tr>
+<tr class="odd">
+<td>6000–15000</td>
+<td>Moderately Satisfied</td>
+<td>104</td>
+</tr>
+<tr class="even">
+<td>6000–15000</td>
+<td>Very Satisfied</td>
+<td>125</td>
+</tr>
+<tr class="odd">
+<td>15000–25000</td>
+<td>Very Dissatisfied</td>
+<td>13</td>
+</tr>
+<tr class="even">
+<td>15000–25000</td>
+<td>A Little Dissatisfied</td>
+<td>28</td>
+</tr>
+<tr class="odd">
+<td>15000–25000</td>
+<td>Moderately Satisfied</td>
+<td>81</td>
+</tr>
+<tr class="even">
+<td>15000–25000</td>
+<td>Very Satisfied</td>
+<td>113</td>
+</tr>
+<tr class="odd">
+<td>&gt;25000</td>
+<td>Very Dissatisfied</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td>&gt;25000</td>
+<td>A Little Dissatisfied</td>
+<td>18</td>
+</tr>
+<tr class="odd">
+<td>&gt;25000</td>
+<td>Moderately Satisfied</td>
+<td>54</td>
+</tr>
+<tr class="even">
+<td>&gt;25000</td>
+<td>Very Satisfied</td>
+<td>92</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="log-linear-models-for-job" class="slide level2">
+<h2>Log-linear models for <code>job</code></h2>
+<p>The original format of the <code>job</code> dataset the same data as the contingency table, but in a different format, sometimes called <strong>long</strong> format.</p>
+<p>A log-linear model is just a Poisson GLM, where the <span class="alert">response variable</span> is <code>Count</code>, and <code>Income</code> and <code>Satisfaction</code> are <span class="alert">explanatory variables</span>.</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>job <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/job.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-2"><a href=""></a></span>
+<span id="cb1-3"><a href=""></a>loglin_job_1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> Income <span class="sc">+</span> Satisfaction, <span class="at">family =</span> poisson, <span class="at">data =</span> job)</span>
+<span id="cb1-4"><a href=""></a>loglin_job_2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> Income <span class="sc">*</span> Satisfaction, <span class="at">family =</span> poisson, <span class="at">data =</span> job)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="comparing-two-models-vevox.app-160-892-474" class="slide level2">
+<h2>Comparing two models (<a href="https://vevox.app/m#/160892474">vevox.app</a>, 160-892-474)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>loglin_job_1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> Income <span class="sc">+</span> Satisfaction, <span class="at">family =</span> poisson, <span class="at">data =</span> job)</span>
+<span id="cb2-2"><a href=""></a>loglin_job_2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> Income <span class="sc">*</span> Satisfaction, <span class="at">family =</span> poisson, <span class="at">data =</span> job)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Recall <code>Income</code> and <code>Satisfaction</code> are both factors with 4 levels.</p>
+<div class="small-text fragment">
+<p>What is <span class="math inline">\(q\)</span>, the number of parameters in <code>loglin_job_1</code>?</p>
+<ul>
+<li>5</li>
+<li>6</li>
+<li>7</li>
+</ul>
+</div>
+<div class="small-text fragment">
+<p>What is <span class="math inline">\(p\)</span>, the number of parameters in <code>loglin_job_2</code>?</p>
+<ul>
+<li>15</li>
+<li>16</li>
+<li>17</li>
+</ul>
+</div>
+</section>
+<section id="log-linear-models-for-job-loglin_job_1" class="slide level2">
+<h2>Log-linear models for <code>job</code> (<code>loglin_job_1</code>)</h2>
+<div class="small-text scrollable">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">summary</span>(loglin_job_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = Count ~ Income + Satisfaction, family = poisson, 
+    data = job)
+
+Coefficients:
+                                 Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)                        3.2065     0.1140   28.12   &lt;2e-16 ***
+Income&gt;25000                      -0.1862     0.1035   -1.80   0.0719 .  
+Income15000-25000                  0.1317     0.0954    1.38   0.1676    
+Income6000-15000                   0.3386     0.0912    3.71   0.0002 ***
+SatisfactionModerately Satisfied   1.0831     0.1113    9.73   &lt;2e-16 ***
+SatisfactionVery Dissatisfied     -0.5550     0.1593   -3.48   0.0005 ***
+SatisfactionVery Satisfied         1.3389     0.1081   12.39   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 445.763  on 15  degrees of freedom
+Residual deviance:  12.037  on  9  degrees of freedom
+AIC: 115.1
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="log-linear-models-for-job-loglin_job_2" class="slide level2">
+<h2>Log-linear models for <code>job</code> (<code>loglin_job_2</code>)</h2>
+<div class="small-text scrollable">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">summary</span>(loglin_job_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = Count ~ Income * Satisfaction, family = poisson, 
+    data = job)
+
+Coefficients:
+                                                   Estimate Std. Error z value
+(Intercept)                                          3.1781     0.2041   15.57
+Income&gt;25000                                        -0.2877     0.3118   -0.92
+Income15000-25000                                    0.1542     0.2782    0.55
+Income6000-15000                                     0.4595     0.2607    1.76
+SatisfactionModerately Satisfied                     1.2040     0.2327    5.17
+SatisfactionVery Dissatisfied                       -0.1823     0.3028   -0.60
+SatisfactionVery Satisfied                           1.2287     0.2321    5.29
+Income&gt;25000:SatisfactionModerately Satisfied       -0.1054     0.3581   -0.29
+Income15000-25000:SatisfactionModerately Satisfied  -0.1417     0.3197   -0.44
+Income6000-15000:SatisfactionModerately Satisfied   -0.1972     0.3002   -0.66
+Income&gt;25000:SatisfactionVery Dissatisfied          -0.7621     0.5386   -1.42
+Income15000-25000:SatisfactionVery Dissatisfied     -0.5849     0.4520   -1.29
+Income6000-15000:SatisfactionVery Dissatisfied      -0.3642     0.4043   -0.90
+Income&gt;25000:SatisfactionVery Satisfied              0.4028     0.3468    1.16
+Income15000-25000:SatisfactionVery Satisfied         0.1665     0.3137    0.53
+Income6000-15000:SatisfactionVery Satisfied         -0.0379     0.2969   -0.13
+                                                   Pr(&gt;|z|)    
+(Intercept)                                         &lt; 2e-16 ***
+Income&gt;25000                                          0.356    
+Income15000-25000                                     0.579    
+Income6000-15000                                      0.078 .  
+SatisfactionModerately Satisfied                    2.3e-07 ***
+SatisfactionVery Dissatisfied                         0.547    
+SatisfactionVery Satisfied                          1.2e-07 ***
+Income&gt;25000:SatisfactionModerately Satisfied         0.769    
+Income15000-25000:SatisfactionModerately Satisfied    0.658    
+Income6000-15000:SatisfactionModerately Satisfied     0.511    
+Income&gt;25000:SatisfactionVery Dissatisfied            0.157    
+Income15000-25000:SatisfactionVery Dissatisfied       0.196    
+Income6000-15000:SatisfactionVery Dissatisfied        0.368    
+Income&gt;25000:SatisfactionVery Satisfied               0.246    
+Income15000-25000:SatisfactionVery Satisfied          0.596    
+Income6000-15000:SatisfactionVery Satisfied           0.898    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance:  4.4576e+02  on 15  degrees of freedom
+Residual deviance: -1.1990e-14  on  0  degrees of freedom
+AIC: 121
+
+Number of Fisher Scoring iterations: 3</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="comparing-two-models" class="slide level2">
+<h2>Comparing two models</h2>
+<p>Now we conduct a log likelihood ratio test to compare the two models.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="fu">anova</span>(loglin_job_1, loglin_job_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table
+
+Model 1: Count ~ Income + Satisfaction
+Model 2: Count ~ Income * Satisfaction
+  Resid. Df Resid. Dev Df Deviance
+1         9         12            
+2         0          0  9       12</code></pre>
+</div>
+</div>
+<p>Here, <span class="math inline">\(L_{01}\)</span> is <span class="math inline">\(12.037\)</span>, given in the deviance column.</p>
+</section>
+<section id="comparing-two-models-vevox.app-160-892-474-1" class="slide level2">
+<h2>Comparing two models (<a href="https://vevox.app/m#/160892474">vevox.app</a>, 160-892-474)</h2>
+<p>Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(L_{01} \sim \chi^2_9\)</span>.</p>
+<p>We should reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(L_{01} &gt; k\)</span>. Which of the following commands could be used to find <span class="math inline">\(k\)</span>, for a test at the <span class="math inline">\(5\%\)</span> level?</p>
+<ul>
+<li><code>dchisq(0.05, df = 9)</code></li>
+<li><code>dchisq(0.95, df = 9)</code></li>
+<li><code>pchisq(0.05, df = 9)</code></li>
+<li><code>pchisq(0.95, df = 9)</code></li>
+<li><code>qchisq(0.05, df = 9)</code></li>
+<li><code>qchisq(0.95, df = 9)</code></li>
+</ul>
+</section>
+<section id="comparing-two-models-1" class="slide level2">
+<h2>Comparing two models</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">qchisq</span>(<span class="fl">0.95</span>, <span class="at">df =</span> <span class="dv">9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 16.92</code></pre>
+</div>
+</div>
+<p>Since <span class="math inline">\(L_{01} =  12.037 &lt; 16.9\)</span>, we do <span class="alert"><strong>not</strong></span> reject <span class="math inline">\(H_0\)</span>, and we prefer the simpler model, <code>loglin_job_1</code>.</p>
+<div class="fragment">
+<p>Later, we’ll see that we can interpret <code>loglin_job_1</code> as meaning that there is no dependence of job satisfaction on income.</p>
+</div>
+</section>
+<section id="recap-lymphoma-data-contingency-table" class="slide level2">
+<h2>Recap: <code>lymphoma</code> data contingency table</h2>
+<div class="center-vertically">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Cell Type</th>
+<th>Sex.</th>
+<th>Remission: No</th>
+<th>Remission: Yes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Diffuse</td>
+<td>Female</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Diffuse</td>
+<td>Male</td>
+<td>12</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Nodular</td>
+<td>Female</td>
+<td>2</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>Nodular</td>
+<td>Male</td>
+<td>1</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="recap-lymphoma-data-in-long-format" class="slide level2">
+<h2>Recap: <code>lymphoma</code> data in long format</h2>
+<div class="center-vertically">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Cell</th>
+<th>Sex</th>
+<th>Remis</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Nodular</td>
+<td>Male</td>
+<td>No</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Nodular</td>
+<td>Male</td>
+<td>Yes</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>Nodular</td>
+<td>Female</td>
+<td>No</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Nodular</td>
+<td>Female</td>
+<td>Yes</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td>Diffuse</td>
+<td>Male</td>
+<td>No</td>
+<td>12</td>
+</tr>
+<tr class="even">
+<td>Diffuse</td>
+<td>Male</td>
+<td>Yes</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Diffuse</td>
+<td>Female</td>
+<td>No</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>Diffuse</td>
+<td>Female</td>
+<td>Yes</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="a-log-linear-model-for-lymphoma" class="slide level2">
+<h2>A log-linear model for <code>lymphoma</code></h2>
+<p>A log-linear model for the contingency table is just a Poisson GLM for this data, where in this case the response variable is <code>Count</code>, and <code>Sex</code>, <code>Remis</code> and <code>Cell</code> are explanatory variables.</p>
+<p>The aim is to understand how the probability of remission varies by type of lymphoma and sex.</p>
+<div class="fragment">
+<p>You will consider log-linear models for this in <span class="alert"><strong>LAB 09</strong></span>. For example,</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a>lymphoma <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/lymphoma.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-2"><a href=""></a>loglin_lymphoma <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> Cell <span class="sc">*</span> Remis <span class="sc">*</span> Sex, <span class="at">data =</span> lymphoma, <span class="at">family =</span> poisson)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>In some cases, it might seem more natural to consider a binomial model for the number of patients in remission, given the total number in each group. We will see later on that the inference assuming this binomial model would be the same as assuming the Poisson log-linear model.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="summary" class="slide level2">
+<h2>Summary</h2>
+<ul>
+<li>We have introduced the idea of a <span class="alert"><strong>contingency table</strong></span>: a cross-classification of counts according to categorical variables.</li>
+<li>A <span class="alert"><strong>log-linear model</strong></span> is a Poisson GLM with the canonical link function (the log link). We can use log-linear models to model contingency table data.</li>
+<li>Sometimes, the Poisson distribution does not seem to be a natural model for the data. We will consider <span class="alert"><strong>multinomial models</strong></span> (an extension of the binomial to more than two categories), and show that we make the same conclusions about the relationships between variables with either model.</li>
+</ul>
+</section></section>
+<section>
+<section id="chapter-6-models-for-categorical-data-lecture-6.2-log-linear-models" class="title-slide slide level1 center">
+<h1><span style="font-size: 42px; color: #131516; display: block; margin-bottom: -50px">Chapter 6: Models for Categorical Data</span> <br> Lecture 6.2 Log-linear models</h1>
 
 </section>
 <section id="recap" class="slide level2">
 <h2>Recap</h2>
+<ul>
+<li>A contingency table is a cross-classification of counts according to categorical variables.</li>
+<li>A contingency table is just a particular view of a dataset: we can rewrite the data in “long” format, which looks like the data frame we are familiar with.</li>
+<li>We can model the cell counts in a contingency table data using log-linear models, which are just Poisson GLMs with the (canonical) log link function.</li>
+</ul>
+<div class="fragment">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>&nbsp;</strong></p>
+</div>
+<div class="callout-content">
+<p>Let’s return to an example to demonstrate these concepts.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="a-contingency-table-of-the-job-dataset-with-margins-1" class="slide level2">
+<h2>A contingency table of the <code>job</code> dataset, with margins</h2>
+<p>As before,</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 15%">
+<col style="width: 19%">
+<col style="width: 19%">
+<col style="width: 18%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Income ($)</th>
+<th>Very Dissat.</th>
+<th>A Little Dissat.</th>
+<th>Moderately Sat.</th>
+<th>Very Sat.</th>
+<th><strong>Sum</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>&lt;6000</td>
+<td>20</td>
+<td>24</td>
+<td>80</td>
+<td>82</td>
+<td><strong>206</strong></td>
+</tr>
+<tr class="even">
+<td>6000–15000</td>
+<td>22</td>
+<td>38</td>
+<td>104</td>
+<td>125</td>
+<td><strong>289</strong></td>
+</tr>
+<tr class="odd">
+<td>15000–25000</td>
+<td>13</td>
+<td>28</td>
+<td>81</td>
+<td>113</td>
+<td><strong>235</strong></td>
+</tr>
+<tr class="even">
+<td>&gt;25000</td>
+<td>7</td>
+<td>18</td>
+<td>54</td>
+<td>92</td>
+<td><strong>171</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Sum</strong></td>
+<td><strong>62</strong></td>
+<td><strong>108</strong></td>
+<td><strong>319</strong></td>
+<td><strong>412</strong></td>
+<td><strong>901</strong></td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>The <strong>one-way margins</strong> represent the classification of items by a single variable; <code>income group</code> and <code>job satisfaction</code>, respectively.</p>
+</section>
+<section id="log-linear-models-1" class="slide level2">
+<h2>Log-linear models</h2>
+<p>If the table has <span class="math inline">\(n\)</span> cells, which we label <span class="math inline">\(1, \cdots ,n\)</span>, then the observed cell counts <span class="math inline">\(y_1, \cdots ,y_n\)</span> are assumed to be observations of independent Poisson random variables <span class="math inline">\(Y_1, \cdots ,Y_n\)</span>.</p>
+<div class="fragment">
+<p>We denote the means of these Poisson random variables by <span class="math inline">\(\mu_1, \cdots, \mu_n\)</span>, and model <span class="math inline">\(log(\mu_i) = \eta_i\)</span>, where <span class="math inline">\(\boldsymbol{\eta}\)</span> is the linear predictor.</p>
+</div>
+<div class="fragment">
+<p>The explanatory variables in a log-linear model for contingency table data are the cross-classifying variables. As these variables are categorical, they are <strong>factors</strong>. As usual with factors, we can include interactions in the model as well as just main effects.</p>
+</div>
+<div class="fragment">
+<p>Such a model will describe how the expected count in each cell depends on the classifying variables, and any interactions between them. <em>Interpretation of these models will be discussed later on</em>.</p>
+</div>
+</section>
+<section id="job-dataset-in-long-format-1" class="slide level2">
+<h2><code>job</code> dataset in long format</h2>
+<p>The original data structure of the <code>job</code> dataset is</p>
+<div class="small-text">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Income</th>
+<th>Satisfaction</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>&lt;6000</td>
+<td>Very Dissatisfied</td>
+<td>20</td>
+</tr>
+<tr class="even">
+<td>&lt;6000</td>
+<td>A Little Dissatisfied</td>
+<td>24</td>
+</tr>
+<tr class="odd">
+<td>&lt;6000</td>
+<td>Moderately Satisfied</td>
+<td>80</td>
+</tr>
+<tr class="even">
+<td>&lt;6000</td>
+<td>Very Satisfied</td>
+<td>82</td>
+</tr>
+<tr class="odd">
+<td>6000–15000</td>
+<td>Very Dissatisfied</td>
+<td>22</td>
+</tr>
+<tr class="even">
+<td>6000–15000</td>
+<td>A Little Dissatisfied</td>
+<td>38</td>
+</tr>
+<tr class="odd">
+<td>6000–15000</td>
+<td>Moderately Satisfied</td>
+<td>104</td>
+</tr>
+<tr class="even">
+<td>6000–15000</td>
+<td>Very Satisfied</td>
+<td>125</td>
+</tr>
+<tr class="odd">
+<td>15000–25000</td>
+<td>Very Dissatisfied</td>
+<td>13</td>
+</tr>
+<tr class="even">
+<td>15000–25000</td>
+<td>A Little Dissatisfied</td>
+<td>28</td>
+</tr>
+<tr class="odd">
+<td>15000–25000</td>
+<td>Moderately Satisfied</td>
+<td>81</td>
+</tr>
+<tr class="even">
+<td>15000–25000</td>
+<td>Very Satisfied</td>
+<td>113</td>
+</tr>
+<tr class="odd">
+<td>&gt;25000</td>
+<td>Very Dissatisfied</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td>&gt;25000</td>
+<td>A Little Dissatisfied</td>
+<td>18</td>
+</tr>
+<tr class="odd">
+<td>&gt;25000</td>
+<td>Moderately Satisfied</td>
+<td>54</td>
+</tr>
+<tr class="even">
+<td>&gt;25000</td>
+<td>Very Satisfied</td>
+<td>92</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="log-linear-models-for-job-1" class="slide level2">
+<h2>Log-linear models for <code>job</code></h2>
+<p>The original format of the <code>job</code> dataset the same data as the contingency table, but in a different format, sometimes called <strong>long</strong> format.</p>
+<p>A log-linear model is just a Poisson GLM, where the response variable is <code>Count</code>, and <code>Income</code> and <code>Satisfaction</code> are explanatory variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>job <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/job.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-2"><a href=""></a></span>
+<span id="cb12-3"><a href=""></a>job<span class="sc">$</span>Income <span class="ot">&lt;-</span> <span class="fu">factor</span>(job<span class="sc">$</span>Income, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"&lt;6000"</span>, <span class="st">"6000-15000"</span>, <span class="st">"15000-25000"</span>, <span class="st">"&gt;25000"</span>))</span>
+<span id="cb12-4"><a href=""></a>job<span class="sc">$</span>Satisfaction <span class="ot">&lt;-</span> <span class="fu">factor</span>(job<span class="sc">$</span>Satisfaction, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Very Dissatisfied"</span>, <span class="st">"A Little Dissatisfied"</span>, <span class="st">"Moderately Satisfied"</span>, <span class="st">"Very Satisfied"</span>))</span>
+<span id="cb12-5"><a href=""></a></span>
+<span id="cb12-6"><a href=""></a><span class="co"># Fit the models</span></span>
+<span id="cb12-7"><a href=""></a>loglin_job_1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> Income <span class="sc">+</span> Satisfaction, <span class="at">family =</span> poisson, <span class="at">data =</span> job)</span>
+<span id="cb12-8"><a href=""></a>loglin_job_2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> Income <span class="sc">*</span> Satisfaction, <span class="at">family =</span> poisson, <span class="at">data =</span> job)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="log-linear-models-for-job-loglin_job_1-1" class="slide level2">
+<h2>Log-linear models for <code>job</code> (<code>loglin_job_1</code>)</h2>
+<div class="small-text scrollable">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>loglin_job_1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:  glm(formula = Count ~ Income + Satisfaction, family = poisson, 
+    data = job)
+
+Coefficients:
+                      (Intercept)                   Income6000-15000  
+                            2.652                              0.339  
+                Income15000-25000                       Income&gt;25000  
+                            0.132                             -0.186  
+SatisfactionA Little Dissatisfied   SatisfactionModerately Satisfied  
+                            0.555                              1.638  
+       SatisfactionVery Satisfied  
+                            1.894  
+
+Degrees of Freedom: 15 Total (i.e. Null);  9 Residual
+Null Deviance:      446 
+Residual Deviance: 12   AIC: 115</code></pre>
+</div>
+</div>
+</div>
+<div class="small-text scrolling">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="fu">summary</span>(loglin_job_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = Count ~ Income + Satisfaction, family = poisson, 
+    data = job)
+
+Coefficients:
+                                  Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept)                         2.6515     0.1410   18.81   &lt;2e-16 ***
+Income6000-15000                    0.3386     0.0912    3.71   0.0002 ***
+Income15000-25000                   0.1317     0.0954    1.38   0.1676    
+Income&gt;25000                       -0.1862     0.1035   -1.80   0.0719 .  
+SatisfactionA Little Dissatisfied   0.5550     0.1593    3.48   0.0005 ***
+SatisfactionModerately Satisfied    1.6381     0.1388   11.80   &lt;2e-16 ***
+SatisfactionVery Satisfied          1.8939     0.1362   13.90   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 445.763  on 15  degrees of freedom
+Residual deviance:  12.037  on  9  degrees of freedom
+AIC: 115.1
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="expected-cell-counts-vevox.app-160-892-474" class="slide level2">
+<h2>Expected cell counts (<a href="https://vevox.app/m#/160892474">vevox.app</a>, 160-892-474)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="fu">coef</span>(loglin_job_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                      (Intercept)                  Income6000-15000 
+                           2.6515                            0.3386 
+                Income15000-25000                      Income&gt;25000 
+                           0.1317                           -0.1862 
+SatisfactionA Little Dissatisfied  SatisfactionModerately Satisfied 
+                           0.5550                            1.6381 
+       SatisfactionVery Satisfied 
+                           1.8939 </code></pre>
+</div>
+</div>
+<div class="small-text">
+<p>The fitted values <span class="math inline">\(\hat \mu_i = \exp(\mathbf{x}_i^{\top} \hat{\boldsymbol{\beta}})\)</span> give us the expected counts in each cell of the contingency table.</p>
+<p><br></p>
+<div class="fragment">
+<p>Which of the following would give the expected count of people with income <span class="math inline">\(&lt;6000\)</span> who were <code>A Little Dissatisfied</code> under model <code>loglin_job_1</code>?</p>
+<ul>
+<li><span class="math inline">\(\exp(0.5550) = 1.70\)</span></li>
+<li><span class="math inline">\(\exp(2.6515) = 14.1\)</span></li>
+<li><span class="math inline">\(\exp(3.2065) = 24.7\)</span></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="observed-and-expected-cell-counts-in-contingency-table-format" class="slide level2">
+<h2>Observed and expected cell counts in contingency table format</h2>
+<div class="small-text">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a>job_tab <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(Count <span class="sc">~</span> Income <span class="sc">+</span> Satisfaction, <span class="at">data =</span> job)</span>
+<span id="cb19-2"><a href=""></a><span class="co"># Puts Arbitrary Margins on Multidimensional Tables or Arrays</span></span>
+<span id="cb19-3"><a href=""></a><span class="fu">addmargins</span>(job_tab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Satisfaction
+Income        Very Dissatisfied A Little Dissatisfied Moderately Satisfied
+  &lt;6000                      20                    24                   80
+  6000-15000                 22                    38                  104
+  15000-25000                13                    28                   81
+  &gt;25000                      7                    18                   54
+  Sum                        62                   108                  319
+             Satisfaction
+Income        Very Satisfied Sum
+  &lt;6000                   82 206
+  6000-15000             125 289
+  15000-25000            113 235
+  &gt;25000                  92 171
+  Sum                    412 901</code></pre>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>fit1_tab <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="fu">fitted</span>(loglin_job_1) <span class="sc">~</span> Income <span class="sc">+</span> Satisfaction, <span class="at">data =</span> job)</span>
+<span id="cb21-2"><a href=""></a><span class="co"># Puts Arbitrary Margins on Multidimensional Tables or Arrays</span></span>
+<span id="cb21-3"><a href=""></a><span class="fu">addmargins</span>(fit1_tab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Satisfaction
+Income        Very Dissatisfied A Little Dissatisfied Moderately Satisfied
+  &lt;6000                   14.18                 24.69                72.93
+  6000-15000              19.89                 34.64               102.32
+  15000-25000             16.17                 28.17                83.20
+  &gt;25000                  11.77                 20.50                60.54
+  Sum                     62.00                108.00               319.00
+             Satisfaction
+Income        Very Satisfied    Sum
+  &lt;6000                94.20 206.00
+  6000-15000          132.15 289.00
+  15000-25000         107.46 235.00
+  &gt;25000               78.19 171.00
+  Sum                 412.00 901.00</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="log-linear-models-for-job-loglin_job_2-1" class="slide level2">
+<h2>Log-linear models for <code>job</code> (<code>loglin_job_2</code>)</h2>
+<div class="small-text scrollable">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="fu">summary</span>(loglin_job_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = Count ~ Income * Satisfaction, family = poisson, 
+    data = job)
+
+Coefficients:
+                                                    Estimate Std. Error z value
+(Intercept)                                           2.9957     0.2236   13.40
+Income6000-15000                                      0.0953     0.3090    0.31
+Income15000-25000                                    -0.4308     0.3563   -1.21
+Income&gt;25000                                         -1.0498     0.4392   -2.39
+SatisfactionA Little Dissatisfied                     0.1823     0.3028    0.60
+SatisfactionModerately Satisfied                      1.3863     0.2500    5.55
+SatisfactionVery Satisfied                            1.4110     0.2494    5.66
+Income6000-15000:SatisfactionA Little Dissatisfied    0.3642     0.4043    0.90
+Income15000-25000:SatisfactionA Little Dissatisfied   0.5849     0.4520    1.29
+Income&gt;25000:SatisfactionA Little Dissatisfied        0.7621     0.5386    1.42
+Income6000-15000:SatisfactionModerately Satisfied     0.1671     0.3429    0.49
+Income15000-25000:SatisfactionModerately Satisfied    0.4432     0.3896    1.14
+Income&gt;25000:SatisfactionModerately Satisfied         0.6568     0.4732    1.39
+Income6000-15000:SatisfactionVery Satisfied           0.3263     0.3401    0.96
+Income15000-25000:SatisfactionVery Satisfied          0.7515     0.3847    1.95
+Income&gt;25000:SatisfactionVery Satisfied               1.1649     0.4647    2.51
+                                                    Pr(&gt;|z|)    
+(Intercept)                                          &lt; 2e-16 ***
+Income6000-15000                                       0.758    
+Income15000-25000                                      0.227    
+Income&gt;25000                                           0.017 *  
+SatisfactionA Little Dissatisfied                      0.547    
+SatisfactionModerately Satisfied                     2.9e-08 ***
+SatisfactionVery Satisfied                           1.5e-08 ***
+Income6000-15000:SatisfactionA Little Dissatisfied     0.368    
+Income15000-25000:SatisfactionA Little Dissatisfied    0.196    
+Income&gt;25000:SatisfactionA Little Dissatisfied         0.157    
+Income6000-15000:SatisfactionModerately Satisfied      0.626    
+Income15000-25000:SatisfactionModerately Satisfied     0.255    
+Income&gt;25000:SatisfactionModerately Satisfied          0.165    
+Income6000-15000:SatisfactionVery Satisfied            0.337    
+Income15000-25000:SatisfactionVery Satisfied           0.051 .  
+Income&gt;25000:SatisfactionVery Satisfied                0.012 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 4.4576e+02  on 15  degrees of freedom
+Residual deviance: 2.2649e-14  on  0  degrees of freedom
+AIC: 121
+
+Number of Fisher Scoring iterations: 3</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="expected-cell-counts-vevox.app-160-892-474-1" class="slide level2">
+<h2>Expected cell counts (<a href="https://vevox.app/m#/160892474">vevox.app</a>, 160-892-474)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>loglin_job_1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> Income <span class="sc">+</span> Satisfaction,  <span class="at">family =</span> poisson, <span class="at">data =</span> job)</span>
+<span id="cb25-2"><a href=""></a>loglin_job_2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> Income <span class="sc">*</span> Satisfaction,  <span class="at">family =</span> poisson, <span class="at">data =</span> job)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="small-text">
+<div class="fragment">
+<p>There are <span class="math inline">\(24\)</span> people with income <span class="math inline">\(&lt;6000\)</span> who were <code>A Little Dissatisfied</code>o. The expected count in this cell under model <code>loglin_job_1</code> is <span class="math inline">\(24.7\)</span>. What is the expected count in this cell under <code>loglin_job_2</code>?</p>
+<ul>
+<li>less than <span class="math inline">\(23.9\)</span>.</li>
+<li><span class="math inline">\(24\)</span>.</li>
+<li>between <span class="math inline">\(24.1\)</span> and <span class="math inline">\(24.6\)</span>.</li>
+<li><span class="math inline">\(24.7\)</span>.</li>
+<li>more than <span class="math inline">\(24.8\)</span>.</li>
+<li>It is not possible to say.</li>
+</ul>
+</div>
+<div class="fragment">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Discussion</strong></p>
+</div>
+<div class="callout-content">
+<p>Notice that <code>loglin_job_2</code> is the saturated model (<span class="math inline">\(16\)</span> cells and <span class="math inline">\(16\)</span> parameters), therefore, it fits the data exactly.</p>
+<p>This happens when the model includes <strong>(I)</strong> all main effects and <strong>(II)</strong> all interactions needed to uniquely estimate each cell.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="observed-and-expected-cell-counts-in-contingency-table-format-1" class="slide level2">
+<h2>Observed and expected cell counts in contingency table format</h2>
+<div class="small-text">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a>job_tab <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(Count <span class="sc">~</span> Income <span class="sc">+</span> Satisfaction, <span class="at">data =</span> job)</span>
+<span id="cb26-2"><a href=""></a><span class="co"># Puts Arbitrary Margins on Multidimensional Tables or Arrays</span></span>
+<span id="cb26-3"><a href=""></a><span class="fu">addmargins</span>(job_tab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Satisfaction
+Income        Very Dissatisfied A Little Dissatisfied Moderately Satisfied
+  &lt;6000                      20                    24                   80
+  6000-15000                 22                    38                  104
+  15000-25000                13                    28                   81
+  &gt;25000                      7                    18                   54
+  Sum                        62                   108                  319
+             Satisfaction
+Income        Very Satisfied Sum
+  &lt;6000                   82 206
+  6000-15000             125 289
+  15000-25000            113 235
+  &gt;25000                  92 171
+  Sum                    412 901</code></pre>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a>fit2_tab <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="fu">fitted</span>(loglin_job_2) <span class="sc">~</span> Income <span class="sc">+</span> Satisfaction, <span class="at">data =</span> job)</span>
+<span id="cb28-2"><a href=""></a><span class="co"># Puts Arbitrary Margins on Multidimensional Tables or Arrays</span></span>
+<span id="cb28-3"><a href=""></a><span class="fu">addmargins</span>(fit2_tab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Satisfaction
+Income        Very Dissatisfied A Little Dissatisfied Moderately Satisfied
+  &lt;6000                      20                    24                   80
+  6000-15000                 22                    38                  104
+  15000-25000                13                    28                   81
+  &gt;25000                      7                    18                   54
+  Sum                        62                   108                  319
+             Satisfaction
+Income        Very Satisfied Sum
+  &lt;6000                   82 206
+  6000-15000             125 289
+  15000-25000            113 235
+  &gt;25000                  92 171
+  Sum                    412 901</code></pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="multinomial-sampling" class="slide level2">
+<h2>Multinomial sampling</h2>
+<p>Although the assumption of Poisson distributed observations is convenient for the purposes of modelling, <strong>it might not be a realistic assumption</strong>, because of the way in which the data have been collected.</p>
+<div class="fragment">
+<p>Frequently, when contingency table data are obtained, the total number of observations (the <span class="alert"><strong>grand total</strong></span>, the sum of all the cell counts) is fixed in advance.</p>
+</div>
+<div class="fragment">
+<p>In this case, no individual cell count can exceed the pre-specified fixed total, so the assumption of <strong>Poisson sampling is invalid</strong> as the sample space is bounded. Furthermore, with a fixed total, the <strong>observations can no longer be observations of independent random variables</strong>.</p>
+</div>
+</section>
+<section id="recap-lymphoma-data-contingency-table-1" class="slide level2">
+<h2>Recap: <code>lymphoma</code> data contingency table</h2>
+<p>The <code>lymphoma</code> dataset gives information about 30 patients, classified by cell type of lymphoma, sex, and response to treatment. This is an example of a three-way contingency table. It is a <span class="math inline">\(2\times 2\times 2\)</span> or <span class="math inline">\(2^3\)</span> table.</p>
+<p><br></p>
+<div class="fragment">
+<table class="caption-top">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 19%">
+<col style="width: 27%">
+<col style="width: 29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Cell Type</th>
+<th>Sex</th>
+<th>Remission: No</th>
+<th>Remission: Yes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Diffuse</td>
+<td>Female</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Diffuse</td>
+<td>Male</td>
+<td>12</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Nodular</td>
+<td>Female</td>
+<td>2</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>Nodular</td>
+<td>Male</td>
+<td>1</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="recap-lymphoma-data-contingency-table-2" class="slide level2">
+<h2>Recap: <code>lymphoma</code> data contingency table</h2>
+<p>For the <code>lymphoma</code> contingency table, the appropriate model to use depends on the process by which these data were collected</p>
+<ul>
+<li>If the data were collected over a fixed period of time, and that in that time there happened to be 30 patients, then Poisson assumption is perfectly valid.</li>
+<li>If it had been decided at the outset to collect data on 30 patients, the <span class="alert">grand total</span> is fixed at 30, and the Poisson assumption is not valid.</li>
+</ul>
+<div class="fragment">
+<p>When the grand total is fixed, a more appropriate distribution for the cell counts is the <span class="alert"><strong>multinomial distribution</strong></span>.</p>
+</div>
+</section>
+<section id="the-multinomial-distribution" class="slide level2">
+<h2>The multinomial distribution</h2>
+<p>The <span class="alert"><strong>multinomial distribution</strong></span> is the distribution of cell counts arising when a pre-specified total of <span class="math inline">\(N\)</span> items are each independently assigned to one of <span class="math inline">\(n\)</span> cells, where the probability of being classified into cell <span class="math inline">\(i\)</span> is <span class="math inline">\(p_i\)</span>, <span class="math inline">\({i=1, \cdots, n}\)</span>, so <span class="math inline">\(\sum_{i=1}^n p_i=1\)</span>.</p>
+<p>The probability function for the multinomial distribution is <span class="math display">\[\begin{align*}
+f_{\mathbf{Y}}(\mathbf{y};{\mathbf{p}})
+&amp;= P(Y_1=y_1,\cdots ,Y_n=y_n) \cr
+&amp;= \begin{cases}
+N!\prod_{i=1}^n \frac{p_i^{y_i}}{y_i!} &amp; \text{if $\sum_{i=1}^n y_i=N$} \\
+0 &amp; \text{otherwise.}
+\end{cases}
+\end{align*}\]</span></p>
+<div class="fragment">
+<p>The binomial is the special case of the multinomial with two cells (<span class="math inline">\(n=2\)</span>).</p>
+</div>
+</section>
+<section id="summary-1" class="slide level2">
+<h2>Summary</h2>
+<ul>
+<li>We have revised the idea of a <span class="alert"><strong>contingency table</strong></span>: a cross-classification of counts according to categorical variables.</li>
+<li>A <span class="alert"><strong>log-linear model</strong></span> is a Poisson GLM with the canonical link function (the log link). We can use log-linear models to model contingency table data, and find expected cell counts.</li>
+<li>If the total count is fixed, a <span class="alert"><strong>multinomial model</strong></span> is more natural than a Poisson one.</li>
+<li>Next time, we will show that we make the <em>same conclusions about the relationships between variables by using a Poisson log-linear model instead of a multinomial one</em> (provided that we include an intercept in the Poisson model).</li>
+</ul>
+</section></section>
+<section>
+<section id="chapter-6-models-for-categorical-data-lecture-6.3-multinomial-sampling" class="title-slide slide level1 center">
+<h1><span style="font-size: 42px; color: #131516; display: block; margin-bottom: -50px">Chapter 6: Models for Categorical Data</span> <br> Lecture 6.3 Multinomial sampling</h1>
+
+</section>
+<section id="recap-1" class="slide level2">
+<h2>Recap</h2>
+<ul>
+<li>A <span class="alert"><strong>log-linear model</strong></span> is a Poisson GLM with the canonical link function (the log link). We can use log-linear models to model contingency table data, and find expected cell counts.</li>
+<li>If the total count is fixed, a <span class="alert"><strong>multinomial model</strong></span> is more natural than a Poisson one.</li>
+<li>How should we do <span class="alert"><strong>inference</strong></span> for a multinomial model?</li>
+</ul>
+</section>
+<section id="recap-the-multinomial-distribution" class="slide level2">
+<h2>Recap: the multinomial distribution</h2>
+<p>The <span class="alert"><strong>multinomial distribution</strong></span> is the distribution of cell counts arising when a pre-specified total of <span class="math inline">\(N\)</span> items are each independently assigned to one of <span class="math inline">\(n\)</span> cells, where the probability of being classified into cell <span class="math inline">\(i\)</span> is <span class="math inline">\(p_i\)</span>, <span class="math inline">\({i=1, \cdots, n}\)</span>, so <span class="math inline">\(\sum_{i=1}^n p_i=1\)</span>.</p>
+<p>The probability function for the multinomial distribution is <span class="math display">\[\begin{align*}
+f_{\mathbf{Y}}(\mathbf{y};{\mathbf{p}})
+&amp;= P(Y_1=y_1,\cdots ,Y_n=y_n) \cr
+&amp;= \begin{cases}
+N!\prod_{i=1}^n \frac{p_i^{y_i}}{y_i!} &amp; \text{if $\sum_{i=1}^n y_i=N$} \\
+0 &amp; \text{otherwise.}
+\end{cases}
+\end{align*}\]</span></p>
+<div class="fragment">
+<p>The binomial is the special case of the multinomial with two cells (<span class="math inline">\(n=2\)</span>).</p>
+</div>
+</section>
+<section id="a-multinomial-log-linear-model" class="slide level2">
+<h2>A multinomial log-linear model</h2>
+<p>When the data have been obtained by multinomial sampling, we suppose <span class="math inline">\(\mathbf{Y} \sim \text{Multinomial}(N, \mathbf{p})\)</span>, where <span class="math inline">\(\log\mu_i=\log(N \cdot p_i)\)</span>, <span class="math inline">\({i=1, \cdots, n}\)</span> is modelled as as a linear function of explanatory variables, so that <span class="math inline">\(\log \mu_i = \mathbf{x}_i^{\top} \boldsymbol{\beta}\)</span>.</p>
+<p>Since <span class="math inline">\(\sum_{i=1}^n p_i = 1\)</span>, we have <span class="math inline">\(\sum_{i=1}^n \mu_i=N\)</span>, the <span class="alert">grand total</span>–which is fixed in advance.</p>
+</section>
+<section id="equivalence-of-poisson-log-linear-model" class="slide level2">
+<h2>Equivalence of Poisson log-linear model</h2>
+<p>Suppose we model instead <span class="math inline">\(Y_i \sim \text{Poisson}(\mu_i)\)</span>, where <span class="math inline">\(\log \mu_i = \mathbf{x}_i^{\top} \boldsymbol{\beta}\)</span>. Suppose that we include an intercept term, e.g.&nbsp;<span class="math inline">\(x_{i1} = 1\)</span> for <span class="math inline">\(i = 1, \cdots,n\)</span>, so <span class="math inline">\(\log \mu_i = \beta_1 + \sum_{j=2}^p x_{ij} \beta_j\)</span>.</p>
+<div class="fragment">
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>The maximum likelihood estimates for multinomial log-linear parameters are identical to those for Poisson log-linear parameters (with intercept). Furthermore, the maximised log-likelihoods for both Poisson and multinomial models take the form <span class="math inline">\(\sum_{i=1}^ny_i\log\hat{\mu}_i\)</span>, where <span class="math inline">\(\hat{\mu}_i = \mathbf{x}_i^{\top} \boldsymbol{\hat{\beta}}\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>We will see a <span class="alert"><strong>sketch of the proof</strong></span> of this result (this is also in the lecture notes).</p>
+</div>
+</section>
+<section id="implications-of-the-equivalence-result" class="slide level2">
+<h2>Implications of the equivalence result</h2>
+<p>Recall that the maximised log-likelihoods for both Poisson and multinomial models take the form <span class="math inline">\(\sum_{i=1}^ny_i\log\hat{\mu}_i\)</span> as functions of the log-linear parameter estimates.</p>
+<div class="fragment">
+<p>So <span class="alert">any inferences based on maximised log-likelihoods (such as likelihood ratio tests) will be the same</span>.</p>
+</div>
+<div class="fragment">
+<p>Therefore, we can analyse contingency table data using Poisson log-linear models, even when the data has been obtained by multinomial sampling. All that is required is that we ensure that the Poisson model contains an intercept term.</p>
+</div>
+</section>
+<section id="sampling-with-fixed-margins" class="slide level2">
+<h2>Sampling with fixed margins</h2>
+<p>Sometimes [<strong>margins other than just the grand total may be pre-specified</strong>].</p>
+<p>For example, consider the <code>lymphoma</code> contingency table.</p>
+<div class="fragment">
+<table class="caption-top">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 19%">
+<col style="width: 27%">
+<col style="width: 29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Cell Type</th>
+<th>Sex</th>
+<th>Remission: No</th>
+<th>Remission: Yes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Diffuse</td>
+<td>Female</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Diffuse</td>
+<td>Male</td>
+<td>12</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>Nodular</td>
+<td>Female</td>
+<td>2</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>Nodular</td>
+<td>Male</td>
+<td>1</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>It may have been decided at the outset to collect data on <span class="math inline">\(18\)</span> male patients and <span class="math inline">\(12\)</span> female patients. Alternatively, perhaps the distribution of both the <code>Sex</code> and <code>Cell Type</code> of the patients was fixed in advance.</p>
+</div>
+</section>
+<section id="product-multinomial-sampling" class="slide level2">
+<h2>Product multinomial sampling</h2>
+<p>In cases where a margin is fixed by design, the data consist of a number of fixed total subgroups, defined by the fixed margin. <span class="alert">Neither Poisson nor multinomial sampling assumptions are valid</span>.</p>
+<div style="margin-top: -20pt;">
+
+</div>
+<div class="fragment">
+<p>The appropriate distribution combines a separate, independent multinomial for each subgroup</p>
+<ul>
+<li>If the <code>Sex</code> margin is fixed, then we should model the data with two independent multinomials, one for males with <span class="math inline">\(N=18\)</span> and one for females with <span class="math inline">\(N=12\)</span>. Each of these multinomials has four cells, representing the cross-classification of the relevant patients by <code>Cell Type</code> and <code>Remission</code>.</li>
+<li>If the <code>Cell Type</code>/<code>Sex</code> margin has been fixed, then the appropriate distribution is four independent two-cell multinomials (binomials) representing the remission classification for each of the four fixed-total patient subgroups.</li>
+</ul>
+</div>
+</section>
+<section id="the-product-multinomial-distribution" class="slide level2">
+<h2>The product multinomial distribution</h2>
+<div class="small-text">
+<p>When the data are modelled using independent multinomials, then the joint probability function for the cell counts <span class="math inline">\(Y_1, \cdots, Y_n\)</span> is the product of multinomial probability functions, one for each fixed-total subgroup. We call this a distribution a <span class="alert"><strong>product multinomial</strong></span>.</p>
+<div class="small-text">
+<p>For example, if the <code>Sex</code> margin is fixed for <code>lymphoma</code>, then the product multinomial distribution has the form <span class="math display">\[
+f_{\mathbf{Y}}(\mathbf{y};{\mathbf{p}})=
+\begin{cases}
+N_m!\prod_{i=1}^4 {{p_{mi}^{y_{mi}}}\over{y_{mi}!}}
+N_f!\prod_{i=1}^4 {{p_{fi}^{y_{fi}}}\over{y_{fi}!}} &amp;
+\text{if $\sum_{i=1}^4 y_{mi}=N_m$ and
+$\sum_{i=1}^4 y_{fi}=N_f$} \\
+0 &amp; \text{otherwise,}
+\end{cases}
+\]</span> where</p>
+<ul>
+<li><span class="math inline">\(N_m\)</span> and <span class="math inline">\(N_f\)</span> are the two fixed marginal totals (18 and 12, respectively)</li>
+<li><span class="math inline">\(y_{m1}, \cdots, y_{m4}\)</span> are the cell counts for males and <span class="math inline">\(y_{f1}, \cdots, y_{f4}\)</span> are the corresponding cell counts for females.</li>
+<li><span class="math inline">\(\sum_{i=1}^4 p_{mi}=\sum_{i=1}^4 p_{fi}=1\)</span>.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="analysis-using-poisson-log-linear-models" class="slide level2">
+<h2>Analysis using Poisson log-linear models</h2>
+<p>Using similar reasoning to the multinomial sampling case, <span class="alert">we can analyse contingency table data using Poisson log-linear models, even when the data has been obtained by product multinomial sampling</span>.</p>
+<div class="fragment">
+<p>However, we must ensure that the Poisson model contains a term corresponding to the fixed margin (and all marginal terms). Then, the estimated means for the specified margin are equal to the corresponding fixed totals.</p>
+</div>
+</section>
+<section id="example-lymphoma-data" class="slide level2">
+<h2>Example: <code>lymphoma</code> data</h2>
+<p>For the <code>lymphoma</code> dataset, for inferences obtained using a Poisson model to be valid when the <code>Sex</code> margin is fixed in advance, the Poisson model must contain the <code>Sex</code> main effect (and the <code>intercept</code>).</p>
+<div class="fragment">
+<p>For inferences obtained using a Poisson model to be valid when the <code>Cell Type</code>/<code>Sex</code> margin is fixed in advance, the Poisson model must contain the <code>Cell Type</code>/<code>Sex</code> interaction, and all marginal terms (the <code>Cell Type</code> main effect, the <code>Sex</code> main effect, and the <code>intercept</code>).</p>
+</div>
+<div class="fragment">
+<p>Therefore, when analysing product multinomial data using a Poisson log-linear model, certain terms <strong>must</strong> be present in any model we fit. If they are removed, the inferences would no longer be valid.</p>
+</div>
+</section>
+<section id="interpreting-log-linear-models" class="slide level2">
+<h2>Interpreting log-linear models</h2>
+<p>Log-linear models for contingency tables enable us to determine important properties concerning the joint distribution of the classifying variables. <span class="alert">The form of our preferred log linear model for a table will have implications for how the variables are associated</span>.</p>
+<div class="fragment">
+<p>Each combination of the classifying variables occurs exactly once in a contingency table. Therefore, the model with the highest order interaction (between all the variables) and all marginal terms (all other interactions) is the <span class="alert"><strong>saturated model</strong></span>.</p>
+</div>
+<div class="fragment">
+<p>The implication of this model is that every combination of levels of the variables has its own mean (probability) and that there are no relationships between these means (no structure). <span class="alert">The variables are highly dependent</span>.</p>
+</div>
+</section>
+<section id="example-return-to-the-job-dataset" class="slide level2">
+<h2>Example: return to the <code>job</code> dataset</h2>
+<p>In the <code>job</code> dataset, we might assume that the number of people in each income group is fixed. We are interested in the probability of having each level of satisfaction at each income group, and seeing whether there is any evidence in this data that job satisfaction depends on income.</p>
+<p><br></p>
+<div style="margin-top: -30pt;">
+
+</div>
+<table class="caption-top">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 16%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 12%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Income ($)</th>
+<th>Very Dissat.</th>
+<th>A Little Dissat.</th>
+<th>Moderately Sat.</th>
+<th>Very Sat.</th>
+<th><strong>Sum</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>&lt;6000</td>
+<td>20</td>
+<td>24</td>
+<td>80</td>
+<td>82</td>
+<td><strong>206</strong></td>
+</tr>
+<tr class="even">
+<td>6000–15000</td>
+<td>22</td>
+<td>38</td>
+<td>104</td>
+<td>125</td>
+<td><strong>289</strong></td>
+</tr>
+<tr class="odd">
+<td>15000–25000</td>
+<td>13</td>
+<td>28</td>
+<td>81</td>
+<td>113</td>
+<td><strong>235</strong></td>
+</tr>
+<tr class="even">
+<td>&gt;25000</td>
+<td>7</td>
+<td>18</td>
+<td>54</td>
+<td>92</td>
+<td><strong>171</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Sum</strong></td>
+<td><strong>62</strong></td>
+<td><strong>108</strong></td>
+<td><strong>319</strong></td>
+<td><strong>412</strong></td>
+<td><strong>901</strong></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="fitting-log-linear-models" class="slide level2">
+<h2>Fitting log-linear models</h2>
+<p>This is an example of product multinomial sampling, with the <code>Income</code> margin fixed: provided that we include an intercept and <code>Income</code> in the model, we can use Poisson log-linear models to analyse the contingency table (as we did before).</p>
+<p><br></p>
+<div style="margin-top: -30pt;">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href=""></a>job <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/job.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb30-2"><a href=""></a></span>
+<span id="cb30-3"><a href=""></a>job<span class="sc">$</span>Income <span class="ot">&lt;-</span> <span class="fu">factor</span>(job<span class="sc">$</span>Income, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"&lt;6000"</span>, <span class="st">"6000-15000"</span>, <span class="st">"15000-25000"</span>, <span class="st">"&gt;25000"</span>))</span>
+<span id="cb30-4"><a href=""></a>job<span class="sc">$</span>Satisfaction <span class="ot">&lt;-</span> <span class="fu">factor</span>(job<span class="sc">$</span>Satisfaction, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Very Dissatisfied"</span>, <span class="st">"A Little Dissatisfied"</span>, <span class="st">"Moderately Satisfied"</span>, <span class="st">"Very Satisfied"</span>))</span>
+<span id="cb30-5"><a href=""></a></span>
+<span id="cb30-6"><a href=""></a>loglin_job_1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> Income <span class="sc">+</span> Satisfaction, <span class="at">family =</span> poisson, <span class="at">data =</span> job)</span>
+<span id="cb30-7"><a href=""></a>loglin_job_2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> Income <span class="sc">*</span> Satisfaction, <span class="at">family =</span> poisson, <span class="at">data =</span> job)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="comparing-models" class="slide level2">
+<h2>Comparing models</h2>
+<p>As before, we can compare these models with a log-likelihood ratio test</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a><span class="fu">anova</span>(loglin_job_1, loglin_job_2, <span class="at">test =</span> <span class="st">"LRT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table
+
+Model 1: Count ~ Income + Satisfaction
+Model 2: Count ~ Income * Satisfaction
+  Resid. Df Resid. Dev Df Deviance Pr(&gt;Chi)
+1         9         12                     
+2         0          0  9       12     0.21</code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>On the basis of this, we prefer <code>loglin_job_1</code>, which does not have an interaction between <code>Income</code> and <code>Satisfaction</code>.</p>
+</div>
+</section>
+<section id="expected-cell-counts-for-loglin_job_1" class="slide level2">
+<h2>Expected cell counts for <code>loglin_job_1</code></h2>
+<p>The fitted values <span class="math inline">\(\hat{\mu}_i = \exp(\mathbf{x}_i^{\top} \hat{\boldsymbol{\beta}})\)</span> give us the expected counts in each cell of the contingency table.</p>
+<p><br></p>
+<div style="margin-top: -30pt;">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a>fit1_tab <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="fu">fitted</span>(loglin_job_1) <span class="sc">~</span> Income <span class="sc">+</span> Satisfaction, <span class="at">data =</span> job)</span>
+<span id="cb33-2"><a href=""></a><span class="co"># Puts Arbitrary Margins on Multidimensional Tables or Arrays</span></span>
+<span id="cb33-3"><a href=""></a><span class="fu">addmargins</span>(fit1_tab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Satisfaction
+Income        Very Dissatisfied A Little Dissatisfied Moderately Satisfied
+  &lt;6000                   14.18                 24.69                72.93
+  6000-15000              19.89                 34.64               102.32
+  15000-25000             16.17                 28.17                83.20
+  &gt;25000                  11.77                 20.50                60.54
+  Sum                     62.00                108.00               319.00
+             Satisfaction
+Income        Very Satisfied    Sum
+  &lt;6000                94.20 206.00
+  6000-15000          132.15 289.00
+  15000-25000         107.46 235.00
+  &gt;25000               78.19 171.00
+  Sum                 412.00 901.00</code></pre>
+</div>
+</div>
+</section>
+<section id="fitted-conditional-prob.-vevox.app-160-892-474" class="slide level2">
+<h2>Fitted conditional prob. (<a href="https://vevox.app/m#/160892474">vevox.app</a>, 160-892-474)</h2>
+<p>Under <code>loglin_job_1</code>, the expected cell counts for <code>Income</code> <span class="math inline">\(&lt; 6000\)</span> are</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a>fit1_tab[<span class="dv">1</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Very Dissatisfied A Little Dissatisfied  Moderately Satisfied 
+                14.18                 24.69                 72.93 
+       Very Satisfied 
+                94.20 </code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>Under this model, what is the estimate of the probability <span class="math display">\[\mathbb{P}(\text{Satisfaction = Very Satisfied} | \text{Income &lt; 6000})?\]</span></p>
+<ul>
+<li><span class="math inline">\(94.2 / 100 = 0.94\)</span></li>
+<li><span class="math inline">\(94.2 / (14.2 + 24.6 + 72.9) = 0.84\)</span></li>
+<li><span class="math inline">\(94.2 / (14.2 + 24.6 + 72.9 + 94.2) = 0.46\)</span></li>
+<li><span class="math inline">\(94.2 / 901 = 0.10\)</span></li>
+</ul>
+</div>
+</section>
+<section id="fitted-conditional-prob.-vevox.app-160-892-474-1" class="slide level2">
+<h2>Fitted conditional prob. (<a href="https://vevox.app/m#/160892474">vevox.app</a>, 160-892-474)</h2>
+<p>Under <code>loglin_job_1</code>, the expected cell counts for <code>Income</code> <span class="math inline">\(6000\text{-}15000\)</span> are</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a>fit1_tab[<span class="dv">2</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Very Dissatisfied A Little Dissatisfied  Moderately Satisfied 
+                19.89                 34.64                102.32 
+       Very Satisfied 
+               132.15 </code></pre>
+</div>
+</div>
+<div class="fragment">
+<p>Under this model, what is the estimate of the probability <span class="math display">\[\mathbb{P}(\text{Satisfaction = Very Satisfied} | \text{Income = 6000-15000})?\]</span></p>
+<ul>
+<li><span class="math inline">\(132.2 / (19.9 + 34.6 + 102.3) = 0.84\)</span></li>
+<li><span class="math inline">\(132.2 / (19.9 + 34.6 + 102.3 + 132.2) = 0.46\)</span></li>
+<li><span class="math inline">\(132.2 / 901 = 0.15\)</span></li>
+</ul>
+</div>
+</section>
+<section id="fitted-conditional-prob.-for-loglin_job_1" class="slide level2">
+<h2>Fitted conditional prob. for <code>loglin_job_1</code></h2>
+<p>The fitted conditional probability for each satisfaction level are</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a>fit1_tab[<span class="dv">1</span>,] <span class="sc">/</span> <span class="fu">sum</span>(fit1_tab[<span class="dv">1</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Very Dissatisfied A Little Dissatisfied  Moderately Satisfied 
+              0.06881               0.11987               0.35405 
+       Very Satisfied 
+              0.45727 </code></pre>
+</div>
+</div>
+<p>for <code>Income</code> <span class="math inline">\(&lt; 6000\)</span>, and</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a>fit1_tab[<span class="dv">2</span>,] <span class="sc">/</span> <span class="fu">sum</span>(fit1_tab[<span class="dv">2</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Very Dissatisfied A Little Dissatisfied  Moderately Satisfied 
+              0.06881               0.11987               0.35405 
+       Very Satisfied 
+              0.45727 </code></pre>
+</div>
+</div>
+<p>for <code>Income</code> <span class="math inline">\(6000\text{-}15000\)</span>.</p>
+<div class="fragment">
+<p>In fact, we get the <strong>same</strong> fitted conditional probabilities for each income. Under this model, <code>Income</code> and <code>Satisfaction</code> are <span class="alert"><strong>independent</strong></span>!</p>
+</div>
+</section>
+<section id="summary-2" class="slide level2">
+<h2>Summary</h2>
+<ul>
+<li>We have considered <span class="alert"><strong>multinomial</strong></span> and <span class="alert"><strong>product multinomial models</strong></span>, appropriate when the grand total or some margin is fixed. We can still analyse such contingency tables using a Poisson log-linear models, <span class="alert">provided we include certain terms (corresponding to the fixed margin) in the model</span>.</li>
+<li>We have seen an example of a log-linear model for a two-way table, with no interaction between classifying variables. For this model, we found that the classifying variables are independent of one another.</li>
+</ul>
+</section></section>
+<section>
+<section id="chapter-6-models-for-categorical-data-lecture-6.4-interpretation-for-two-way-tables" class="title-slide slide level1 center">
+<h1><span style="font-size: 42px; color: #131516; display: block; margin-bottom: -50px">Chapter 6: Models for Categorical Data</span> <br> Lecture 6.4 Interpretation for two-way tables</h1>
+
+</section>
+<section id="recap-2" class="slide level2">
+<h2>Recap</h2>
+<p>Last time we considered the implications of a log-linear model with no interaction term for the job dataset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a>job <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/job.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb43-2"><a href=""></a></span>
+<span id="cb43-3"><a href=""></a>job<span class="sc">$</span>Income <span class="ot">&lt;-</span> <span class="fu">factor</span>(job<span class="sc">$</span>Income, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"&lt;6000"</span>, <span class="st">"6000-15000"</span>, <span class="st">"15000-25000"</span>, <span class="st">"&gt;25000"</span>))</span>
+<span id="cb43-4"><a href=""></a>job<span class="sc">$</span>Satisfaction <span class="ot">&lt;-</span> <span class="fu">factor</span>(job<span class="sc">$</span>Satisfaction, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Very Dissatisfied"</span>, <span class="st">"A Little Dissatisfied"</span>, <span class="st">"Moderately Satisfied"</span>, <span class="st">"Very Satisfied"</span>))</span>
+<span id="cb43-5"><a href=""></a></span>
+<span id="cb43-6"><a href=""></a>loglin_job_1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> Income <span class="sc">+</span> Satisfaction, <span class="at">family =</span> poisson, <span class="at">data =</span> job)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We found that under this model, the fitted conditional probabilities for having each level of job satisfaction were the same for each income group.</p>
+<div class="fragment">
+<p>For this model for a two-way table, with no interaction (no <code>Income:Satisfaction</code> term), we find the the cross-classifying factors (<code>Income</code> and <code>Satisfaction</code>) are independent. Now, <span class="alert">we will show that this is true in general, and then go on to look at multi-way tables</span>.</p>
+</div>
+</section>
+<section id="interpretation-for-two-way-tables" class="slide level2">
+<h2>Interpretation for two-way tables</h2>
+<p>We consider a two-way <span class="math inline">\(r \times c\)</span> table where the two classifying variables <span class="math inline">\(R\)</span> and <span class="math inline">\(C\)</span> have <span class="math inline">\(r\)</span> and <span class="math inline">\(c\)</span> levels, respectively.</p>
+<div class="fragment">
+<p>The saturated model <span class="math inline">\(R*C\)</span> implies that the two variables are associated. If we remove the RC interaction, we have the model <span class="math inline">\(R+C\)</span>, <span class="math display">\[
+\log\mu_i=\alpha+\beta_R(r_i)+\beta_C(c_i),\qquad {i=1, \cdots, n}
+\]</span> where <span class="math inline">\(n=rc\)</span> is the total number of cells in the table.</p>
+</div>
+</section>
+<section id="cell-probabilities-in-main-effects-model" class="slide level2">
+<h2>Cell probabilities in main-effects model</h2>
+<p>Because of the equivalence of Poisson and multinomial sampling, we can think of each cell mean <span class="math inline">\(\mu_i\)</span> as equal to <span class="math inline">\(N \cdot p_i\)</span> where <span class="math inline">\(N\)</span> is the total number of observations in the table, and <span class="math inline">\(p_i\)</span> a cell probability.</p>
+<div class="fragment">
+<p>As each combination of levels of <span class="math inline">\(R\)</span> and <span class="math inline">\(C\)</span> is represented in exactly one cell, it is also convenient to replace the cell label <span class="math inline">\(i\)</span> by the pair of labels <span class="math inline">\(j\)</span> and <span class="math inline">\(k\)</span> representing the corresponding levels of <span class="math inline">\(R\)</span> and <span class="math inline">\(C\)</span> respectively. Hence <span class="math display">\[
+\log \left(p_{jk}\right) = \alpha + \beta_R(j) + \beta_C(k) - \log (N),
+\]</span> for <span class="math inline">\(j = 1, \cdots, r\)</span> and <span class="math inline">\(k = 1, \cdots, c\)</span>.</p>
+</div>
+</section>
+<section id="joint-row-and-column-probabilities" class="slide level2">
+<h2>Joint row and column probabilities</h2>
+<p>We have <span class="math display">\[
+\log \left(p_{jk}\right)=\alpha+\beta_R(j)+\beta_C(k)-\log(N),
+\]</span> and <span class="math display">\[
+\mathbb{P}(R=j,C=k)=\exp[\alpha+\beta_R(j)+\beta_C(k)-\log(N)],
+\]</span> for <span class="math inline">\(j=1, \cdots, r\)</span> and <span class="math inline">\(k=1, \cdots, c\)</span>.</p>
+<div class="fragment">
+<p>So,</p>
+<div style="margin-top: -20pt;">
+
+</div>
+<div class="small-text">
+<p><span class="math display">\[\begin{align*}
+1&amp;=\sum_{j=1}^r\sum_{k=1}^c\exp[\alpha+\beta_R(j)+\beta_C(k)-\log(N)]\cr
+&amp;={1\over N}\exp[\alpha]\sum_{j=1}^r\exp[\beta_R(j)]\sum_{k=1}^c\exp[\beta_C(k)].
+\end{align*}\]</span></p>
+</div>
+</div>
+</section>
+<section id="marginal-row-and-column-probabilities" class="slide level2">
+<h2>Marginal row and column probabilities</h2>
+<div class="small-text">
+<p>Since <span class="math display">\[
+\mathbb{P}(R=j,C=k)=\exp[\alpha+\beta_R(j)+\beta_C(k)-\log (N)],
+\]</span></p>
+<div class="fragment">
+<p>we have</p>
+<p><span class="math display">\[\begin{align*}
+\mathbb{P}(R=j)&amp;=\sum_{k=1}^c\exp[\alpha+\beta_R(j)+\beta_C(k)-\log(N)]\cr
+&amp;={1\over N}\exp[\alpha]\exp[\beta_R(j)]\sum_{k=1}^c\exp[\beta_C(k)],
+\quad j=1,\cdots,r,
+\end{align*}\]</span></p>
+</div>
+<div class="fragment">
+<p>and</p>
+<p><span class="math display">\[\begin{align*}
+\mathbb{P}(C=k)&amp;=\sum_{j=1}^r\exp[\alpha+\beta_R(j)+\beta_C(k)-\log(N)]\cr
+&amp;={1\over N}\exp[\alpha]\exp[\beta_C(k)]\sum_{j=1}^r\exp[\beta_R(j)],
+\quad k=1,\cdots,c.
+\end{align*}\]</span></p>
+</div>
+</div>
+</section>
+<section id="independence-of-cross-classifying-variables" class="slide level2">
+<h2>Independence of cross-classifying variables</h2>
+<div class="small-text">
+<p>Therefore, <span class="math display">\[\begin{align*}
+\mathbb{P}(R=j)\mathbb{P}(C=k) &amp;=
+{1\over N}\exp[\alpha]\exp[\beta_R(j)]\sum_{k=1}^c\exp[\beta_C(k)] \times \\
+&amp;\phantom{=|\;}{1\over N}\exp[\alpha]\exp[\beta_C(k)]\sum_{j=1}^r\exp[\beta_R(j)] \\
+&amp;={1\over N}\exp[\alpha]\exp[\beta_C(k)]\exp[\beta_R(j)] \times \\
+&amp;\phantom{=|\;}{1\over N}\exp[\alpha]\sum_{j=1}^r\exp[\beta_R(j)] \sum_{k=1}^c\exp[\beta_C(k)] \\
+&amp;={1\over N}\exp[\alpha]\exp[\beta_C(k)]\exp[\beta_R(j)]\times 1 \\
+&amp;=\mathbb{P}(R=j,C=k)
+\end{align*}\]</span> for <span class="math inline">\(j = 1, \cdots, r\)</span> and <span class="math inline">\(k = 1, \cdots, c\)</span>.</p>
+</div>
+</section>
+<section id="independence-of-cross-classifying-variables-1" class="slide level2">
+<h2>Independence of cross-classifying variables</h2>
+<p>Absence of the interaction <span class="math inline">\(R*C\)</span> in a log-linear model implies that <span class="math inline">\(R\)</span> and <span class="math inline">\(C\)</span> are independent variables.</p>
+<p><span class="alert">Absence of main effects is generally less interesting</span>, and main effects are typically not removed from a log-linear model for a contingency table.</p>
+</section>
+<section id="interpretation-for-multi-way-tables" class="slide level2">
+<h2>Interpretation for multi-way tables</h2>
+<p>In multi-way tables, absence of a two-factor interaction does not necessarily mean that the two variables are independent.</p>
+<div class="fragment">
+<p>For example, consider the <code>lymphoma</code> dataset, with 3 binary classifying variables <code>Sex</code> (<span class="math inline">\(S\)</span>), <code>Cell type</code> (<span class="math inline">\(C\)</span>) and <code>Remission</code> (<span class="math inline">\(R\)</span>).</p>
+<p>After comparing the fit of several possible models, we find that a reasonable log-linear model for these data is <span class="math inline">\(R * C + C * S\)</span>.</p>
+<p>Hence the interaction between <code>Remission</code> and <code>Sex</code> is absent.</p>
+<div style="margin-top: 20pt;">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a>lymphoma <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/lymphoma.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb44-2"><a href=""></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> Remis <span class="sc">*</span> Cell <span class="sc">+</span> Cell <span class="sc">*</span> Sex, <span class="at">data =</span> lymphoma, <span class="at">family =</span> poisson)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="expected-cell-counts-vevox.app-160-892-474-2" class="slide level2">
+<h2>Expected cell counts (<a href="https://vevox.app/m#/160892474">vevox.app</a>, 160-892-474)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a><span class="fu">coef</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         (Intercept)             RemisYes          CellNodular 
+               1.261               -2.015               -0.648 
+             SexMale RemisYes:CellNodular  CellNodular:SexMale 
+               1.179                3.219               -1.649 </code></pre>
+</div>
+</div>
+<p>Which of the following would give the expected count of <span class="alert"><em>female patients</em></span> with <span class="alert"><em>nodular cell type who were in remission</em></span> under model <code>mod</code>?</p>
+<ul>
+<li><span class="math inline">\(\exp(1.261) = 3.53\)</span></li>
+<li><span class="math inline">\(\exp(1.261 -2.015 -0.648) = 0.25\)</span></li>
+<li><span class="math inline">\(\exp(1.261 -2.015 -0.648 + 3.219) = 6.15\)</span></li>
+<li><span class="math inline">\(\exp(1.261 - 2.015 - 0.648 + 1.179 + 3.219 - 1.649) = 3.85\)</span></li>
+</ul>
+</section>
+<section id="expected-cell-counts" class="slide level2">
+<h2>Expected cell counts</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="fu">xtabs</span>(<span class="fu">fitted</span>(mod) <span class="sc">~</span> Cell <span class="sc">+</span> Sex <span class="sc">+</span> Remis, <span class="at">data =</span> lymphoma)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>, , Remis = No
+
+         Sex
+Cell       Female    Male
+  Diffuse  3.5294 11.4706
+  Nodular  1.8462  1.1538
+
+, , Remis = Yes
+
+         Sex
+Cell       Female    Male
+  Diffuse  0.4706  1.5294
+  Nodular  6.1538  3.8462</code></pre>
+</div>
+</div>
+</section>
+<section id="fitted-cell-probabilities" class="slide level2">
+<h2>Fitted cell probabilities</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a>N <span class="ot">&lt;-</span> <span class="fu">sum</span>(lymphoma<span class="sc">$</span>Count)</span>
+<span id="cb49-2"><a href=""></a>p <span class="ot">&lt;-</span> <span class="fu">fitted</span>(mod) <span class="sc">/</span> N</span>
+<span id="cb49-3"><a href=""></a></span>
+<span id="cb49-4"><a href=""></a><span class="fu">xtabs</span>(p <span class="sc">~</span> Cell <span class="sc">+</span> Sex <span class="sc">+</span> Remis, <span class="at">data =</span> lymphoma)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>, , Remis = No
+
+         Sex
+Cell       Female    Male
+  Diffuse 0.11765 0.38235
+  Nodular 0.06154 0.03846
+
+, , Remis = Yes
+
+         Sex
+Cell       Female    Male
+  Diffuse 0.01569 0.05098
+  Nodular 0.20513 0.12821</code></pre>
+</div>
+</div>
+</section>
+<section id="marginal-cell-probabilities" class="slide level2">
+<h2>Marginal cell probabilities</h2>
+<p>The estimated probabilities for the two-way <code>Sex</code>/<code>Remission</code> margin are</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href=""></a>lymphoma_p_table <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="fu">fitted</span>(mod) <span class="sc">~</span> Cell <span class="sc">+</span> Sex <span class="sc">+</span> Remis, <span class="at">data =</span> lymphoma)</span>
+<span id="cb51-2"><a href=""></a>lymphoma_p_margins <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(lymphoma_p_table, <span class="at">margin =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb51-3"><a href=""></a>lymphoma_p_margins <span class="ot">&lt;-</span> <span class="fu">addmargins</span>(lymphoma_p_margins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<div style="margin-top: -40pt;">
+
+</div>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Sex</th>
+<th>Remission: No</th>
+<th>Remission: Yes</th>
+<th><strong>Sum</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Female</td>
+<td>0.1792</td>
+<td>0.2208</td>
+<td><strong>0.4</strong></td>
+</tr>
+<tr class="even">
+<td>Male</td>
+<td>0.4208</td>
+<td>0.1792</td>
+<td><strong>0.6</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>Sum</strong></td>
+<td><strong>0.6</strong></td>
+<td><strong>0.4</strong></td>
+<td><strong>1.0</strong></td>
+</tr>
+</tbody>
+</table>
+<div style="margin-top: 20pt;">
+
+</div>
+<div class="fragment">
+<p>The estimated conditional probability of remission is <span class="math inline">\(0.2208/ 0.4 = 0.55\)</span> for female patients, and <span class="math inline">\(0.1792 / 0.6 = 0.30\)</span> for male patients.</p>
+<p>So, <span class="alert">remission (<span class="math inline">\(R\)</span>) and sex (<span class="math inline">\(S\)</span>) are <strong>not</strong> independent</span>.</p>
+</div>
+</section>
+<section id="conditional-independence" class="slide level2">
+<h2>Conditional independence</h2>
+<p>What the model <span class="math inline">\(R*C+C*S\)</span> implies is that <span class="math inline">\(R\)</span> is independent of <span class="math inline">\(S\)</span> <strong>conditional on</strong> <span class="math inline">\(C\)</span>, that is <span class="math display">\[
+\mathbb{P}(R,S|C)=\mathbb{P}(R|C)\mathbb{P}(S|C).
+\]</span></p>
+<div class="fragment">
+<p>Another way of expressing this is <span class="math display">\[
+\mathbb{P}(R|S,C)=\mathbb{P}(R|C),
+\]</span> that is, the probability of each level of <span class="math inline">\(R\)</span> given a particular combination of <span class="math inline">\(S\)</span> and <span class="math inline">\(C\)</span>, does not depend on which level <span class="math inline">\(S\)</span> takes.</p>
+<p>Equivalently, we can write <span class="math inline">\(\mathbb{P}(S|R,C)=\mathbb{P}(S|C)\)</span>.</p>
+</div>
+</section>
+<section id="conditional-probs.-and-conditional-independence" class="slide level2">
+<h2>Conditional probs. and conditional independence</h2>
+<p>This can be observed by calculating the estimated conditional probabilities of remission for the <code>lymphoma</code> dataset.</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 10%">
+<col style="width: 21%">
+<col style="width: 22%">
+<col style="width: 31%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Cell Type</th>
+<th>Sex</th>
+<th>Remission: No</th>
+<th>Remission: Yes</th>
+<th><span class="math inline">\(\hat{\mathbb{P}}(R \mid S, C)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Diffuse</td>
+<td>Female</td>
+<td>0.1176</td>
+<td>0.0157</td>
+<td>0.12</td>
+</tr>
+<tr class="even">
+<td>Diffuse</td>
+<td>Male</td>
+<td>0.3824</td>
+<td>0.0510</td>
+<td>0.12</td>
+</tr>
+<tr class="odd">
+<td>Nodular</td>
+<td>Female</td>
+<td>0.0615</td>
+<td>0.2051</td>
+<td>0.77</td>
+</tr>
+<tr class="even">
+<td>Nodular</td>
+<td>Male</td>
+<td>0.0385</td>
+<td>0.1282</td>
+<td>0.77</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>The probability of remission given <code>Cell type</code> and <code>Sex</code> depend only on a patient’s <code>Cell type</code>, and not on their <code>Sex</code>.</p>
+<p>So, <span class="math inline">\(\mathbb{P}(R|S, C) = \mathbb{P}(R|C)\)</span>, and <span class="alert"><span class="math inline">\(R\)</span> is independent of <span class="math inline">\(S\)</span>, given <span class="math inline">\(C\)</span></span>.</p>
+</div>
+</section>
+<section id="interpretation-for-lymphoma-example" class="slide level2">
+<h2>Interpretation for <code>lymphoma</code> example</h2>
+<p>Although <span class="math inline">\(R\)</span> and <span class="math inline">\(S\)</span> are conditionally independent given <span class="math inline">\(C\)</span>, they are <span class="alert"><strong>not</strong> marginally independent</span>. Male patients have a much lower probability of remission.</p>
+<div class="fragment">
+<p>Observing the estimated values it is clear that patients with nodular cell type have a greater probability of remission, and furthermore, that female patients are more likely to have this cell type than males. Thus, women are more likely to be in remission than men.</p>
+</div>
+</section>
+<section id="summary-3" class="slide level2">
+<h2>Summary</h2>
+<ul>
+<li>In two-way tables, if there is <span class="alert">no interaction between the two cross classifying variables</span>, then <span class="alert">those two variable are independent</span>.</li>
+<li>In three-way tables, we have seen an <span class="alert">example</span> with no interaction between a pair of variables, in which those variables were <span class="alert">conditionally independent given the remaining variable</span>.</li>
+<li>Next, we will see a general result on conditional independence in multiway tables.</li>
+</ul>
+</section></section>
+<section>
+<section id="chapter-6-models-for-categorical-data-lecture-6.5-interpretation-for-multiway-tables" class="title-slide slide level1 center">
+<h1><span style="font-size: 42px; color: #131516; display: block; margin-bottom: -50px">Chapter 6: Models for Categorical Data</span> <br> Lecture 6.5 Interpretation for multiway tables</h1>
+
+</section>
+<section id="recap-3" class="slide level2">
+<h2>Recap</h2>
+<ul>
+<li>In two-way tables, if there is <span class="alert">no interaction between the two cross classifying variables</span>, then <span class="alert">those two variable are independent</span>.</li>
+<li>In three-way tables, we have seen an <span class="alert">example</span> with no interaction between a pair of variables (<span class="math inline">\(R\)</span> and <span class="math inline">\(S\)</span>), in which those variables were <span class="alert">conditionally independent given the remaining variable</span> (<span class="math inline">\(C\)</span>).</li>
+</ul>
+<div class="fragment">
+<p>Let’s look at a general result on conditional independence in multiway tables.</p>
+</div>
+</section>
+<section id="general-result-on-conditional-independence" class="slide level2">
+<h2>General result on conditional independence</h2>
+<p>In general, suppose we have an <span class="math inline">\(r\)</span>-way contingency table with classifying variables <span class="math inline">\(X_1, \cdots ,X_r\)</span>.</p>
+<p>A log linear model which does not contain the <span class="math inline">\(X_1 * X_2\)</span> interaction implies that <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are <span class="alert"><strong>conditionally independent</strong></span> given <span class="math inline">\(X_3, \cdots, X_r\)</span>, that is <span class="math display">\[
+\mathbb{P}(X_1,X_2|X_3,\cdots ,X_r)=\mathbb{P}(X_1|X_3,\cdots ,X_r)\mathbb{P}(X_2|X_3,\cdots ,X_r).
+\]</span></p>
+<p><br></p>
+<div style="margin-top: -20pt;">
+
+</div>
+<div class="fragment">
+<p><em>The proof is similar to the two-way case; therefore, we will <strong>not</strong> present it here</em>.</p>
+</div>
+</section>
+<section id="implications-for-three-way-tables" class="slide level2">
+<h2>Implications for three-way tables</h2>
+<p>Suppose the factors for a three-way tables are <span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span> and <span class="math inline">\(X_3\)</span>. We can list all models and the implications for the conditional independence structure</p>
+<ol type="1">
+<li><span class="alert"><strong>Model 1</strong></span> containing the terms <span class="math inline">\(X_1, X_2, X_3\)</span>. All factors are mutually independent.</li>
+<li><span class="alert"><strong>Model 2</strong></span> containing the terms <span class="math inline">\(X_1*X_2, X_3\)</span>. The factor <span class="math inline">\(X_3\)</span> is jointly independent of <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>.</li>
+<li><span class="alert"><strong>Model 3</strong></span> containing the terms <span class="math inline">\(X_1*X_2, X_2*X_3\)</span>. The factors <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_3\)</span> are conditionally independent given <span class="math inline">\(X_2\)</span>.</li>
+<li><span class="alert"><strong>Model 4</strong></span> containing the terms <span class="math inline">\(X_1*X_2, X_2*X_3, X_1*X_3\)</span>. There is no conditional independence structure. This is the model without the highest order interaction term.</li>
+<li><span class="alert"><strong>Model 5</strong></span> containing <span class="math inline">\(X_1*X_2*X_3\)</span>. This is the saturated model. No more simplification of dependence structure is possible.</li>
+</ol>
+</section>
+<section id="interpreting-four-way-table-vevox.app-160-892-474" class="slide level2">
+<h2>Interpreting four-way table (<a href="https://vevox.app/m#/160892474">vevox.app</a>, 160-892-474)</h2>
+<p>Suppose that we have a four-way table, cross-clasitified by variables <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span>, and <span class="math inline">\(D\)</span>.</p>
+<div style="margin-top: -15pt;">
+
+</div>
+<p>Suppose we fit the model</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href=""></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> A <span class="sc">+</span> A<span class="sc">*</span>B <span class="sc">+</span> B<span class="sc">*</span>C <span class="sc">+</span> C<span class="sc">*</span>D, <span class="at">family =</span> <span class="st">"Poisson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Under the model <code>mod</code>, which of the following statements are true? Select all that apply.</p>
+<ul>
+<li><span class="math inline">\(A\)</span> is independent of <span class="math inline">\(B\)</span>.</li>
+<li><span class="math inline">\(A\)</span> is conditionally independent of <span class="math inline">\(B\)</span> given <span class="math inline">\(C\)</span> and <span class="math inline">\(D\)</span>.</li>
+<li><span class="math inline">\(A\)</span> is conditionally independent of <span class="math inline">\(D\)</span> given <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span>.</li>
+<li><span class="math inline">\(B\)</span> is conditionally independent of <span class="math inline">\(C\)</span> given <span class="math inline">\(A\)</span> and <span class="math inline">\(D\)</span>.</li>
+<li><span class="math inline">\(B\)</span> is conditionally independent of <span class="math inline">\(D\)</span> given <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span>.</li>
+</ul>
+</section>
+<section id="simpsons-paradox" class="slide level2">
+<h2>Simpson’s paradox</h2>
+<p>In 1972-74, a survey of women was carried out in an area of Newcastle. A follow-up survey was carried out 20 years later.</p>
+<p>A summary of the responses is</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 9%">
+<col style="width: 12%">
+<col style="width: 65%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Smoker</th>
+<th>Dead</th>
+<th>Alive</th>
+<th><span class="math inline">\(\hat{\mathbb{P}}(\text{Dead} \mid \text{Smoker})\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Yes</td>
+<td>139</td>
+<td>443</td>
+<td>0.24</td>
+</tr>
+<tr class="even">
+<td>No</td>
+<td>230</td>
+<td>502</td>
+<td>0.31</td>
+</tr>
+</tbody>
+</table>
+<p>Looking at this table, it appears that the non-smokers had a greater probability of dying: <span class="alert"><strong>can that be right?</strong></span></p>
+</section>
+<section id="simpsons-paradox-explained" class="slide level2">
+<h2>Simpson’s paradox explained</h2>
+<p>There is an important extra variable to be considered, related to both smoking habit and mortality–<span class="alert"><strong>age</strong></span> (at the time of the initial survey).</p>
+<div class="fragment">
+<p>When we consider this variable, we get</p>
+<div class="small-text">
+<table class="caption-top">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 9%">
+<col style="width: 7%">
+<col style="width: 9%">
+<col style="width: 63%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Age</th>
+<th>Smoker</th>
+<th>Dead</th>
+<th>Alive</th>
+<th><span class="math inline">\(\hat{\mathbb{P}}(\text{Dead} \mid \text{Age}, \text{Smoker})\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>18–34</td>
+<td>Yes</td>
+<td>5</td>
+<td>174</td>
+<td>0.03</td>
+</tr>
+<tr class="even">
+<td>18–34</td>
+<td>No</td>
+<td>6</td>
+<td>213</td>
+<td>0.03</td>
+</tr>
+<tr class="odd">
+<td>35–44</td>
+<td>Yes</td>
+<td>14</td>
+<td>95</td>
+<td>0.13</td>
+</tr>
+<tr class="even">
+<td>35–44</td>
+<td>No</td>
+<td>7</td>
+<td>114</td>
+<td>0.06</td>
+</tr>
+<tr class="odd">
+<td>45–54</td>
+<td>Yes</td>
+<td>27</td>
+<td>103</td>
+<td>0.21</td>
+</tr>
+<tr class="even">
+<td>45–54</td>
+<td>No</td>
+<td>12</td>
+<td>66</td>
+<td>0.15</td>
+</tr>
+<tr class="odd">
+<td>55–64</td>
+<td>Yes</td>
+<td>51</td>
+<td>64</td>
+<td>0.44</td>
+</tr>
+<tr class="even">
+<td>55–64</td>
+<td>No</td>
+<td>40</td>
+<td>81</td>
+<td>0.33</td>
+</tr>
+<tr class="odd">
+<td>65–74</td>
+<td>Yes</td>
+<td>29</td>
+<td>7</td>
+<td>0.81</td>
+</tr>
+<tr class="even">
+<td>65–74</td>
+<td>No</td>
+<td>101</td>
+<td>28</td>
+<td>0.78</td>
+</tr>
+<tr class="odd">
+<td>75–</td>
+<td>Yes</td>
+<td>13</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>75–</td>
+<td>No</td>
+<td>64</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="simpsons-paradox-explained-1" class="slide level2">
+<h2>Simpson’s paradox explained</h2>
+<p><span class="alert">Conditional on every age at outset</span>, it is now the <span class="alert">smokers who have a higher probability of dying</span>.</p>
+<div class="fragment">
+<p>The marginal association is reversed in the table conditional on age, because mortality and smoking are associated with age. There are proportionally many fewer smokers in the older age-groups (where the probability of death is greater).</p>
+</div>
+<div class="fragment">
+<p>When making inferences about associations between variables, <strong>it is important that all other variables which are relevant are considered</strong>. <span class="alert"><strong>Marginal inferences may lead to misleading conclusions</strong></span>.</p>
+</div>
+</section>
+<section id="summary-4" class="slide level2">
+<h2>Summary</h2>
+<ul>
+<li>We have seen how to interpret log-linear models in terms of (conditional) independence between variables.</li>
+<li>We have seen through Simpson’s paradox how marginal associations can mask or reverse true conditional relationships.</li>
+</ul>
+<div style="margin-top: 80pt;">
+
+</div>
+<div class="centering fragment">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Mission Accomplished</strong></p>
+</div>
+<div class="callout-content">
+<p><span class="alert"><strong>This completes the lecture material!</strong></span></p>
+</div>
+</div>
+</div>
+</div>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 

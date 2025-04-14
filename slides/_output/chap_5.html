@@ -408,7 +408,7 @@
     </div>
 </div>
 
-  <p class="date">19/03/2025</p>
+  <p class="date">14/04/2025</p>
 </section>
 <section id="preface" class="slide level2">
 <h2>Preface</h2>
@@ -523,11 +523,6 @@
 <h2>Linear model quiz 03 (<a href="https://vevox.app/m#/160892474">vevox.app</a>, 160-892-474)</h2>
 
 <img data-src="chap_5_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"><p>Does it look like a linear model might be appropriate here?</p>
-</section>
-<section id="linear-model-quiz-04-vevox.app-160-892-474" class="slide level2">
-<h2>Linear model quiz 04 (<a href="https://vevox.app/m#/160892474">vevox.app</a>, 160-892-474)</h2>
-
-<img data-src="chap_5_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"><p>Does it look like a linear model might be appropriate here?</p>
 </section>
 <section id="introduction" class="slide level2">
 <h2>Introduction</h2>
@@ -1012,7 +1007,7 @@ b(p) = \log(1 + \exp p)
 <span id="cb1-3"><a href=""></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Linear predictor"</span>, <span class="at">y =</span> <span class="st">"Mean (prob.)"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">family =</span> <span class="st">"LM Roman 10"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="chap_5_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"><p>Is this a suitable inverse link function for the Bernoulli and Binomial cases?</p>
+<img data-src="chap_5_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"><p>Is this a suitable inverse link function for the Bernoulli and Binomial cases?</p>
 </section>
 <section id="inverse-of-the-canonical-link-bernoulli-and-binomial-ii-vevox.app-160-892-474" class="slide level2">
 <h2>Inverse of the canonical link (Bernoulli and Binomial) II (<a href="https://vevox.app/m#/160892474">vevox.app</a>, 160-892-474)</h2>
@@ -1022,7 +1017,7 @@ b(p) = \log(1 + \exp p)
 <span id="cb2-3"><a href=""></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Linear predictor"</span>, <span class="at">y =</span> <span class="st">"Mean (prob.)"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">family =</span> <span class="st">"LM Roman 10"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="chap_5_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"><p>Is this a suitable inverse link function for the Bernoulli and Binomial cases?</p>
+<img data-src="chap_5_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"><p>Is this a suitable inverse link function for the Bernoulli and Binomial cases?</p>
 </section>
 <section id="probit-model-bernoulli-and-binomial" class="slide level2">
 <h2>Probit model (Bernoulli and Binomial)</h2>
@@ -1044,7 +1039,7 @@ p_i = \Phi\left(\mathbf{x}_i^{\top}\boldsymbol{\beta}\right)~~~\text{or (equival
 <span id="cb3-3"><a href=""></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Linear predictor"</span>, <span class="at">y =</span> <span class="st">"Mean (prob.)"</span>) <span class="sc">+</span> <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">number_format</span>(<span class="at">accuracy =</span> <span class="fl">0.01</span>)) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">family =</span> <span class="st">"LM Roman 10"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="chap_5_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"><p>Is this a suitable inverse link function for the Bernoulli and Binomial cases?</p>
+<img data-src="chap_5_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"><p>Is this a suitable inverse link function for the Bernoulli and Binomial cases?</p>
 </section>
 <section id="inverse-of-the-canonical-link-bernoulli-and-binomial-iv-vevox.app-160-892-474" class="slide level2">
 <h2>Inverse of the canonical link (Bernoulli and Binomial) IV (<a href="https://vevox.app/m#/160892474">vevox.app</a>, 160-892-474)</h2>
@@ -1054,7 +1049,7 @@ p_i = \Phi\left(\mathbf{x}_i^{\top}\boldsymbol{\beta}\right)~~~\text{or (equival
 <span id="cb4-3"><a href=""></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Linear predictor"</span>, <span class="at">y =</span> <span class="st">"Mean (prob.)"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">family =</span> <span class="st">"LM Roman 10"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="chap_5_files/figure-revealjs/unnamed-chunk-8-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"><p>Is this a suitable inverse link function for the Bernoulli and Binomial cases?</p>
+<img data-src="chap_5_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"><p>Is this a suitable inverse link function for the Bernoulli and Binomial cases?</p>
 </section>
 <section id="effect-of-link-functions-in-practice" class="slide level2">
 <h2>Effect of link functions in practice</h2>
@@ -1099,7 +1094,7 @@ p_i = \Phi\left(\mathbf{x}_i^{\top}\boldsymbol{\beta}\right)~~~\text{or (equival
 <span id="cb11-5"><a href=""></a><span class="fu">ggplot</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">rep</span>(new_doses<span class="sc">$</span>dose, <span class="dv">2</span>), <span class="at">y =</span> <span class="fu">c</span>(pred_logit, pred_probit), <span class="at">link =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Logit"</span>, <span class="st">"Probit"</span>), <span class="at">each =</span> <span class="fu">length</span>(new_doses<span class="sc">$</span>dose)))) <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">colour =</span> link)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> beetle, <span class="fu">aes</span>(<span class="at">x =</span> dose, <span class="at">y =</span> prop_killed), <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Logit"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"Probit"</span> <span class="ot">=</span> <span class="st">"red"</span>), <span class="at">name =</span> <span class="st">"Link function"</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Dose"</span>, <span class="at">y =</span> <span class="st">"Fitted mean (prob.)"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>, <span class="at">family =</span> <span class="st">"LM Roman 10"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="chap_5_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
+<img data-src="chap_5_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
 <section id="glm-examples-count-data" class="slide level2">
 <h2>GLM examples: count data</h2>
 <p>If <span class="math inline">\(Y_i\)</span> represent counts of the number of times an event occurs in a fixed time (or a fixed region of space), we might model <span class="math inline">\(Y_i \sim \text{Poisson}(\lambda_i)\)</span>.</p>
@@ -1176,7 +1171,7 @@ pollution      2.990    0.01486   201.2        0</code></pre>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="chap_5_files/figure-revealjs/unnamed-chunk-14-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+<p><img data-src="chap_5_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
 </figure>
 </div>
 </div>
@@ -1433,7 +1428,7 @@ u(\hat{\beta}) = 0.
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="chap_5_files/figure-revealjs/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center" width="480"></p>
+<p><img data-src="chap_5_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center" width="480"></p>
 </figure>
 </div>
 </div>
@@ -1457,7 +1452,7 @@ u(\hat{\beta}) = 0.
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="chap_5_files/figure-revealjs/unnamed-chunk-17-1.png" class="quarto-figure quarto-figure-center" width="480"></p>
+<p><img data-src="chap_5_files/figure-revealjs/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center" width="480"></p>
 </figure>
 </div>
 </div>
@@ -2675,14 +2670,14 @@ r^D_i=\text{sign}\left(y_i-\hat{\mu}_i^{(0)}\right) \cdot
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href=""></a><span class="fu">plot</span>(<span class="fu">predict</span>(beetle_logit), resid_deviance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="chap_5_files/figure-revealjs/unnamed-chunk-39-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
+<img data-src="chap_5_files/figure-revealjs/unnamed-chunk-38-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
 <section id="plotting-the-pearson-residuals-in-r" class="slide level2">
 <h2>Plotting the pearson residuals in <code>R</code></h2>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href=""></a><span class="fu">plot</span>(<span class="fu">predict</span>(beetle_logit), resid_pearson)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="chap_5_files/figure-revealjs/unnamed-chunk-40-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
+<img data-src="chap_5_files/figure-revealjs/unnamed-chunk-39-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
 <section id="summary-7" class="slide level2">
 <h2>Summary</h2>
 <ul>
