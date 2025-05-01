@@ -11,6 +11,7 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="André Victor Ribeiro Amaral">
+  <meta name="dcterms.date" content="2025-01-05">
   <title>Statistical Modelling II (MATH3091)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -408,7 +409,7 @@
     </div>
 </div>
 
-  <p class="date">14/04/2025</p>
+  <p class="date">01/05/2025</p>
 </section>
 <section id="preface" class="slide level2">
 <h2>Preface</h2>
@@ -513,7 +514,7 @@
 <h2>Introduction</h2>
 <p>A particularly important application of generalised linear models is the analysis of <span class="alert"><strong>categorical data</strong></span>.</p>
 <div class="fragment">
-<p>Here, the data are observations of one or more categorical variables on each of a number of units (often individuals). Therefore, each of the units are <strong>cross-classified</strong> by the categorical variables.</p>
+<p>Here, the data are observations of one or more categorical variables for each of a number of units (often individuals). Therefore, each of the units are <strong>cross-classified</strong> by the categorical variables.</p>
 </div>
 <div class="fragment">
 <p>For example, the <code>job</code> dataset gives the job satisfaction and income band of 901 individuals from the 1984 General Social Survey.</p>
@@ -1810,7 +1811,7 @@ N!\prod_{i=1}^n \frac{p_i^{y_i}}{y_i!} &amp; \text{if $\sum_{i=1}^n y_i=N$} \\
 <p><strong>Important</strong></p>
 </div>
 <div class="callout-content">
-<p>The maximum likelihood estimates for multinomial log-linear parameters are identical to those for Poisson log-linear parameters (with intercept). Furthermore, the maximised log-likelihoods for both Poisson and multinomial models take the form <span class="math inline">\(\sum_{i=1}^ny_i\log\hat{\mu}_i\)</span>, where <span class="math inline">\(\hat{\mu}_i = \mathbf{x}_i^{\top} \boldsymbol{\hat{\beta}}\)</span>.</p>
+<p>The maximum likelihood estimates for multinomial log-linear parameters are identical to those for Poisson log-linear parameters (with intercept). Furthermore, the maximised log-likelihoods for both Poisson and multinomial models take the form <span class="math inline">\(\sum_{i=1}^ny_i\log\hat{\mu}_i\)</span>, where <span class="math inline">\(\log \hat{\mu}_i = \mathbf{x}_i^{\top} \boldsymbol{\hat{\beta}}\)</span>.</p>
 </div>
 </div>
 </div>

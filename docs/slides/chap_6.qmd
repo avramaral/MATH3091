@@ -58,7 +58,7 @@ These slides are based on material written by previous lecturers of this course,
 A particularly important application of generalised linear models is the analysis of [**categorical data**]{.alert}. 
 
 :::{.fragment}
-Here, the data are observations of one or more categorical variables on each of a number of units (often individuals). Therefore, each of the units are **cross-classified** by the categorical variables.
+Here, the data are observations of one or more categorical variables for each of a number of units (often individuals). Therefore, each of the units are **cross-classified** by the categorical variables.
 :::
 
 :::{.fragment}
@@ -642,7 +642,7 @@ Suppose we model instead $Y_i \sim \text{Poisson}(\mu_i)$, where $\log \mu_i = \
 $\log \mu_i = \beta_1 + \sum_{j=2}^p x_{ij} \beta_j$.
 
 :::{.callout-important .fragment}
-The maximum likelihood estimates for multinomial log-linear parameters are identical to those for Poisson log-linear parameters (with intercept). Furthermore, the maximised log-likelihoods for both Poisson and multinomial models take the form $\sum_{i=1}^ny_i\log\hat{\mu}_i$, where $\hat{\mu}_i = \mathbf{x}_i^{\top} \boldsymbol{\hat{\beta}}$.
+The maximum likelihood estimates for multinomial log-linear parameters are identical to those for Poisson log-linear parameters (with intercept). Furthermore, the maximised log-likelihoods for both Poisson and multinomial models take the form $\sum_{i=1}^ny_i\log\hat{\mu}_i$, where $\log \hat{\mu}_i = \mathbf{x}_i^{\top} \boldsymbol{\hat{\beta}}$.
 :::
 
 :::{.fragment}
