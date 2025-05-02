@@ -658,14 +658,13 @@ So [any inferences based on maximised log-likelihoods (such as likelihood ratio 
 :::
 
 :::{.fragment}
-Therefore, we can analyse contingency table data using Poisson log-linear models, even when the data has been obtained by multinomial sampling. All that is required is that we ensure that the Poisson model
-contains an intercept term.
+Therefore, we can analyse contingency table data using Poisson log-linear models, even when the data has been obtained by multinomial sampling. [**All that is required is that we ensure that the Poisson model
+contains an intercept term.**]{.alert}
 :::
-
 
 ## Sampling with fixed margins
 
-Sometimes [**margins other than just the grand total may be pre-specified**].
+Sometimes [**margins other than just the grand total may be pre-specified**]{.alert}.
 
 For example, consider the `lymphoma` contingency table.
 
