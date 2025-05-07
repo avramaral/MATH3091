@@ -662,6 +662,42 @@ Therefore, we can analyse contingency table data using Poisson log-linear models
 contains an intercept term.**]{.alert}
 :::
 
+## Example in `R` (Part 1)
+
+```{r, echo = TRUE}
+# Create dataset (long format)
+df <- as_tibble(data.frame(A = c(0, 0, 1, 1),
+                           B = c(0, 1, 0, 1),
+                           count = c(3, 2, 4, 1)))
+
+df
+
+# Contingency table
+ct <- xtabs(count ~ A + B, data = df)
+ct <- addmargins(ct)
+
+ct
+```
+
+## Example in `R` (Part 2)
+
+```{r, echo = TRUE}
+# Fit models
+mod1 <-  glm(formula = count ~ 0 + A + B, family = "poisson", data = df)
+mod2 <-  glm(formula = count ~ 1 + A + B, family = "poisson", data = df)
+
+ct1 <- xtabs(fitted(mod1) ~ A + B, data = df)
+ct2 <- xtabs(fitted(mod2) ~ A + B, data = df)
+
+ct1 <- addmargins(ct1)
+ct2 <- addmargins(ct2)
+
+# Fitted values without intercept
+ct1
+# Fitted values with intercept
+ct2
+```
+
 ## Sampling with fixed margins
 
 Sometimes [**margins other than just the grand total may be pre-specified**]{.alert}.
