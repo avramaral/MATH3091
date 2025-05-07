@@ -1986,17 +1986,86 @@ $\sum_{i=1}^4 y_{fi}=N_f$} \\
 <h2>Analysis using Poisson log-linear models</h2>
 <p>Using similar reasoning to the multinomial sampling case, <span class="alert">we can analyse contingency table data using Poisson log-linear models, even when the data has been obtained by product multinomial sampling</span>.</p>
 <div class="fragment">
-<p>However, we must ensure that the Poisson model contains a term corresponding to the fixed margin (and all marginal terms). Then, the estimated means for the specified margin are equal to the corresponding fixed totals.</p>
+<p>However, <span class="alert"><strong>we must ensure that the Poisson model contains a term corresponding to the fixed margin (and all marginal terms)</strong></span>. Then, the estimated means for the specified margin are equal to the corresponding fixed totals.</p>
+</div>
+<div class="fragment">
+<p>Therefore, when analysing product multinomial data using a Poisson log-linear model, certain terms <strong>must</strong> be present in any model we fit. If they are removed, the inferences would <span class="alert"><strong>no longer be valid</strong></span>.</p>
 </div>
 </section>
 <section id="example-lymphoma-data" class="slide level2">
 <h2>Example: <code>lymphoma</code> data</h2>
+<div class="small-text">
 <p>For the <code>lymphoma</code> dataset, for inferences obtained using a Poisson model to be valid when the <code>Sex</code> margin is fixed in advance, the Poisson model must contain the <code>Sex</code> main effect (and the <code>intercept</code>).</p>
-<div class="fragment">
-<p>For inferences obtained using a Poisson model to be valid when the <code>Cell Type</code>/<code>Sex</code> margin is fixed in advance, the Poisson model must contain the <code>Cell Type</code>/<code>Sex</code> interaction, and all marginal terms (the <code>Cell Type</code> main effect, the <code>Sex</code> main effect, and the <code>intercept</code>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a>mod_sex <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Sex, <span class="at">data =</span> lymphoma, <span class="at">family =</span> poisson)</span>
+<span id="cb38-2"><a href=""></a></span>
+<span id="cb38-3"><a href=""></a><span class="co"># Female: 12, Male: 18</span></span>
+<span id="cb38-4"><a href=""></a>ct_sex <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="fu">fitted</span>(mod_sex) <span class="sc">~</span> Cell <span class="sc">+</span> Remis <span class="sc">+</span> Sex , <span class="at">data =</span> lymphoma)</span>
+<span id="cb38-5"><a href=""></a><span class="fu">addmargins</span>(ct_sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>, , Sex = Female
+
+         Remis
+Cell        No  Yes  Sum
+  Diffuse  3.0  3.0  6.0
+  Nodular  3.0  3.0  6.0
+  Sum      6.0  6.0 12.0
+
+, , Sex = Male
+
+         Remis
+Cell        No  Yes  Sum
+  Diffuse  4.5  4.5  9.0
+  Nodular  4.5  4.5  9.0
+  Sum      9.0  9.0 18.0
+
+, , Sex = Sum
+
+         Remis
+Cell        No  Yes  Sum
+  Diffuse  7.5  7.5 15.0
+  Nodular  7.5  7.5 15.0
+  Sum     15.0 15.0 30.0</code></pre>
 </div>
-<div class="fragment">
-<p>Therefore, when analysing product multinomial data using a Poisson log-linear model, certain terms <strong>must</strong> be present in any model we fit. If they are removed, the inferences would no longer be valid.</p>
+</div>
+</div>
+</section>
+<section id="example-lymphoma-data-1" class="slide level2">
+<h2>Example: <code>lymphoma</code> data</h2>
+<div class="small-text">
+<p>For inferences obtained using a Poisson model to be valid when the <code>Cell Type</code>/<code>Sex</code> margin is fixed in advance, the Poisson model must contain the <code>Cell Type</code>/<code>Sex</code> interaction, and all marginal terms (the <code>Cell Type</code> main effect, the <code>Sex</code> main effect, and the <code>intercept</code>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a>mod_cell_sex <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Cell <span class="sc">+</span> Sex <span class="sc">+</span> Cell<span class="sc">:</span>Sex, <span class="at">data =</span> lymphoma, <span class="at">family =</span> poisson)</span>
+<span id="cb40-2"><a href=""></a></span>
+<span id="cb40-3"><a href=""></a><span class="co"># Female and Diffuse : 4, Female and Nodular: 8, Male and Diffuse: 13, Male and Nodular: 5</span></span>
+<span id="cb40-4"><a href=""></a>ct_cell_sex <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="fu">fitted</span>(mod_cell_sex) <span class="sc">~</span> Remis <span class="sc">+</span> Cell <span class="sc">+</span> Sex, <span class="at">data =</span> lymphoma)</span>
+<span id="cb40-5"><a href=""></a><span class="fu">addmargins</span>(ct_cell_sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>, , Sex = Female
+
+     Cell
+Remis Diffuse Nodular  Sum
+  No      2.0     4.0  6.0
+  Yes     2.0     4.0  6.0
+  Sum     4.0     8.0 12.0
+
+, , Sex = Male
+
+     Cell
+Remis Diffuse Nodular  Sum
+  No      6.5     2.5  9.0
+  Yes     6.5     2.5  9.0
+  Sum    13.0     5.0 18.0
+
+, , Sex = Sum
+
+     Cell
+Remis Diffuse Nodular  Sum
+  No      8.5     6.5 15.0
+  Yes     8.5     6.5 15.0
+  Sum    17.0    13.0 30.0</code></pre>
+</div>
+</div>
 </div>
 </section>
 <section id="interpreting-log-linear-models" class="slide level2">
@@ -2087,20 +2156,20 @@ $\sum_{i=1}^4 y_{fi}=N_f$} \\
 
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a>job <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/job.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb38-2"><a href=""></a></span>
-<span id="cb38-3"><a href=""></a>job<span class="sc">$</span>Income <span class="ot">&lt;-</span> <span class="fu">factor</span>(job<span class="sc">$</span>Income, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"&lt;6000"</span>, <span class="st">"6000-15000"</span>, <span class="st">"15000-25000"</span>, <span class="st">"&gt;25000"</span>))</span>
-<span id="cb38-4"><a href=""></a>job<span class="sc">$</span>Satisfaction <span class="ot">&lt;-</span> <span class="fu">factor</span>(job<span class="sc">$</span>Satisfaction, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Very Dissatisfied"</span>, <span class="st">"A Little Dissatisfied"</span>, <span class="st">"Moderately Satisfied"</span>, <span class="st">"Very Satisfied"</span>))</span>
-<span id="cb38-5"><a href=""></a></span>
-<span id="cb38-6"><a href=""></a>loglin_job_1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> Income <span class="sc">+</span> Satisfaction, <span class="at">family =</span> poisson, <span class="at">data =</span> job)</span>
-<span id="cb38-7"><a href=""></a>loglin_job_2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> Income <span class="sc">*</span> Satisfaction, <span class="at">family =</span> poisson, <span class="at">data =</span> job)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a>job <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/job.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb42-2"><a href=""></a></span>
+<span id="cb42-3"><a href=""></a>job<span class="sc">$</span>Income <span class="ot">&lt;-</span> <span class="fu">factor</span>(job<span class="sc">$</span>Income, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"&lt;6000"</span>, <span class="st">"6000-15000"</span>, <span class="st">"15000-25000"</span>, <span class="st">"&gt;25000"</span>))</span>
+<span id="cb42-4"><a href=""></a>job<span class="sc">$</span>Satisfaction <span class="ot">&lt;-</span> <span class="fu">factor</span>(job<span class="sc">$</span>Satisfaction, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Very Dissatisfied"</span>, <span class="st">"A Little Dissatisfied"</span>, <span class="st">"Moderately Satisfied"</span>, <span class="st">"Very Satisfied"</span>))</span>
+<span id="cb42-5"><a href=""></a></span>
+<span id="cb42-6"><a href=""></a>loglin_job_1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> Income <span class="sc">+</span> Satisfaction, <span class="at">family =</span> poisson, <span class="at">data =</span> job)</span>
+<span id="cb42-7"><a href=""></a>loglin_job_2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> Income <span class="sc">*</span> Satisfaction, <span class="at">family =</span> poisson, <span class="at">data =</span> job)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="comparing-models" class="slide level2">
 <h2>Comparing models</h2>
 <p>As before, we can compare these models with a log-likelihood ratio test</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a><span class="fu">anova</span>(loglin_job_1, loglin_job_2, <span class="at">test =</span> <span class="st">"LRT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a><span class="fu">anova</span>(loglin_job_1, loglin_job_2, <span class="at">test =</span> <span class="st">"LRT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Deviance Table
 
@@ -2123,9 +2192,9 @@ Model 2: Count ~ Income * Satisfaction
 
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a>fit1_tab <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="fu">fitted</span>(loglin_job_1) <span class="sc">~</span> Income <span class="sc">+</span> Satisfaction, <span class="at">data =</span> job)</span>
-<span id="cb41-2"><a href=""></a><span class="co"># Puts Arbitrary Margins on Multidimensional Tables or Arrays</span></span>
-<span id="cb41-3"><a href=""></a><span class="fu">addmargins</span>(fit1_tab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a>fit1_tab <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="fu">fitted</span>(loglin_job_1) <span class="sc">~</span> Income <span class="sc">+</span> Satisfaction, <span class="at">data =</span> job)</span>
+<span id="cb45-2"><a href=""></a><span class="co"># Puts Arbitrary Margins on Multidimensional Tables or Arrays</span></span>
+<span id="cb45-3"><a href=""></a><span class="fu">addmargins</span>(fit1_tab)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Satisfaction
 Income        Very Dissatisfied A Little Dissatisfied Moderately Satisfied
@@ -2148,7 +2217,7 @@ Income        Very Satisfied    Sum
 <h2>Fitted conditional prob. (<a href="https://vevox.app/m#/160892474">vevox.app</a>, 160-892-474)</h2>
 <p>Under <code>loglin_job_1</code>, the expected cell counts for <code>Income</code> <span class="math inline">\(&lt; 6000\)</span> are</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a>fit1_tab[<span class="dv">1</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a>fit1_tab[<span class="dv">1</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Very Dissatisfied A Little Dissatisfied  Moderately Satisfied 
                 14.18                 24.69                 72.93 
@@ -2170,7 +2239,7 @@ Income        Very Satisfied    Sum
 <h2>Fitted conditional prob. (<a href="https://vevox.app/m#/160892474">vevox.app</a>, 160-892-474)</h2>
 <p>Under <code>loglin_job_1</code>, the expected cell counts for <code>Income</code> <span class="math inline">\(6000\text{-}15000\)</span> are</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a>fit1_tab[<span class="dv">2</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a>fit1_tab[<span class="dv">2</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Very Dissatisfied A Little Dissatisfied  Moderately Satisfied 
                 19.89                 34.64                102.32 
@@ -2191,7 +2260,7 @@ Income        Very Satisfied    Sum
 <h2>Fitted conditional prob. for <code>loglin_job_1</code></h2>
 <p>The fitted conditional probability for each satisfaction level are</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a>fit1_tab[<span class="dv">1</span>,] <span class="sc">/</span> <span class="fu">sum</span>(fit1_tab[<span class="dv">1</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href=""></a>fit1_tab[<span class="dv">1</span>,] <span class="sc">/</span> <span class="fu">sum</span>(fit1_tab[<span class="dv">1</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Very Dissatisfied A Little Dissatisfied  Moderately Satisfied 
               0.06881               0.11987               0.35405 
@@ -2201,7 +2270,7 @@ Income        Very Satisfied    Sum
 </div>
 <p>for <code>Income</code> <span class="math inline">\(&lt; 6000\)</span>, and</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a>fit1_tab[<span class="dv">2</span>,] <span class="sc">/</span> <span class="fu">sum</span>(fit1_tab[<span class="dv">2</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href=""></a>fit1_tab[<span class="dv">2</span>,] <span class="sc">/</span> <span class="fu">sum</span>(fit1_tab[<span class="dv">2</span>,])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Very Dissatisfied A Little Dissatisfied  Moderately Satisfied 
               0.06881               0.11987               0.35405 
@@ -2230,12 +2299,12 @@ Income        Very Satisfied    Sum
 <h2>Recap</h2>
 <p>Last time we considered the implications of a log-linear model with no interaction term for the job dataset.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href=""></a>job <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/job.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb51-2"><a href=""></a></span>
-<span id="cb51-3"><a href=""></a>job<span class="sc">$</span>Income <span class="ot">&lt;-</span> <span class="fu">factor</span>(job<span class="sc">$</span>Income, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"&lt;6000"</span>, <span class="st">"6000-15000"</span>, <span class="st">"15000-25000"</span>, <span class="st">"&gt;25000"</span>))</span>
-<span id="cb51-4"><a href=""></a>job<span class="sc">$</span>Satisfaction <span class="ot">&lt;-</span> <span class="fu">factor</span>(job<span class="sc">$</span>Satisfaction, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Very Dissatisfied"</span>, <span class="st">"A Little Dissatisfied"</span>, <span class="st">"Moderately Satisfied"</span>, <span class="st">"Very Satisfied"</span>))</span>
-<span id="cb51-5"><a href=""></a></span>
-<span id="cb51-6"><a href=""></a>loglin_job_1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> Income <span class="sc">+</span> Satisfaction, <span class="at">family =</span> poisson, <span class="at">data =</span> job)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href=""></a>job <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/job.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb55-2"><a href=""></a></span>
+<span id="cb55-3"><a href=""></a>job<span class="sc">$</span>Income <span class="ot">&lt;-</span> <span class="fu">factor</span>(job<span class="sc">$</span>Income, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"&lt;6000"</span>, <span class="st">"6000-15000"</span>, <span class="st">"15000-25000"</span>, <span class="st">"&gt;25000"</span>))</span>
+<span id="cb55-4"><a href=""></a>job<span class="sc">$</span>Satisfaction <span class="ot">&lt;-</span> <span class="fu">factor</span>(job<span class="sc">$</span>Satisfaction, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Very Dissatisfied"</span>, <span class="st">"A Little Dissatisfied"</span>, <span class="st">"Moderately Satisfied"</span>, <span class="st">"Very Satisfied"</span>))</span>
+<span id="cb55-5"><a href=""></a></span>
+<span id="cb55-6"><a href=""></a>loglin_job_1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> Income <span class="sc">+</span> Satisfaction, <span class="at">family =</span> poisson, <span class="at">data =</span> job)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We found that under this model, the fitted conditional probabilities for having each level of job satisfaction were the same for each income group.</p>
 <div class="fragment">
@@ -2334,15 +2403,15 @@ Income        Very Satisfied    Sum
 
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href=""></a>lymphoma <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/lymphoma.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb52-2"><a href=""></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> Remis <span class="sc">*</span> Cell <span class="sc">+</span> Cell <span class="sc">*</span> Sex, <span class="at">data =</span> lymphoma, <span class="at">family =</span> poisson)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href=""></a>lymphoma <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/lymphoma.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb56-2"><a href=""></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> Remis <span class="sc">*</span> Cell <span class="sc">+</span> Cell <span class="sc">*</span> Sex, <span class="at">data =</span> lymphoma, <span class="at">family =</span> poisson)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
 <section id="expected-cell-counts-vevox.app-160-892-474-2" class="slide level2">
 <h2>Expected cell counts (<a href="https://vevox.app/m#/160892474">vevox.app</a>, 160-892-474)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href=""></a><span class="fu">coef</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href=""></a><span class="fu">coef</span>(mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         (Intercept)             RemisYes          CellNodular 
                1.261               -2.015               -0.648 
@@ -2361,7 +2430,7 @@ Income        Very Satisfied    Sum
 <section id="expected-cell-counts" class="slide level2">
 <h2>Expected cell counts</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href=""></a><span class="fu">xtabs</span>(<span class="fu">fitted</span>(mod) <span class="sc">~</span> Cell <span class="sc">+</span> Sex <span class="sc">+</span> Remis, <span class="at">data =</span> lymphoma)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href=""></a><span class="fu">xtabs</span>(<span class="fu">fitted</span>(mod) <span class="sc">~</span> Cell <span class="sc">+</span> Sex <span class="sc">+</span> Remis, <span class="at">data =</span> lymphoma)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>, , Remis = No
 
@@ -2382,10 +2451,10 @@ Cell       Female    Male
 <section id="fitted-cell-probabilities" class="slide level2">
 <h2>Fitted cell probabilities</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href=""></a>N <span class="ot">&lt;-</span> <span class="fu">sum</span>(lymphoma<span class="sc">$</span>Count)</span>
-<span id="cb57-2"><a href=""></a>p <span class="ot">&lt;-</span> <span class="fu">fitted</span>(mod) <span class="sc">/</span> N</span>
-<span id="cb57-3"><a href=""></a></span>
-<span id="cb57-4"><a href=""></a><span class="fu">xtabs</span>(p <span class="sc">~</span> Cell <span class="sc">+</span> Sex <span class="sc">+</span> Remis, <span class="at">data =</span> lymphoma)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href=""></a>N <span class="ot">&lt;-</span> <span class="fu">sum</span>(lymphoma<span class="sc">$</span>Count)</span>
+<span id="cb61-2"><a href=""></a>p <span class="ot">&lt;-</span> <span class="fu">fitted</span>(mod) <span class="sc">/</span> N</span>
+<span id="cb61-3"><a href=""></a></span>
+<span id="cb61-4"><a href=""></a><span class="fu">xtabs</span>(p <span class="sc">~</span> Cell <span class="sc">+</span> Sex <span class="sc">+</span> Remis, <span class="at">data =</span> lymphoma)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>, , Remis = No
 
@@ -2407,9 +2476,9 @@ Cell       Female    Male
 <h2>Marginal cell probabilities</h2>
 <p>The estimated probabilities for the two-way <code>Sex</code>/<code>Remission</code> margin are</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href=""></a>lymphoma_p_table <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="fu">fitted</span>(mod) <span class="sc">~</span> Cell <span class="sc">+</span> Sex <span class="sc">+</span> Remis, <span class="at">data =</span> lymphoma)</span>
-<span id="cb59-2"><a href=""></a>lymphoma_p_margins <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(lymphoma_p_table, <span class="at">margin =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
-<span id="cb59-3"><a href=""></a>lymphoma_p_margins <span class="ot">&lt;-</span> <span class="fu">addmargins</span>(lymphoma_p_margins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href=""></a>lymphoma_p_table <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="fu">fitted</span>(mod) <span class="sc">~</span> Cell <span class="sc">+</span> Sex <span class="sc">+</span> Remis, <span class="at">data =</span> lymphoma)</span>
+<span id="cb63-2"><a href=""></a>lymphoma_p_margins <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(lymphoma_p_table, <span class="at">margin =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb63-3"><a href=""></a>lymphoma_p_margins <span class="ot">&lt;-</span> <span class="fu">addmargins</span>(lymphoma_p_margins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br></p>
 <div style="margin-top: -40pt;">
@@ -2584,7 +2653,7 @@ Cell       Female    Male
 </div>
 <p>Suppose we fit the model</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href=""></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> A <span class="sc">+</span> A<span class="sc">*</span>B <span class="sc">+</span> B<span class="sc">*</span>C <span class="sc">+</span> C<span class="sc">*</span>D, <span class="at">family =</span> <span class="st">"Poisson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href=""></a>mod <span class="ot">&lt;-</span> <span class="fu">glm</span>(Count <span class="sc">~</span> A <span class="sc">+</span> A<span class="sc">*</span>B <span class="sc">+</span> B<span class="sc">*</span>C <span class="sc">+</span> C<span class="sc">*</span>D, <span class="at">family =</span> <span class="st">"Poisson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Under the model <code>mod</code>, which of the following statements are true? Select all that apply.</p>
 <ul>

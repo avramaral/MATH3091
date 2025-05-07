@@ -759,23 +759,41 @@ where
 Using similar reasoning to the multinomial sampling case, [we can analyse contingency table data using Poisson log-linear models, even when the data has been obtained by product multinomial sampling]{.alert}.
 
 :::{.fragment}
-However, we must ensure that the Poisson model contains a term corresponding to the fixed margin
-(and all marginal terms). Then, the estimated means for the specified margin are equal to the corresponding
-fixed totals.
+However, [**we must ensure that the Poisson model contains a term corresponding to the fixed margin
+(and all marginal terms)**]{.alert}. Then, the estimated means for the specified margin are equal to the corresponding fixed totals.
+:::
+
+:::{.fragment}
+Therefore, when analysing product multinomial data using a Poisson log-linear model, certain terms **must** be present in any model we fit. If they are removed, the inferences would [**no longer be
+valid**]{.alert}.
 :::
 
 ## Example: `lymphoma` data
 
+:::{.small-text}
 For the `lymphoma` dataset, for inferences obtained using a Poisson model to be valid when the `Sex` margin is fixed in advance, the Poisson model must contain the `Sex` main effect (and the `intercept`).
 
-:::{.fragment}
+```{r, echo = TRUE}
+mod_sex <- glm(Count ~ 1 + Sex, data = lymphoma, family = poisson)
+
+# Female: 12, Male: 18
+ct_sex <- xtabs(fitted(mod_sex) ~ Cell + Remis + Sex , data = lymphoma)
+addmargins(ct_sex)
+```
+:::
+## Example: `lymphoma` data
+
+:::{.small-text}
 For inferences obtained using a Poisson model to be valid when the `Cell Type`/`Sex` margin is fixed in advance, the Poisson model must contain the `Cell Type`/`Sex` interaction, and all marginal terms
 (the `Cell Type` main effect, the `Sex` main effect, and the `intercept`).
-:::
 
-:::{.fragment}
-Therefore, when analysing product multinomial data using a Poisson log-linear model, certain terms **must** be present in any model we fit. If they are removed, the inferences would no longer be
-valid.
+```{r, echo = TRUE}
+mod_cell_sex <- glm(Count ~ 1 + Cell + Sex + Cell:Sex, data = lymphoma, family = poisson)
+
+# Female and Diffuse : 4, Female and Nodular: 8, Male and Diffuse: 13, Male and Nodular: 5
+ct_cell_sex <- xtabs(fitted(mod_cell_sex) ~ Remis + Cell + Sex, data = lymphoma)
+addmargins(ct_cell_sex)
+```
 :::
 
 ## Interpreting log-linear models
