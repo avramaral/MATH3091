@@ -1149,13 +1149,14 @@ Equivalently, we can write $\mathbb{P}(S|R,C)=\mathbb{P}(S|C)$.
 
 This can be observed by calculating the estimated conditional probabilities of remission for the `lymphoma` dataset.
 
-
+:::{.small-text}
 | Cell Type | Sex    | Remission: No | Remission: Yes | $\hat{\mathbb{P}}(R \mid S, C)$ |
 |-----------|--------|----------------|-----------------|------------------------|
 | Diffuse   | Female | 0.1176         | 0.0157          | 0.12                   |
 | Diffuse   | Male   | 0.3824         | 0.0510          | 0.12                   |
 | Nodular   | Female | 0.0615         | 0.2051          | 0.77                   |
 | Nodular   | Male   | 0.0385         | 0.1282          | 0.77                   |
+:::
 
 :::{.fragment}
 The probability of remission given `Cell type` and `Sex` depend only on a patient's `Cell type`, and not on their `Sex`.
@@ -1163,6 +1164,11 @@ The probability of remission given `Cell type` and `Sex` depend only on a patien
 So, $\mathbb{P}(R|S, C) = \mathbb{P}(R|C)$, and [$R$ is independent of $S$, given $C$]{.alert}.
 :::
 
+:::{.fragment}
+Although $R$ and $S$ are conditionally independent given $C$, they are [**not** marginally independent]{.alert}.
+:::
+
+<!--
 ## Interpretation for `lymphoma` example
 
 Although $R$ and $S$ are conditionally independent given $C$, they are [**not** marginally independent]{.alert}. Male patients have a much lower probability of remission.
@@ -1171,6 +1177,7 @@ Although $R$ and $S$ are conditionally independent given $C$, they are [**not** 
 Observing the estimated values it is clear that patients with nodular cell type have a greater probability of remission, and furthermore, that female patients are more likely to have this cell type than males.
 Thus, women are more likely to be in remission than men.
 :::
+-->
 
 ## Summary
 

@@ -23,4 +23,4 @@ This chapter introduces Generalised Linear Models (GLMs). It covers the exponent
 ### :bar_chart: **Chapter 06: Models for Categorical Data**  
 This chapter covers the analysis of categorical data using contingency tables and log-linear models. It also explores multinomial sampling, as well as the interpretation of log-linear models for two-way and multiway tables.
 
-- :page_facing_up: [Chapter 6](/slides/_output/chap_6.html) (last updated on 07/05/2025)
+- :page_facing_up: [Chapter 6](/slides/_output/chap_6.html) (last updated on 08/05/2025)

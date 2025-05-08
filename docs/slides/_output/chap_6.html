@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="André Victor Ribeiro Amaral">
-  <meta name="dcterms.date" content="2025-07-05">
+  <meta name="dcterms.date" content="2025-08-05">
   <title>Statistical Modelling II (MATH3091)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -409,7 +409,7 @@
     </div>
 </div>
 
-  <p class="date">07/05/2025</p>
+  <p class="date">08/05/2025</p>
 </section>
 <section id="preface" class="slide level2">
 <h2>Preface</h2>
@@ -2537,6 +2537,7 @@ Cell       Female    Male
 <section id="conditional-probs.-and-conditional-independence" class="slide level2">
 <h2>Conditional probs. and conditional independence</h2>
 <p>This can be observed by calculating the estimated conditional probabilities of remission for the <code>lymphoma</code> dataset.</p>
+<div class="small-text">
 <table class="caption-top">
 <colgroup>
 <col style="width: 14%">
@@ -2585,17 +2586,24 @@ Cell       Female    Male
 </tr>
 </tbody>
 </table>
+</div>
 <div class="fragment">
 <p>The probability of remission given <code>Cell type</code> and <code>Sex</code> depend only on a patient’s <code>Cell type</code>, and not on their <code>Sex</code>.</p>
 <p>So, <span class="math inline">\(\mathbb{P}(R|S, C) = \mathbb{P}(R|C)\)</span>, and <span class="alert"><span class="math inline">\(R\)</span> is independent of <span class="math inline">\(S\)</span>, given <span class="math inline">\(C\)</span></span>.</p>
 </div>
-</section>
-<section id="interpretation-for-lymphoma-example" class="slide level2">
-<h2>Interpretation for <code>lymphoma</code> example</h2>
-<p>Although <span class="math inline">\(R\)</span> and <span class="math inline">\(S\)</span> are conditionally independent given <span class="math inline">\(C\)</span>, they are <span class="alert"><strong>not</strong> marginally independent</span>. Male patients have a much lower probability of remission.</p>
 <div class="fragment">
-<p>Observing the estimated values it is clear that patients with nodular cell type have a greater probability of remission, and furthermore, that female patients are more likely to have this cell type than males. Thus, women are more likely to be in remission than men.</p>
+<p>Although <span class="math inline">\(R\)</span> and <span class="math inline">\(S\)</span> are conditionally independent given <span class="math inline">\(C\)</span>, they are <span class="alert"><strong>not</strong> marginally independent</span>.</p>
 </div>
+<!--
+## Interpretation for `lymphoma` example
+
+Although $R$ and $S$ are conditionally independent given $C$, they are [**not** marginally independent]{.alert}. Male patients have a much lower probability of remission.
+
+:::{.fragment}
+Observing the estimated values it is clear that patients with nodular cell type have a greater probability of remission, and furthermore, that female patients are more likely to have this cell type than males.
+Thus, women are more likely to be in remission than men.
+:::
+-->
 </section>
 <section id="summary-3" class="slide level2">
 <h2>Summary</h2>
