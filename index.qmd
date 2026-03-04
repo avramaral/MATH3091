@@ -8,9 +8,9 @@ format:
     from: markdown+emoji
 ---
 
-Welcome to the second part of **[MATH3091: Statistical Modelling II]{.attention}**. The first part of the module was taught by Dr Helen Ogden, covering Chapters 1–4 from the lecture notes (see below). This part will focus on **Generalised Linear Models (Chapter 5)** and **Models for Categorical Data (Chapter 6)**.
+Welcome to the second part of **[MATH3091: Statistical Modelling II]{.attention}**. The first part of the module was taught by Dr Chao Zheng, covering Chapters 1–4 from the lecture notes (see below). This part will focus on **Generalised Linear Models (Chapter 5)** and **Models for Categorical Data (Chapter 6)**.
 
-📖 **Lecture Notes:** [Available here](https://heogden.github.io/math3091/){target="_blank"}
+📖 **Lecture Notes:** <a href="slides/MATH3091_notes.pdf" download>Available here</a>
 
 ---
 
