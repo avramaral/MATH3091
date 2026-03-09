@@ -554,14 +554,14 @@ Returning to our previous example, we can compute the canonical link function fo
 
 Recall that, for the Bernoulli distribution (previous lecture),
 $$
-b(p) = \log(1 + \exp p)
+b(\theta) = \log(1 + \exp \theta)
 $$
 Thus, the canonical link is 
 \begin{align*}
-\frac{d}{dp}b(p) = b'(p) &= \frac{\exp p}{1 + \exp p} \\
-                   \mu   &=  \frac{\exp p}{1 + \exp p} \implies p = \log\left(\frac{\mu}{1 - \mu}\right) = \text{logit}(\mu),
+\frac{d}{d\theta}b(\theta) = b'(\theta) &= \frac{\exp \theta}{1 + \exp \theta} \\
+                   \mu   &=  \frac{\exp \theta}{1 + \exp \theta} \implies \theta = \log\left(\frac{\mu}{1 - \mu}\right) = \text{logit}(\mu),
 \end{align*}
-i.e., the canonical link function for this example is $g(\mu) = \text{logit}(\mu)$.
+i.e., the canonical link function for this example is $g(\mu) = \text{logit}(\mu)$. This follows since $\theta = b^{'-1}(\mu)$ and, for the canonical link function, $g(\mu)\equiv b^{'-1}(\mu)$. 
 
 ## Canonical link functions
 

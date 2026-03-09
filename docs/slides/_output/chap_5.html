@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.8.24">
 
   <meta name="author" content="André Victor Ribeiro Amaral">
-  <meta name="dcterms.date" content="2026-04-03">
+  <meta name="dcterms.date" content="2026-09-03">
   <title>Statistical Modelling II (MATH3091)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -211,7 +211,7 @@
     </div>
 </div>
 
-  <p class="date">04/03/2026</p>
+  <p class="date">09/03/2026</p>
 </section>
 <section id="preface" class="slide level2">
 <h2>Preface</h2>
@@ -696,11 +696,11 @@ g(\mu)\equiv b^{'-1}(\mu)
 <h2>Bernoulli example</h2>
 <p>Returning to our previous example, we can compute the canonical link function for <span class="math inline">\(Y \sim \text{Bernoulli}(p)\)</span>, where <span class="math inline">\(\mu = \mathbb{E}(Y) = p\)</span>.</p>
 <p>Recall that, for the Bernoulli distribution (previous lecture), <span class="math display">\[
-b(p) = \log(1 + \exp p)
+b(\theta) = \log(1 + \exp \theta)
 \]</span> Thus, the canonical link is <span class="math display">\[\begin{align*}
-\frac{d}{dp}b(p) = b'(p) &amp;= \frac{\exp p}{1 + \exp p} \\
-                   \mu   &amp;=  \frac{\exp p}{1 + \exp p} \implies p = \log\left(\frac{\mu}{1 - \mu}\right) = \text{logit}(\mu),
-\end{align*}\]</span> i.e., the canonical link function for this example is <span class="math inline">\(g(\mu) = \text{logit}(\mu)\)</span>.</p>
+\frac{d}{d\theta}b(\theta) = b'(\theta) &amp;= \frac{\exp \theta}{1 + \exp \theta} \\
+                   \mu   &amp;=  \frac{\exp \theta}{1 + \exp \theta} \implies \theta = \log\left(\frac{\mu}{1 - \mu}\right) = \text{logit}(\mu),
+\end{align*}\]</span> i.e., the canonical link function for this example is <span class="math inline">\(g(\mu) = \text{logit}(\mu)\)</span>. This follows since <span class="math inline">\(\theta = b^{'-1}(\mu)\)</span> and, for the canonical link function, <span class="math inline">\(g(\mu)\equiv b^{'-1}(\mu)\)</span>.</p>
 </section>
 <section id="canonical-link-functions" class="slide level2">
 <h2>Canonical link functions</h2>
