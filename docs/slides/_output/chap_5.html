@@ -857,7 +857,7 @@ p_i = \Phi\left(\mathbf{x}_i^{\top}\boldsymbol{\beta}\right)~~~\text{or (equival
 </section>
 <section id="effect-of-link-functions-in-practice" class="slide level2">
 <h2>Effect of link functions in practice</h2>
-<p>The choice of link function (e.g.&nbsp;between the <code>logit</code> or <code>probit</code> link) will have a large impact on the estimated parameters <span class="math inline">\(\boldsymbol{\beta}\)</span>.</p>
+<p>The choice of link function (e.g.&nbsp;between the <code>logit</code> or <code>probit</code>) will have a large impact on the estimated parameters <span class="math inline">\(\boldsymbol{\beta}\)</span> (<code>beetle</code> <span class="alert">is analysed in Lab 05</span>).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>beetle</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -1027,11 +1027,11 @@ g(\mu_i) = \eta_i.
 \]</span> and depends on <span class="math inline">\(\boldsymbol{\beta}\)</span> through <span class="math display">\[\begin{align*}
 \theta_i &amp;= b^{' -1}(\mu_i), \cr
 \mu_i &amp;= g^{-1}(\eta_i), \cr
-\eta_i&amp;=\mathbf{x}_i^{\top}\boldsymbol{\beta}=\sum_{i=1}^p x_{ij} \beta_j, \quad i = 1, \cdots, n.
+\eta_i&amp;=\mathbf{x}_i^{\top}\boldsymbol{\beta}=\sum_{j=1}^p x_{ij} \beta_j, \quad i = 1, \cdots, n.
 \end{align*}\]</span></p>
 </section>
-<section id="fitting-a-glm-in-r-from-computer-lab" class="slide level2">
-<h2>Fitting a GLM in <code>R</code> (from Computer Lab)</h2>
+<section id="fitting-a-glm-in-r-from-computer-lab-05" class="slide level2">
+<h2>Fitting a GLM in <code>R</code> (from <span class="alert">Computer Lab 05</span>)</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>beetle <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/beetle.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb17-2"><a href=""></a>beetle<span class="sc">$</span>exposed     <span class="ot">&lt;-</span> beetle<span class="sc">$</span>dead <span class="sc">+</span> beetle<span class="sc">$</span>alive</span>
