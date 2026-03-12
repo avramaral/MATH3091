@@ -25,6 +25,14 @@ date-format: "DD/MM/YYYY"
 knitr::opts_chunk$set(include = TRUE)
 options(digits = 4)
 library("tidyverse")
+
+library("showtext")
+
+font_add(
+  family = "LM Roman 10",
+  regular = "/Users/avra1d24/Library/Fonts/lmroman10-regular.otf"
+)
+showtext_auto()
 ```
 
 ## Preface
@@ -561,7 +569,9 @@ Thus, the canonical link is
 \frac{d}{d\theta}b(\theta) = b'(\theta) &= \frac{\exp \theta}{1 + \exp \theta} \\
                    \mu   &=  \frac{\exp \theta}{1 + \exp \theta} \implies \theta = \log\left(\frac{\mu}{1 - \mu}\right) = \text{logit}(\mu),
 \end{align*}
-i.e., the canonical link function for this example is $g(\mu) = \text{logit}(\mu)$. This follows since $\theta = b^{'-1}(\mu)$ and, for the canonical link function, $g(\mu)\equiv b^{'-1}(\mu)$. 
+i.e., the canonical link function for this example is $g(\mu) = \text{logit}(\mu)$. 
+<!--
+This follows since $\theta = b^{'-1}(\mu)$ and, for the canonical link function, $g(\mu)\equiv b^{'-1}(\mu)$. -->
 
 ## Canonical link functions
 
