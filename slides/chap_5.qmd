@@ -697,7 +697,7 @@ Is this a suitable inverse link function for the Bernoulli and Binomial cases?
 
 ## Effect of link functions in practice
 
-The choice of link function (e.g. between the `logit` or `probit` link) will have a large impact on the estimated parameters $\boldsymbol{\beta}$.
+The choice of link function (e.g. between the `logit` or `probit`) will have a large impact on the estimated parameters $\boldsymbol{\beta}$ (`beetle` [is analysed in Lab 05]{.alert}).
 
 ```{r, echo = FALSE}
 beetle <- read_csv("data/beetle.csv", show_col_types = FALSE)
@@ -854,10 +854,10 @@ and depends on $\boldsymbol{\beta}$ through
 \begin{align*}
 \theta_i &= b^{' -1}(\mu_i), \cr
 \mu_i &= g^{-1}(\eta_i), \cr
-\eta_i&=\mathbf{x}_i^{\top}\boldsymbol{\beta}=\sum_{i=1}^p x_{ij} \beta_j, \quad i = 1, \cdots, n.
+\eta_i&=\mathbf{x}_i^{\top}\boldsymbol{\beta}=\sum_{j=1}^p x_{ij} \beta_j, \quad i = 1, \cdots, n.
 \end{align*}
 
-## Fitting a GLM in `R` (from Computer Lab)
+## Fitting a GLM in `R` (from [Computer Lab 05]{.alert})
 
 ```{r, echo = TRUE}
 beetle <- read_csv("data/beetle.csv", show_col_types = FALSE)
