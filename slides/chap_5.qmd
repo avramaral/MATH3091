@@ -1055,8 +1055,8 @@ $$
 With one more iteration, we have 
 
 ```{r, echo = TRUE, fig.width = 5, fig.height = 4, fig.align = "center"}
-g1 <- numDeriv::grad(func = function(x) { bin_loglike(x, y, m) }, x = 0.7212)
-h1 <- numDeriv::hessian(func = function(x) { bin_loglike(x, y, m) }, x = 0.7212)
+g1 <- numDeriv::grad(func = function(x) { bin_loglike(x, y, m) }, x = 0.6495)
+h1 <- numDeriv::hessian(func = function(x) { bin_loglike(x, y, m) }, x = 0.6495)
 c(g1, h1)
 ```
 

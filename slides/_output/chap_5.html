@@ -10,7 +10,6 @@
   <meta name="generator" content="quarto-1.8.24">
 
   <meta name="author" content="André Victor Ribeiro Amaral">
-  <meta name="dcterms.date" content="2026-12-03">
   <title>Statistical Modelling II (MATH3091)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -211,7 +210,7 @@
     </div>
 </div>
 
-  <p class="date">12/03/2026</p>
+  <p class="date">17/03/2026</p>
 </section>
 <section id="preface" class="slide level2">
 <h2>Preface</h2>
@@ -1283,11 +1282,11 @@ p^{(1)} = p^{(0)} + \frac{u(0.4)}{H(0.4)} = 0.4 + \frac{262.5}{1052} = 0.6495.
 <div class="fragment">
 <p>With one more iteration, we have</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>g1 <span class="ot">&lt;-</span> numDeriv<span class="sc">::</span><span class="fu">grad</span>(<span class="at">func =</span> <span class="cf">function</span>(x) { <span class="fu">bin_loglike</span>(x, y, m) }, <span class="at">x =</span> <span class="fl">0.7212</span>)</span>
-<span id="cb25-2"><a href=""></a>h1 <span class="ot">&lt;-</span> numDeriv<span class="sc">::</span><span class="fu">hessian</span>(<span class="at">func =</span> <span class="cf">function</span>(x) { <span class="fu">bin_loglike</span>(x, y, m) }, <span class="at">x =</span> <span class="fl">0.7212</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>g1 <span class="ot">&lt;-</span> numDeriv<span class="sc">::</span><span class="fu">grad</span>(<span class="at">func =</span> <span class="cf">function</span>(x) { <span class="fu">bin_loglike</span>(x, y, m) }, <span class="at">x =</span> <span class="fl">0.6495</span>)</span>
+<span id="cb25-2"><a href=""></a>h1 <span class="ot">&lt;-</span> numDeriv<span class="sc">::</span><span class="fu">hessian</span>(<span class="at">func =</span> <span class="cf">function</span>(x) { <span class="fu">bin_loglike</span>(x, y, m) }, <span class="at">x =</span> <span class="fl">0.6495</span>)</span>
 <span id="cb25-3"><a href=""></a><span class="fu">c</span>(g1, h1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1]    -6.167 -1008.244</code></pre>
+<pre><code>[1]   57.54 -802.96</code></pre>
 </div>
 </div>
 <p><span class="math display">\[
