@@ -19,8 +19,8 @@ Introduction to the exponential family, components of a GLM, examples, maximum l
 
 <!--:white_check_mark:-->
 - :memo: <a href="/problem_class/pc04/ex04.pdf" download>Problem Sheet</a>
-- :lock: **Solution (available after class)**  
-<!-- - :unlock: <a href="/problem_class/pc04/sol04.pdf" download>Solution</a> -->
+<!-- - :lock: **Solution (available after class)** -->
+- :unlock: <a href="/problem_class/pc04/sol04.pdf" download>Solution</a>
 
 ### Problem Sheet 05 (Week 10): Generalised Linear Models (Part II)  
 Comparing GLMs, deviance, models with unknown scale, contingency tables, and log-linear models.
